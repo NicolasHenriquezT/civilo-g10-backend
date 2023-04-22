@@ -1,10 +1,11 @@
-package com.civilo.roller.entities;
+package com.civilo.roller.Models;
 
 import lombok.*;
-
 import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
+import java.util.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -13,7 +14,9 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
+
 public class UserEntity {
+
     //Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +28,8 @@ public class UserEntity {
     private String password;
     private String phoneNumber;
     private String commune;
-    private LocalDate birthdate;
+    private LocalDate birthDate;
     private int age;
-}
 
+}
+ 

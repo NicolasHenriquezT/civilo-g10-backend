@@ -1,11 +1,9 @@
-package com.civilo.roller.Models;
+package com.civilo.roller.Entities;
 
 import lombok.*;
-import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
-import java.util.Serializable;
-import java.util.List;
+
 
 @Entity
 @Table(name = "QUOTES")
@@ -14,9 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-
-public class Quote {
-
+public class QuoteEntity {
     //Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +23,10 @@ public class Quote {
     private int value;
     private String description;
     private float commission;
+
+    //Relaciones
+    @ManyToOne
+    @JoinColumn(name = "SELLER_sellerid")
+    private SellerEntity seller;
 
 } 

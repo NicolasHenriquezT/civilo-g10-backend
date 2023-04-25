@@ -1,11 +1,9 @@
-package com.civilo.roller.Models;
+package com.civilo.roller.Entities;
 
 import lombok.*;
-import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
-import java.util.Serializable;
-import java.util.List;
+
 
 @Entity
 @Table(name = "REQUEST")
@@ -14,9 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-
-public class Request {
-
+public class RequestEntity {
     //Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +24,12 @@ public class Request {
     private String commune;
     private String reason;
 
+    //Relaciones
+    @ManyToOne
+    @JoinColumn(name = "USERS")
+    UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "STATUS")
+    StatusEntity status;
 }

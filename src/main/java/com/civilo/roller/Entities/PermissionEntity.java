@@ -1,27 +1,31 @@
-package com.civilo.roller.Models;
+package com.civilo.roller.Entities;
 
 import lombok.*;
-import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
-import java.util.Serializable;
-import java.util.List;
+
 
 @Entity
-@Table(name = "COVERAGES")
+@Table(name = "PERMISSION")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-
-public class Coverage {
+public class PermissionEntity {
 
     //Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long coverageID;
-    private List<String> commune;
+    private Long permissionID;
+    private String permission;
+
+    //Relaciones
+    @ManyToOne
+    @JoinColumn(name = "ROLE")
+    RoleEntity role;
+
+
 
 }

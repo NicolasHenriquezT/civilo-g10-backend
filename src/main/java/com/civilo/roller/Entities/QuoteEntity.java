@@ -13,6 +13,9 @@ import jakarta.persistence.*;
 @Getter
 @Setter
 public class QuoteEntity {
+
+    ////////////////////////////////////////////// ATRIBUTOS Y MÉTODOS POR VALIDAR //////////////////////////////////////////////
+
     //Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

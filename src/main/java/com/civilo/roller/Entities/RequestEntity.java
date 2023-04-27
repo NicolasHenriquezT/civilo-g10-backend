@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "REQUEST")
+@Table(name = "requests")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "PERMISSION")
+@Table(name = "permissions")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,10 +22,10 @@ public class PermissionEntity {
     private String permission;
 
     //Relaciones
-    @ManyToOne
-    @JoinColumn(name = "ROLE")
-    RoleEntity role;
 
+    @ManyToOne
+    @JoinColumn(name = "roles")
+    RoleEntity role;
 
 
 }

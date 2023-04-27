@@ -5,7 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "STATUS")
+@Table(name = "status")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +20,5 @@ public class StatusEntity {
     private String statusName;
 
     //Relaciones
-    @ManyToOne
-    @JoinColumn(name = "REQUEST")
-    RequestEntity request;
+
 }

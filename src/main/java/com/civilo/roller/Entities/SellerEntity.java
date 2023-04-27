@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-//@Table(name = "SELLERS")
+//@Table(name = "sellers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,10 +19,11 @@ public class SellerEntity extends UserEntity {
     private String companyName;
     private boolean disponibility;
 
+    @ElementCollection
+    private List<Integer> coverageID;
+
     //Relaciones
-    @ManyToOne
-    @JoinColumn(name = "COVERAGES")
-    CoverageEntity coverage;
+
 
     @OneToMany(mappedBy = "quoteID", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuoteEntity> quoteEntities;

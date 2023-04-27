@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

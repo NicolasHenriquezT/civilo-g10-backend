@@ -3,6 +3,7 @@ package com.civilo.roller.Entities;
 import lombok.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -23,6 +24,9 @@ public class RequestEntity {
     private String closingDate;
     private String commune;
     private String reason;
+
+    @ElementCollection
+    private List<Integer> userID;
 
     //Relaciones
     @ManyToOne

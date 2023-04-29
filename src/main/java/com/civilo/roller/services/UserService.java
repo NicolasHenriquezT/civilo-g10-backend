@@ -2,11 +2,11 @@ package com.civilo.roller.services;
 
 import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.repositories.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -22,4 +22,17 @@ public class UserService {
     public UserEntity saveUser(UserEntity user){
         return userRepository.save(user);
     }
+
+    public Optional<UserEntity> getUserById(Long id){
+        return userRepository.findById(id);
+    }
+
+    public UserEntity validateUser(String email, String password){
+        UserEntity user = userRepository.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)){
+            return user;
+        }
+        return null;
+    }
+
 }

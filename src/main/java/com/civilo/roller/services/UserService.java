@@ -1,5 +1,6 @@
 package com.civilo.roller.services;
 
+import com.civilo.roller.Entities.PermissionEntity;
 import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+
+
 
     // El siguiente método retorna un listado el cual contiene TODA la información asociada a los usuarios
     public List<UserEntity> getUsers(){
@@ -34,5 +37,7 @@ public class UserService {
         }
         return null;
     }
+
+
 
 }

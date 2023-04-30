@@ -22,4 +22,15 @@ public class PermissionService {
         return permissionRepository.save(permission);
     }
 
+    public String rolePermissions(Long roleId){
+        List<PermissionEntity> permissionEntityList = getPermissions();
+        String permisos = "";
+        for (int i = 0; i < permissionEntityList.size(); i++){
+            if (permissionEntityList.get(i).getRole().getRoleID() == roleId){
+                permisos = permisos + permissionEntityList.get(i).getPermission() + "\n                  ";
+            }
+        }
+        return permisos;
+    }
+
 }

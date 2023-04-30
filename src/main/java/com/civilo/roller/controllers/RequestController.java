@@ -37,9 +37,14 @@ public class RequestController {
         }
         // Si hay una sesión activa, creamos la solicitud
         requestEntity.setUser((UserEntity) session.getAttribute("user"));
-        requestService.saveRequest(requestEntity);
-        System.out.println("SOLICITUD ENVIADA CORRECTAMENTE");
-        return ResponseEntity.ok().build();
+        // Validamos que el usuario que envía la solicitud es del tipo cliente
+        if (((UserEntity) session.getAttribute("user")).getRole().getAccountType().equals("Cliente")){
+            requestService.saveRequest(requestEntity);
+            System.out.println("SOLICITUD ENVIADA CORRECTAMENTE");
+            return ResponseEntity.ok().build();
+        }
+        System.out.println("USUARIO SIN PERMISOS PARA ESTA ACCIÓN -> NO SE ENVIA LA SOLICITUD");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
 }

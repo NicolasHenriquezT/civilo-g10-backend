@@ -2,6 +2,7 @@ package com.civilo.roller.controllers;
 
 import com.civilo.roller.Entities.DataTransferObjectEntity;
 import com.civilo.roller.Entities.UserEntity;
+import com.civilo.roller.services.PermissionService;
 import com.civilo.roller.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +19,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    PermissionService permissionService;
 
     //Obtener lista de tareas (Metodo GET)
     //@RequestMapping(value = "/usuarios", method = RequestMethod.GET)
@@ -45,6 +49,7 @@ public class UserController {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         System.out.println("SESIÓN INICIADA CORRECTAMENTE");
+        System.out.println(getSession(session));
         return ResponseEntity.ok().build();
     }
 
@@ -52,10 +57,11 @@ public class UserController {
     public ResponseEntity<?> logout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session != null){
-            System.out.println("NO HAY SESIÓN INICIADA");
+            System.out.println("SESIÓN CERRADA CORRECTAMENTE");
             session.invalidate();
+            return ResponseEntity.ok().build();
         }
-        System.out.println("SESIÓN CERRADA CORRECTAMENTE");
+        System.out.println("NO HAY SESIÓN INICIADA");
         return ResponseEntity.ok().build();
     }
 
@@ -64,9 +70,11 @@ public class UserController {
         String sessionId = session.getId();
         UserEntity user = (UserEntity) session.getAttribute("user");
         return "Session ID: " + sessionId + "\n" +
-                "User email     : " + user.getEmail() + "\n" +
-                "User full name : " + user.getName() + " " + user.getSurname() + "\n" +
-                "User role      : " + user.getRole().getAccountType();
+                "User email      : " + user.getEmail() + "\n" +
+                "User full name  : " + user.getName() + " " + user.getSurname() + "\n" +
+                "User role       : " + user.getRole().getAccountType() + "\n" +
+                "User role ID    : " + user.getRole().getRoleID() + "\n" +
+                "User permissions: " + permissionService.rolePermissions(user.getRole().getRoleID()) + "\n";
     }
 
 

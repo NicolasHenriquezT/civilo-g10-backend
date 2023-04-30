@@ -26,6 +26,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    //Para borrar 1
+    //Para borrar todos
+    //Para actualizar
+
     public Optional<UserEntity> getUserById(Long id){
         return userRepository.findById(id);
     }

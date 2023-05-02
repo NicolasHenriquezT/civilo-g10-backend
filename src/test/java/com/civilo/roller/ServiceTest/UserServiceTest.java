@@ -1,5 +1,6 @@
 package com.civilo.roller.ServiceTest;
 
+import com.civilo.roller.Entities.RoleEntity;
 import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.repositories.UserRepository;
 import com.civilo.roller.services.UserService;
@@ -31,7 +32,7 @@ public class UserServiceTest {
 
     @Test
     void saveUser(){
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
         Mockito.when(userRepository.save(user)).thenReturn(user);
         final UserEntity currentResponse = userService.saveUser(user);
         assertEquals(user,currentResponse);
@@ -39,7 +40,7 @@ public class UserServiceTest {
 
     @Test
     void getUsers(){
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
         List<UserEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(user);
         Mockito.when((List<UserEntity>) userRepository.findAll()).thenReturn(expectedAnswer);
@@ -49,7 +50,7 @@ public class UserServiceTest {
 
     @Test
     void getUserById(){
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
         List<UserEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(user);
         Mockito.when(userRepository.findById(Long.valueOf("9999"))).thenReturn(Optional.of(user));
@@ -59,7 +60,7 @@ public class UserServiceTest {
 
     @Test
     void validateUser(){
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
         Mockito.when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
         user.setPassword("p");
         UserEntity currentResponse = userService.validateUser(user.getEmail(), user.getPassword());

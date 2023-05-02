@@ -1,5 +1,6 @@
 package com.civilo.roller.ServiceTest;
 
+import com.civilo.roller.Entities.RoleEntity;
 import com.civilo.roller.Entities.SellerEntity;
 import com.civilo.roller.repositories.SellerRepository;
 import com.civilo.roller.services.SellerService;
@@ -30,7 +31,7 @@ public class SellerServiceTest {
 
     @Test
     void saveSeller(){
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, "Company", true);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"), "Company", true);
         Mockito.when(sellerRepository.save(seller)).thenReturn(seller);
         final SellerEntity currentResponse = sellerService.saveSeller(seller);
         assertEquals(seller,currentResponse);
@@ -38,7 +39,7 @@ public class SellerServiceTest {
 
     @Test
     void getSellers(){
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, "Company", true);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"), "Company", true);
         List<SellerEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(seller);
         Mockito.when((List<SellerEntity>) sellerRepository.findAll()).thenReturn(expectedAnswer);

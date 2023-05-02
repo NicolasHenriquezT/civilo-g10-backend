@@ -33,13 +33,9 @@ public class UserEntity {
     @JoinColumn(name = "ROLE")
     RoleEntity role;
 
-    @ManyToOne
-    @JoinColumn(name = "REQUEST")
-    RequestEntity request;
 
 
 
-    //Constructor
-    public UserEntity(Long userID, String name, String surname, String email, String password, String phoneNumber, String commune, LocalDate birthDate, int age) {
-    }
+
+
 }

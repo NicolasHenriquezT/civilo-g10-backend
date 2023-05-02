@@ -1,6 +1,6 @@
 package com.civilo.roller.EntitiesTest;
 
-import com.civilo.roller.Entities.RoleEntity;
+import com.civilo.roller.Entities.StatusEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class RoleEntityTest {
+public class StatusEntityTest {
     @Test
-    public void testRoleEntityAttributes() {
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setRoleID(Long.valueOf("1"));
-        roleEntity.setAccountType("admin");
-        assertEquals(Long.valueOf("1"), roleEntity.getRoleID());
-        assertEquals("admin", roleEntity.getAccountType());
+    public void testStatusEntity() {
+        StatusEntity status = new StatusEntity();
+        status.setStatusID(1L);
+        status.setStatusName("Active");
+        assertEquals(1L, status.getStatusID());
+        assertEquals("Active", status.getStatusName());
     }
 }

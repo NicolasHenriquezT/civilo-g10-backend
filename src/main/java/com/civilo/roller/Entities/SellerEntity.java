@@ -33,8 +33,8 @@ public class SellerEntity extends UserEntity {
     //Constructor
     public SellerEntity(Long userID, String name, String surname, String email,
                         String password, String phoneNumber, String commune,
-                        LocalDate birthDate, int age, String companyName, boolean disponibility) {
-        super(userID, name, surname, email, password, phoneNumber, commune, birthDate, age);
+                        LocalDate birthDate, int age, RoleEntity role, String companyName, boolean disponibility) {
+        super(userID, name, surname, email, password, phoneNumber, commune, birthDate, age, role);
         this.companyName = companyName;
         this.disponibility = disponibility;
     }

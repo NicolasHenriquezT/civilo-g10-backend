@@ -4,6 +4,7 @@ import com.civilo.roller.Entities.PermissionEntity;
 import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,24 @@ public class UserService {
 
     public Optional<UserEntity> getUserById(Long id){
         return userRepository.findById(id);
+    }
+
+    public UserEntity getUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    //metodo para verificar si un email ya existe dentro de la base de datos
+    public Boolean userAlreadyExists(UserEntity user){
+
+        String email = user.getEmail();
+        UserEntity resultado = getUserByEmail(email);
+
+        if(resultado == null){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     public UserEntity validateUser(String email, String password){

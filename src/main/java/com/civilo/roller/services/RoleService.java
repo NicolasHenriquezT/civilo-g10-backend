@@ -21,4 +21,10 @@ public class RoleService {
     public RoleEntity saveRole(RoleEntity role){
         return roleRepository.save(role);
     }
+
+    //Se obtiene la ID del rol dependiendo del tipo de cuenta
+    public Long getRoleIdByAccountType(String accountType){
+        return roleRepository.findIdByAccountType(accountType);
+
+    }
 }

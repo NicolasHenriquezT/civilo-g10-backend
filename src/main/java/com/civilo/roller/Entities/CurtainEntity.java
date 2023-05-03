@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CurtainsEntity {
+public class CurtainEntity {
     //Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

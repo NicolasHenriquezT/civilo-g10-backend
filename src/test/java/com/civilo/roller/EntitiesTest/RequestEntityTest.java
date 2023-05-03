@@ -26,7 +26,7 @@ public class RequestEntityTest {
     CoverageEntity coverage;
 
     @Mock
-    CurtainsEntity curtains;
+    CurtainEntity curtains;
 
     @Mock
     StatusEntity status;

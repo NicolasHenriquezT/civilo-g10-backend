@@ -41,7 +41,7 @@ public class RequestEntity {
 
     @ManyToOne
     @JoinColumn(name = "CURTAINS")
-    CurtainsEntity curtains;
+    CurtainEntity curtain;
 
     @ManyToOne
     @JoinColumn(name = "STATUS")

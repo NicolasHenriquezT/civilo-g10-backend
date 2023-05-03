@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -37,6 +39,18 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @GetMapping("/{email}")
+    public UserEntity getUserByEmail(@PathVariable("email") String email){
+        System.out.println("EMAIL:    " + email);
+        System.out.println("DATOS:    " + this.userService.getUserByEmail(email));
+        return this.userService.getUserByEmail(email);
+    }
+ 
+    @PostMapping()
+    public UserEntity saveUser(@RequestBody UserEntity user) {
+        return this.userService.createUser(user);
+    }
+    /*
     // Permite obtener un usuario en especifico del sistema.
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable long id){
@@ -47,6 +61,11 @@ public class UserController {
         }
         return new ResponseEntity<UserEntity>(user.get(), HttpStatus.OK);
     }
+    
+     */
+
+
+
 
     // Permite guardar un nuevo usuario en el sistema.
     @PostMapping("/register")
@@ -117,7 +136,7 @@ public class UserController {
     //------------------------------------------------------------------------------------------------------------------------------------------------//
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody DataTransferObjectEntity userDTO, HttpServletRequest request){
+    public ResponseEntity<?> login(@RequestBody UserEntity userDTO, HttpServletRequest request){
         UserEntity user = userService.validateUser(userDTO.getEmail(), userDTO.getPassword());
         if (user == null){
             System.out.println("CORREO O CONTRASEÑA INCORRECTA\n");

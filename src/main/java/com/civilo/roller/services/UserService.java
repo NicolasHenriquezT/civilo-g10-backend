@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public UserEntity getUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     // Create
     // Permite guardar un objeto del tipo "UserEntity" en la base de datos.
     public UserEntity createUser(UserEntity user){   

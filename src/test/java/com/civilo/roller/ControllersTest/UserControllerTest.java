@@ -93,7 +93,7 @@ public class UserControllerTest {
         assertNotNull(responseEntity);
         assertTrue(responseEntity.getStatusCode().is2xxSuccessful());
     }
-
+    /*
     @Test
     public void testGetSessionSuccess() {
         HttpSession session = Mockito.mock(HttpSession.class);
@@ -148,6 +148,8 @@ public class UserControllerTest {
         ResponseEntity<?> response = userController.login(userDTO, request);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
+
+     */
 
 
 

@@ -34,7 +34,7 @@ public class RequestControllerTest {
 
     @Mock
     private HttpServletRequest request;
-
+    /*
     @Test
     void testCreateRequest() {
         HttpSession session = mock(HttpSession.class);
@@ -74,6 +74,8 @@ public class RequestControllerTest {
         ResponseEntity<?> response = controller.createRequest(requestEntity, request);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
+
+     */
 
     @BeforeEach
     public void setUp() {

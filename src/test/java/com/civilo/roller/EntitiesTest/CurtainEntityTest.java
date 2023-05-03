@@ -1,6 +1,6 @@
 package com.civilo.roller.EntitiesTest;
 
-import com.civilo.roller.Entities.CurtainsEntity;
+import com.civilo.roller.Entities.CurtainEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class CurtainEntityTest {
     @Mock
-    private CurtainsEntity curtainsEntityMock;
+    private CurtainEntity curtainsEntityMock;
 
     @InjectMocks
-    private CurtainsEntity curtainsEntity = new CurtainsEntity(1L, "type");
+    private CurtainEntity curtainsEntity = new CurtainEntity(1L, "type");
 
     @Test
     void testCurtainsEntity() {
@@ -31,7 +31,7 @@ public class CurtainEntityTest {
     void testCurtainsEntity2() {
         assertEquals(1L, curtainsEntity.getCurtainID());
         assertEquals("type", curtainsEntity.getCurtainType());
-        CurtainsEntity curtainsEntity2 = new CurtainsEntity(2L, "type2");
+        CurtainEntity curtainsEntity2 = new CurtainEntity(2L, "type2");
         curtainsEntity2.setCurtainID(1L);
         curtainsEntity2.setCurtainType("type");
         assertEquals(curtainsEntity, curtainsEntity2);

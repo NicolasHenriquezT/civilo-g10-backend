@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CoverageService {
@@ -22,7 +23,9 @@ public class CoverageService {
         return coverageRepository.save(coverage);
     }
 
-
+    public Optional<CoverageEntity> getCoverage(Long id){
+        return coverageRepository.findById(id);
+    }
 
 
 }

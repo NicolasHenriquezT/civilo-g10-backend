@@ -84,6 +84,12 @@ public class UserController {
                 "User permissions: " + permissionService.rolePermissions(user.getRole().getRoleID()) + "\n";
     }
 
+    @GetMapping("/currentSession")
+    public UserEntity getCurrentSession(@RequestParam("email") String emailSession, @RequestParam("password") String passwordSession) {
+        UserEntity user = userService.validateUser(emailSession, passwordSession);
+        return user;
+    }
+
     //Registro de usuario
     @PostMapping("/register")
     public ResponseEntity<?> RegisterUser(@RequestBody UserEntity user) {

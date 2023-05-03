@@ -4,6 +4,7 @@ import lombok.*;
 import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -32,10 +33,8 @@ public class UserEntity {
     @ManyToOne
     @JoinColumn(name = "ROLE")
     RoleEntity role;
-
-
-
-
-
+    
+    //@JsonIgnore
+    //RoleEntity role;
 
 }

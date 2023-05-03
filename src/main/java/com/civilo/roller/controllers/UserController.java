@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,25 +28,94 @@ public class UserController {
     @Autowired
     PermissionService permissionService;
 
-    @Autowired
+    @Autowired 
     RoleService roleService;
 
-    //Obtener lista de tareas (Metodo GET)
-    //@RequestMapping(value = "/usuarios", method = RequestMethod.GET)
-    //public List<UserEntity> getAllUsers(){
-    //    return userService.getUsers();      
-    //}
-
-    @GetMapping() 
-    public List<UserEntity> getUsers(){ 
-        return userService.getUsers(); 
-    } 
- 
-    @PostMapping()
-    public UserEntity saveUser(@RequestBody UserEntity user){
-        return this.userService.saveUser(user);
+    // Permite obtener todos los usuarios del sistema.
+    @GetMapping()
+    public List<UserEntity> getUsers(){
+        return userService.getUsers();
     }
 
+    // Permite obtener un usuario en especifico del sistema.
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable long id){
+        Optional<UserEntity> user = userService.getUserById(id);
+        if(!user.isPresent()){
+            System.out.println("NO SE ENCONTRO EL USUARIO n");
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND); 
+        }
+        return new ResponseEntity<UserEntity>(user.get(), HttpStatus.OK);
+    }
+
+    // Permite guardar un nuevo usuario en el sistema.
+    @PostMapping("/register")
+    public ResponseEntity<?> createUser(@RequestBody UserEntity user){
+
+        Optional<UserEntity> existingUser = userService.validateEmail(user.getEmail());
+
+        //Se verifica si el email esta registrado
+        if(existingUser.isPresent()){
+            System.out.println("CORREO YA REGISTRADO\n");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("El email ingresado ya existe"); 
+        }
+
+        //Se obtiene la id del rol dependiendo del tipo de cuenta
+        String accountType = user.getRole().getAccountType();
+        Long IdRol = roleService.getRoleIdByAccountType(accountType);
+
+        //Se guarda la id del rol dentro del usuario
+        user.getRole().setRoleID(IdRol);
+
+        userService.createUser(user);
+        System.out.println("GUARDADO CON EXITO\n");
+        return ResponseEntity.ok().build();
+    }
+
+    // Permite actualizar información de un usuario.
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody UserEntity user) {
+        
+        Optional<UserEntity> checkUser = userService.getUserById(id);
+        
+        if(!checkUser.isPresent()){
+            System.out.println("NO SE ENCONTRO EL USUARIO CON ID: " + id + " \n");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El usuario con el ID especificado no se encuentra registrado."); 
+        }
+
+        Optional<UserEntity> checkEmail = userService.validateEmail(user.getEmail());
+
+        if(checkEmail.isPresent()){
+            System.out.println("CORREO EN USO\n");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("El email a modificar ya se encuentra registrado"); 
+        }
+
+        userService.updateUser(id,user);
+        System.out.println("ACTUALIZADO CON EXITO\n");
+        return ResponseEntity.ok().build(); 
+    }
+
+    // Permite eliminar todos los usuarios del sistema.
+    @DeleteMapping()
+    public ResponseEntity<String> deleteUsers(){
+        userService.deleteUsers();
+        return ResponseEntity.ok("SE ELIMINARON LOS USUARIOS CORRECTAMENTE");
+    }
+
+    // Permite eliminar un usuario en especifico del sistema.
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable Long id){
+        if(!userService.existsUserById(id)){
+            System.out.println("NO SE ENCONTRO UN USUARIO CON EL ID: "+ id + "\n");
+            return ResponseEntity.notFound().build();
+        }
+        userService.deleteUserById(id);
+        return ResponseEntity.ok("USUARIO CON ID " + id + " ELIMINADO CORRECTAMENTE\n");
+
+    }
+ 
+    //------------------------------------------------------------------------------------------------------------------------------------------------//
+    
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody DataTransferObjectEntity userDTO, HttpServletRequest request){
         UserEntity user = userService.validateUser(userDTO.getEmail(), userDTO.getPassword());
@@ -84,43 +154,11 @@ public class UserController {
                 "User permissions: " + permissionService.rolePermissions(user.getRole().getRoleID()) + "\n";
     }
 
-    @GetMapping("/currentSession")
-    public UserEntity getCurrentSession(@RequestParam("email") String emailSession, @RequestParam("password") String passwordSession) {
-        UserEntity user = userService.validateUser(emailSession, passwordSession);
-        return user;
-    }
-
-    //Registro de usuario
-    @PostMapping("/register")
-    public ResponseEntity<?> RegisterUser(@RequestBody UserEntity user) {
-
-        //Se obtiene la id del rol dependiendo del tipo de cuenta
-        String accountType = user.getRole().getAccountType();
-        Long IdRol = roleService.getRoleIdByAccountType(accountType);
-
-        //Se guarda la id del rol dentro del usuario
-        user.getRole().setRoleID(IdRol);
-
-        //Si el email ya esta registrado en la base de datos se manda un mensaje de respuesta al cliente
-        //de que el usuario ya existe
-        //y un codigo de respuesta 405
-        if(userService.userAlreadyExists(user)){
-            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("El usuario ya existe");
-        }
-        
-        //sino, se guarda el usuario en la base de datos y se manda el codigo de respuesta
-        else{
-            userService.saveUser(user);
-            return ResponseEntity.ok().build();
-
-        }       
-        
-    }
-    
-
-
-
-
+    @GetMapping("/currentSession") 
+    public UserEntity getCurrentSession(@RequestParam("email") String emailSession, @RequestParam("password") String passwordSession) { 
+        UserEntity user = userService.validateUser(emailSession, passwordSession); 
+        return user; 
+    }  
 
 
 }

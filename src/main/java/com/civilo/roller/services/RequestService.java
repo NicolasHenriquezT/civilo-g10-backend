@@ -5,6 +5,7 @@ import com.civilo.roller.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,5 +21,16 @@ public class RequestService {
     // El siguiente método permite guardar un objeto del tipo "RequestEntity" en la base de datos
     public RequestEntity saveRequest(RequestEntity request){
         return requestRepository.save(request);
+    }
+
+    public List<RequestEntity> getRequestBySellerId(Long sellerId) {
+        List<RequestEntity> requests = getRequests();
+        List<RequestEntity> myRequest = new ArrayList<>();
+        for (int i = 0; i < requests.size(); i++){
+            if (requests.get(i).getSellerId() == sellerId){
+                myRequest.add(requests.get(i));
+            }
+        }
+        return myRequest;
     }
 }

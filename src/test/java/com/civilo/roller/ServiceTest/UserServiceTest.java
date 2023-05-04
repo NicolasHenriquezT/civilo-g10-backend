@@ -34,7 +34,7 @@ public class UserServiceTest {
     void saveUser(){
         UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
         Mockito.when(userRepository.save(user)).thenReturn(user);
-        final UserEntity currentResponse = userService.saveUser(user);
+        final UserEntity currentResponse = userService.createUser(user);
         assertEquals(user,currentResponse);
     }
 

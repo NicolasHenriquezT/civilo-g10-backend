@@ -26,6 +26,7 @@ public class RequestEntity {
     private LocalDate admissionDate;
     private LocalDate closingDate;
     private String reason;
+    private int sellerId;
 
     @ElementCollection
     private List<Integer> userID;

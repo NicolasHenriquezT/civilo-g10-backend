@@ -64,7 +64,7 @@ public class UserControllerTest {
     @Test
     void testSaveUser() {
         UserEntity expectedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));;
-        when(userService.saveUser(Mockito.any(UserEntity.class))).thenReturn(expectedUser);
+        when(userService.createUser(Mockito.any(UserEntity.class))).thenReturn(expectedUser);
         UserEntity actualUser = userController.saveUser(new UserEntity());
         assertEquals(expectedUser, actualUser);
     }

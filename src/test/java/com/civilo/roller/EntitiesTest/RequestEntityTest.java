@@ -52,7 +52,7 @@ public class RequestEntityTest {
         requestEntity.setUserID(userID);
         requestEntity.setUser(user);
         requestEntity.setCoverage(coverage);
-        requestEntity.setCurtains(curtains);
+        requestEntity.setCurtain(curtains);
         requestEntity.setStatus(status);
         assertNotNull(requestEntity);
         assertEquals(requestID, requestEntity.getRequestID());
@@ -64,7 +64,7 @@ public class RequestEntityTest {
         assertEquals(userID, requestEntity.getUserID());
         assertEquals(user, requestEntity.getUser());
         assertEquals(coverage, requestEntity.getCoverage());
-        assertEquals(curtains, requestEntity.getCurtains());
+        assertEquals(curtains, requestEntity.getCurtain());
         assertEquals(status, requestEntity.getStatus());
     }
 }

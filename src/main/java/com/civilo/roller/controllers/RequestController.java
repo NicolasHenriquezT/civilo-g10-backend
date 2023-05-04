@@ -55,4 +55,10 @@ public class RequestController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
+    @GetMapping("/sellerRequest/{sellerId}")
+    public List<RequestEntity> getRequestsBySellerId(@PathVariable("sellerId") Long sellerId){
+        return requestService.getRequestBySellerId(sellerId);
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.civilo.roller.services;
 
 import com.civilo.roller.Entities.SellerEntity;
+import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.repositories.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,13 @@ public class SellerService {
     public SellerEntity saveSeller(SellerEntity seller){
         return sellerRepository.save(seller);
     }
+
+    public SellerEntity validateSeller(String email, String password){
+        SellerEntity seller = sellerRepository.findByEmail(email);
+        if (seller != null && seller.getPassword().equals(password)){
+            return seller;
+        }
+        return null;
+    }
+
 }

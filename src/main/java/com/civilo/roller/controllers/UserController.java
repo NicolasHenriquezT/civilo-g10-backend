@@ -1,9 +1,11 @@
 package com.civilo.roller.controllers;
 
 import com.civilo.roller.Entities.DataTransferObjectEntity;
+import com.civilo.roller.Entities.SellerEntity;
 import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.services.PermissionService;
 import com.civilo.roller.services.RoleService;
+import com.civilo.roller.services.SellerService;
 import com.civilo.roller.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -32,6 +34,9 @@ public class UserController {
 
     @Autowired 
     RoleService roleService;
+
+    @Autowired
+    SellerService sellerService;
 
     // Permite obtener todos los usuarios del sistema.
     @GetMapping()
@@ -84,9 +89,17 @@ public class UserController {
         //Se guarda la id del rol dentro del usuario
         user.getRole().setRoleID(IdRol);
 
-        userService.createUser(user);
-        System.out.println("GUARDADO CON EXITO\n");
-        return ResponseEntity.ok().build();
+        if (accountType.equals("Vendedor")){
+            SellerEntity seller = new SellerEntity(null, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getCommune(), user.getBirthDate(), user.getAge(), user.getRole(), null, false);
+            sellerService.saveSeller(seller);
+            System.out.println("GUARDADO CON EXITO\n");
+            return ResponseEntity.ok().build();
+        }
+        else {
+            userService.createUser(user);
+            System.out.println("GUARDADO CON EXITO\n");
+            return ResponseEntity.ok().build();
+        }
     }
 
     // Permite actualizar información de un usuario.

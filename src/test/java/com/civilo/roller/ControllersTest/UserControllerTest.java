@@ -1,25 +1,20 @@
 package com.civilo.roller.ControllersTest;
 
-import com.civilo.roller.Entities.DataTransferObjectEntity;
-import com.civilo.roller.Entities.PermissionEntity;
-import com.civilo.roller.Entities.RoleEntity;
-import com.civilo.roller.Entities.UserEntity;
+import com.civilo.roller.Entities.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import com.civilo.roller.controllers.UserController;
 import com.civilo.roller.repositories.UserRepository;
 import com.civilo.roller.services.PermissionService;
+import com.civilo.roller.services.RoleService;
 import com.civilo.roller.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -30,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -45,6 +41,9 @@ public class UserControllerTest {
 
     @Mock
     private PermissionService permissionService;
+
+    @Mock
+    private RoleService roleService;
 
     @BeforeEach
     public void setUp() {
@@ -93,68 +92,150 @@ public class UserControllerTest {
         assertNotNull(responseEntity);
         assertTrue(responseEntity.getStatusCode().is2xxSuccessful());
     }
-    /*
-    @Test
-    public void testGetSessionSuccess() {
-        HttpSession session = Mockito.mock(HttpSession.class);
-        UserEntity user = new UserEntity();
-        user.setEmail("test@example.com");
-        user.setName("John");
-        user.setSurname("Doe");
-        RoleEntity role = new RoleEntity();
-        role.setAccountType("Test role");
-        user.setRole(role);
-        PermissionEntity expectedPermission = new PermissionEntity(1L, "Permission 1", role);
-        Mockito.when(session.getId()).thenReturn("testSessionId");
-        Mockito.when(session.getAttribute("user")).thenReturn(user);
-        String result = userController.getSession(session);
-        assertEquals("Session ID: testSessionId\n" +
-                "User email      : test@example.com\n" +
-                "User full name  : John Doe\n" +
-                "User role       : Test role\n" +
-                "User role ID    : null\n" +
-                "User permissions: null\n", result);
-    }
 
     @Test
-    public void testLoginSuccess() {
-        DataTransferObjectEntity userDTO = new DataTransferObjectEntity();
-        userDTO.setEmail("test@example.com");
-        userDTO.setPassword("password");
-        HttpSession session = Mockito.mock(HttpSession.class);
-        UserEntity user = new UserEntity();
-        user.setEmail("test@example.com");
-        user.setPassword("password");
-        user.setName("John");
-        user.setSurname("Doe");
-        RoleEntity role = new RoleEntity();
-        role.setAccountType("Cliente");
-        user.setRole(role);
-        PermissionEntity expectedPermission = new PermissionEntity(1L, "Permission 1", role);
-        Mockito.when(session.getId()).thenReturn("testSessionId");
-        Mockito.when(session.getAttribute("user")).thenReturn(user);
-        Mockito.when(userService.validateUser(userDTO.getEmail(), userDTO.getPassword())).thenReturn(user);
+    public void testLoginSuccessful() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        Mockito.when(userService.validateUser(Mockito.anyString(), Mockito.anyString())).thenReturn(user);
         Mockito.when(request.getSession()).thenReturn(session);
-        ResponseEntity<?> response = userController.login(userDTO, request);
+        ResponseEntity<?> response = userController.login(user, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         Mockito.verify(session).setAttribute("user", user);
     }
 
     @Test
-    public void testLoginUnauthorized() {
-        DataTransferObjectEntity userDTO = new DataTransferObjectEntity();
-        userDTO.setEmail("test@example.com");
+    public void testLoginFailed() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        Mockito.when(userService.validateUser(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
+        ResponseEntity<?> response = userController.login(user, request);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        Mockito.verify(session, Mockito.never()).setAttribute(Mockito.anyString(), Mockito.any());
+    }
+
+    @Test
+    void testGetUserByEmail() {
+        String email = "email@example.com";
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", email, "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+
+        when(userService.getUserByEmail(anyString())).thenReturn(user);
+
+        UserEntity result = userController.getUserByEmail(email);
+        assertEquals(email, result.getEmail());
+    }
+
+    @Test
+    public void testCreateUser() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        when(userService.validateEmail(user.getEmail())).thenReturn(Optional.empty());
+        when(roleService.getRoleIdByAccountType(user.getRole().getAccountType())).thenReturn(Long.valueOf("1234"));
+        ResponseEntity<?> response = userController.createUser(user);
+        verify(userService, times(1)).createUser(user);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testCreateUser_existingEmail() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        when(userService.validateEmail(any(String.class))).thenReturn(Optional.of(user));
+        ResponseEntity<?> responseEntity = userController.createUser(user);
+        assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());
+        assertEquals("El email ingresado ya existe", responseEntity.getBody());
+    }
+
+    @Test
+    public void testUpdateUser() {
+        long userId = 1L;
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        when(userService.getUserById(userId)).thenReturn(Optional.of(user));
+        when(userService.validateEmail(updatedUser.getEmail())).thenReturn(Optional.empty());
+        ResponseEntity<?> response = userController.updateUser(userId, updatedUser);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(userService, times(1)).updateUser(userId, updatedUser);
+    }
+
+    @Test
+    public void testUpdateUserUserNotFound() {
+        long userId = 1L;
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        when(userService.getUserById(userId)).thenReturn(Optional.empty());
+        ResponseEntity<?> response = userController.updateUser(userId, updatedUser);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("El usuario con el ID especificado no se encuentra registrado.", response.getBody());
+        verify(userService, times(0)).updateUser(userId, updatedUser);
+    }
+
+    @Test
+    public void testUpdateUserEmailConflict() {
+        long userId = 1L;
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        when(userService.getUserById(userId)).thenReturn(Optional.of(user));
+        when(userService.validateEmail(updatedUser.getEmail())).thenReturn(Optional.of(user));
+        ResponseEntity<?> response = userController.updateUser(userId, updatedUser);
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals("El email a modificar ya se encuentra registrado", response.getBody());
+        verify(userService, times(0)).updateUser(userId, updatedUser);
+    }
+
+    @Test
+    public void deleteUsersTest() {
+        ResponseEntity<String> responseEntity = userController.deleteUsers();
+        verify(userService).deleteUsers();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("SE ELIMINARON LOS USUARIOS CORRECTAMENTE", responseEntity.getBody());
+    }
+
+    @Test
+    public void testGetCurrentSession() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, role);
+        when(userService.validateUser("Email", "Password")).thenReturn(user);
+        UserEntity result = userController.getCurrentSession("Email", "Password");
+        assertEquals(user, result);
+    }
+
+    @Test
+    public void testLoginExecutive() {
+        UserEntity userDTO = new UserEntity();
+        userDTO.setEmail("email@example.com");
         userDTO.setPassword("password");
-        ResponseEntity<?> response = userController.login(userDTO, request);
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Ejecutivo");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "email@example.com", "Password", "0 1234 5678", "Commune", null, 20, role);
+        when(userService.validateUser(userDTO.getEmail(), userDTO.getPassword())).thenReturn(user);
+        when(request.getSession()).thenReturn(session);
+        ResponseEntity<?> response = userController.loginExecutive(userDTO, request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testLoginExecutiveNull() {
+        UserEntity userDTO = new UserEntity();
+        userDTO.setEmail("email");
+        userDTO.setPassword("password");
+        when(userService.validateUser(userDTO.getEmail(), userDTO.getPassword())).thenReturn(null);
+        ResponseEntity<?> response = userController.loginExecutive(userDTO, request);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 
-     */
-
-
-
-
-
-
+    @Test
+    void testLoginExecutiveInvalidRole() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9998"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        UserEntity userDTO = new UserEntity();
+        userDTO.setEmail("email");
+        userDTO.setPassword("password");
+        when(userService.validateUser(userDTO.getEmail(), userDTO.getPassword())).thenReturn(user);
+        ResponseEntity<?> response = userController.loginExecutive(userDTO, request);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
 
 }

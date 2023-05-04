@@ -41,8 +41,6 @@ public class UserController {
 
     @GetMapping("/{email}")
     public UserEntity getUserByEmail(@PathVariable("email") String email){
-        System.out.println("EMAIL:    " + email);
-        System.out.println("DATOS:    " + this.userService.getUserByEmail(email));
         return this.userService.getUserByEmail(email);
     }
  
@@ -145,7 +143,6 @@ public class UserController {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         System.out.println("SESIÓN INICIADA CORRECTAMENTE");
-        System.out.println(getSession(session));
         return ResponseEntity.ok().build();
     }
 
@@ -190,7 +187,6 @@ public class UserController {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             System.out.println("SESIÓN INICIADA CORRECTAMENTE");
-            System.out.println(getSession(session));
             return ResponseEntity.ok().build();
         }
         System.out.println("NO FIGURA CON EL ROL INGRESADO\n");

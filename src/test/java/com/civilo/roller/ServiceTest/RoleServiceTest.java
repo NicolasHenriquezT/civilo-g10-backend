@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -30,7 +31,7 @@ public class RoleServiceTest {
     @Test
     void saveRole(){
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Type 1");
-        Mockito.when(roleRepository.save(role)).thenReturn(role);
+        when(roleRepository.save(role)).thenReturn(role);
         final RoleEntity currentResponse = roleService.saveRole(role);
         assertEquals(role,currentResponse);
     }
@@ -40,8 +41,16 @@ public class RoleServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Type 1");
         List<RoleEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(role);
-        Mockito.when((List<RoleEntity>) roleRepository.findAll()).thenReturn(expectedAnswer);
+        when((List<RoleEntity>) roleRepository.findAll()).thenReturn(expectedAnswer);
         final List<RoleEntity> currentResponse = roleService.getRoles();
         assertEquals(expectedAnswer, currentResponse);
+    }
+
+    @Test
+    void getRoleIdByAccountType() {
+        String accountType = "some account type";
+        Long roleId = 123L;
+        when(roleRepository.findIdByAccountType(accountType)).thenReturn(roleId);
+        assertEquals(roleId, roleService.getRoleIdByAccountType(accountType));
     }
 }

@@ -4,6 +4,8 @@ import com.civilo.roller.Entities.RoleEntity;
 import com.civilo.roller.Entities.SellerEntity;
 import com.civilo.roller.controllers.SellerController;
 import com.civilo.roller.services.SellerService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,6 +39,12 @@ public class SellerControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    @Mock
+    private HttpServletRequest request;
+
+    @Mock
+    private HttpSession session;
+
     @Test
     void testGetSellers() {
         List<SellerEntity> expectedSellers = new ArrayList<>();
@@ -51,5 +61,26 @@ public class SellerControllerTest {
         Mockito.when(sellerService.saveSeller(Mockito.any(SellerEntity.class))).thenReturn(expectedSeller);
         SellerEntity actualSeller = sellerController.saveSeller(new SellerEntity());
         assertEquals(expectedSeller, actualSeller);
+    }
+
+    @Test
+    public void testLoginSuccessful() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "Company", true);
+        Mockito.when(sellerService.validateSeller(Mockito.anyString(), Mockito.anyString())).thenReturn(seller);
+        Mockito.when(request.getSession()).thenReturn(session);
+        ResponseEntity<?> response = sellerController.login(seller, request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        Mockito.verify(session).setAttribute("seller", seller);
+    }
+
+    @Test
+    public void testLoginFailed() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "Company", true);
+        Mockito.when(sellerService.validateSeller(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
+        ResponseEntity<?> response = sellerController.login(seller, request);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        Mockito.verify(session, Mockito.never()).setAttribute(Mockito.anyString(), Mockito.any());
     }
 }

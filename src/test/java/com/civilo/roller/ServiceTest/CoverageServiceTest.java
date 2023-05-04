@@ -14,8 +14,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 
 @DataJpaTest
@@ -31,7 +33,7 @@ public class CoverageServiceTest {
     @Test
     void saveCoverage(){
         CoverageEntity coverage = new CoverageEntity(Long.valueOf("9999"), "Arica");
-        Mockito.when(coverageRepository.save(coverage)).thenReturn(coverage);
+        when(coverageRepository.save(coverage)).thenReturn(coverage);
         final CoverageEntity currentResponse = coverageService.saveCoverage(coverage);
         assertEquals(coverage,currentResponse);
     }
@@ -41,8 +43,17 @@ public class CoverageServiceTest {
         CoverageEntity coverage = new CoverageEntity(Long.valueOf("9999"), "Arica");
         List<CoverageEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(coverage);
-        Mockito.when((List<CoverageEntity>) coverageRepository.findAll()).thenReturn(expectedAnswer);
+        when((List<CoverageEntity>) coverageRepository.findAll()).thenReturn(expectedAnswer);
         final List<CoverageEntity> currentResponse = coverageService.getCoverages();
         assertEquals(expectedAnswer, currentResponse);
+    }
+
+    @Test
+    void testGetCoverageById() {
+        Long id = 1L;
+        CoverageEntity coverageEntity = new CoverageEntity(id, "Santiago");
+        when(coverageRepository.findById(id)).thenReturn(Optional.of(coverageEntity));
+        Optional<CoverageEntity> result = coverageService.getCoverage(id);
+        assertEquals(coverageEntity, result.get());
     }
 }

@@ -13,24 +13,11 @@ public class RoleService {
     @Autowired
     RoleRepository roleRepository;
 
+    // Get all
     // El siguiente método retorna un listado el cual contiene TODA la información asociada a los roles
     public List<RoleEntity> getRoles(){
         return (List<RoleEntity>) roleRepository.findAll();
     }
-
-    // El siguiente método permite guardar un objeto del tipo "RoleEntity" en la base de datos
-    public RoleEntity saveRole(RoleEntity role){
-        return roleRepository.save(role);
-    }
-
-    //Se obtiene la ID del rol dependiendo del tipo de cuenta
-    public Long getRoleIdByAccountType(String accountType){
-        return roleRepository.findIdByAccountType(accountType);
-
-    }
-
-
-    //---------J
 
     // Get by id
     // Permite obtener la informacion de un rol en especifico.
@@ -78,5 +65,10 @@ public class RoleService {
         return roleRepository.findById(id).isPresent();
     }
 
+    //Se obtiene la ID del rol dependiendo del tipo de cuenta
+    public Long getRoleIdByAccountType(String accountType){
+        return roleRepository.findIdByAccountType(accountType);
+
+    }
 
 }

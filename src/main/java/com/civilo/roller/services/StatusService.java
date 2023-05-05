@@ -13,19 +13,11 @@ public class StatusService {
     @Autowired
     StatusRepository statusRepository;
 
+    // Get All
     // El siguiente método retorna un listado el cual contiene TODA la información asociada a los estados
     public List<StatusEntity> getStatus(){
         return (List<StatusEntity>) statusRepository.findAll();
     }
-
-    // El siguiente método permite guardar un objeto del tipo "StatusEntity" en la base de datos
-    public StatusEntity saveStatus(StatusEntity status){
-        return statusRepository.save(status);
-    }
-
-
-
-    //---------J
     
     // Get by id
     // Permite obtener la informacion de un estado en especifico.

@@ -1,5 +1,6 @@
 package com.civilo.roller.controllers;
 
+import com.civilo.roller.Entities.CoverageEntity;
 import com.civilo.roller.Entities.SellerEntity;
 import com.civilo.roller.services.SellerService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,6 +40,12 @@ public class SellerController {
         HttpSession session = request.getSession();
         session.setAttribute("seller", seller);
         System.out.println("SESIÓN INICIADA CORRECTAMENTE");
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/sellerInformation")
+    public ResponseEntity<?> sellerInformationUpdateCompanyName(@RequestBody SellerEntity userDTO){
+        sellerService.updateCoverageIdAndCompanyNameSellerByEmail(userDTO.getEmail(), userDTO.getCompanyName(), userDTO.getCoverageID());
         return ResponseEntity.ok().build();
     }
 

@@ -31,4 +31,13 @@ public class SellerService {
         return null;
     }
 
+    public SellerEntity updateCoverageIdAndCompanyNameSellerByEmail(String email, String companyName, List<Integer> coverageID){
+        email = email.replaceAll("\"", "");
+        System.out.println(email);
+        SellerEntity seller = sellerRepository.findByEmail(email);
+        seller.setCompanyName(companyName);
+        seller.setCoverageID(coverageID);
+        return sellerRepository.save(seller);
+    }
+
 }

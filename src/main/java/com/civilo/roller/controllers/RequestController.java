@@ -1,19 +1,22 @@
 package com.civilo.roller.controllers;
 
 import com.civilo.roller.Entities.RequestEntity;
-import com.civilo.roller.Entities.StatusEntity;
 import com.civilo.roller.Entities.UserEntity;
-import com.civilo.roller.services.RequestService;
+import com.civilo.roller.services.CoverageService;
+import com.civilo.roller.services.CurtainService;
 import com.civilo.roller.services.StatusService;
-import com.civilo.roller.services.UserService;
+import com.civilo.roller.services.RequestService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -22,31 +25,34 @@ public class RequestController {
     @Autowired
     RequestService requestService;
 
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    StatusService statusService;
-
+    // Permite obtener todas las solicitudes del sistema.
     @GetMapping()
     public List<RequestEntity> getRequests(){
         return requestService.getRequests();
     }
 
-    @PostMapping()
-    public RequestEntity saveRequest(@RequestBody RequestEntity request){
-        return this.requestService.saveRequest(request);
+    // Permite obtener una solicitud en especifico del sistema.
+    @GetMapping("/{id}")
+    public ResponseEntity<RequestEntity> getRequestById(@PathVariable long id){
+        Optional<RequestEntity> request = requestService.getRequestById(id);
+        if(!request.isPresent()){
+            System.out.println("NO SE ENCONTRO LA SOLICITUD \n");
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND); 
+        }
+        return new ResponseEntity<RequestEntity>(request.get(), HttpStatus.OK);
     }
 
     @PostMapping("/clientRequest")
-    public ResponseEntity<?> createRequest(@RequestBody RequestEntity requestEntity) {
-        if (userService.validateUser(requestEntity.getUser().getEmail(), requestEntity.getUser().getPassword()) == null) {
+    public ResponseEntity<?> createRequest(@RequestBody RequestEntity requestEntity, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
             System.out.println("NO EXISTE SESIÓN ACTIVA -> NO SE ENVÍA LA SOLICITUD");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        // Si hay una sesión activa, creamos la solicitud
+        requestEntity.setUser((UserEntity) session.getAttribute("user"));
         // Validamos que el usuario que envía la solicitud es del tipo cliente
-        if (requestEntity.getUser().getRole().getAccountType().equals("Cliente")){
-            requestEntity.setStatus(statusService.getStatus().get(0));
+        if (((UserEntity) session.getAttribute("user")).getRole().getAccountType().equals("Cliente")){
             requestService.saveRequest(requestEntity);
             System.out.println("SOLICITUD ENVIADA CORRECTAMENTE");
             return ResponseEntity.ok().build();
@@ -55,10 +61,68 @@ public class RequestController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping("/sellerRequest/{sellerId}")
-    public List<RequestEntity> getRequestsBySellerId(@PathVariable("sellerId") Long sellerId){
-        return requestService.getRequestBySellerId(sellerId);
+    /*
+    // Permite guardar una nueva solicitud en el sistema.
+    @PostMapping()
+    public ResponseEntity<?> createRequest(@RequestBody RequestEntity request){
+
+        //Se obtiene la id de la cobertura dependiendo de la comuna.
+        String commune = request.getCoverage().getCommune();
+        Long IdCoverage = coverageService.getCoverageIdByCommune(commune);
+
+        //Se obtiene la id del estado dependiendo del nombre del estado.
+        String statusName = request.getStatus().getStatusName();
+        Long IdStatus = statusService.getStatusIdByStatusName(statusName);
+
+        //Se obtiene la id de la cortina dependiendo del tipo de cortina.
+        String curtainType = request.getCurtain().getCurtainType();
+        Long IdCurtain = curtainService.getCurtainIdByCurtainType(curtainType);
+        
+
+        //Se guardan los ids de cobertura, estado y cortina dentro de la solicitud
+        request.getCoverage().setCoverageID(IdCoverage);
+        request.getStatus().setStatusID(IdStatus);
+        request.getCurtain().setCurtainID(IdCurtain);
+
+        requestService.createRequest(request);
+        System.out.println("REQUEST GUARDADO CON EXITO\n");
+        return ResponseEntity.ok().build();
+    }
+    */
+    
+    // Permite actualizar información de un usuario.
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody RequestEntity request) {
+        
+        Optional<RequestEntity> checkRequest = requestService.getRequestById(id);
+        
+        if(!checkRequest.isPresent()){
+            System.out.println("NO SE ENCONTRO LA SOLICITUD CON ID: " + id + " \n");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La solicitud con el ID especificado no existe."); 
+        }
+
+        requestService.updateRequest(id,request);
+        System.out.println("SOLICITUD ACTUALIZADA CON EXITO\n");
+        return ResponseEntity.ok().build(); 
     }
 
+    // Permite eliminar todas las solicitudes del sistema.
+    @DeleteMapping()
+    public ResponseEntity<String> deleteRequest(){
+        requestService.deleteRequest();
+        return ResponseEntity.ok("SE ELIMINARON LAS SOLICITUDES CORRECTAMENTE");
+    }
+
+    // Permite eliminar un usuario en especifico del sistema.
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRequestById(@PathVariable Long id){
+        if(!requestService.existsRequestById(id)){
+            System.out.println("NO SE ENCONTRO UNA SOLICITUD CON EL ID: "+ id + "\n");
+            return ResponseEntity.notFound().build();
+        }
+        requestService.deleteRequestById(id);
+        return ResponseEntity.ok("SOLICITUD CON ID " + id + " ELIMINADA CORRECTAMENTE\n");
+
+    }
 
 }

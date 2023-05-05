@@ -14,4 +14,6 @@ public interface RoleRepository extends CrudRepository<RoleEntity, Long> {
     @Query(value = "select roleid idrol from roles r where r.account_type = :accountType", nativeQuery = true)
     Long findIdByAccountType(@Param("accountType") String accountType);
 
+    RoleEntity findByAccountType(String accountType);
+
 }

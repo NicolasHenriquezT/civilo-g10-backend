@@ -23,4 +23,10 @@ public class CurtainService {
         return curtainRepository.save(curtain);
     }
 
+    //Se obtiene la ID de la cortina dependiendo del tipo de cortina
+    public Long getCurtainIdByCurtainType(String curtainType){
+        return curtainRepository.findIdByCurtainType(curtainType);
+
+    }
+
 }

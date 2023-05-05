@@ -27,5 +27,11 @@ public class CoverageService {
         return coverageRepository.findById(id);
     }
 
+    //Se obtiene la ID de la cobertura dependiendo de la comuna
+    public Long getCoverageIdByCommune(String commune){
+        return coverageRepository.findIdByCommune(commune);
+
+    }
+
 
 }

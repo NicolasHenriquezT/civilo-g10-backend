@@ -1,7 +1,9 @@
 package com.civilo.roller.ControllersTest;
 
+import com.civilo.roller.Entities.CoverageEntity;
 import com.civilo.roller.Entities.RoleEntity;
 import com.civilo.roller.Entities.SellerEntity;
+import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.controllers.SellerController;
 import com.civilo.roller.services.SellerService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -50,7 +53,7 @@ public class SellerControllerTest {
         List<SellerEntity> expectedSellers = new ArrayList<>();
         expectedSellers.add(new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, new RoleEntity(1L, "Cliente"), "Company", true));
         expectedSellers.add(new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"), "Company", true));
-        Mockito.when(sellerService.getSellers()).thenReturn(expectedSellers);
+        when(sellerService.getSellers()).thenReturn(expectedSellers);
         List<SellerEntity> actualSeller = sellerController.getSellers();
         assertEquals(expectedSellers, actualSeller);
     }
@@ -58,7 +61,7 @@ public class SellerControllerTest {
     @Test
     void testSaveSeller() {
         SellerEntity expectedSeller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"), "Company", true);
-        Mockito.when(sellerService.saveSeller(Mockito.any(SellerEntity.class))).thenReturn(expectedSeller);
+        when(sellerService.saveSeller(Mockito.any(SellerEntity.class))).thenReturn(expectedSeller);
         SellerEntity actualSeller = sellerController.saveSeller(new SellerEntity());
         assertEquals(expectedSeller, actualSeller);
     }
@@ -67,20 +70,29 @@ public class SellerControllerTest {
     public void testLoginSuccessful() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "Company", true);
-        Mockito.when(sellerService.validateSeller(Mockito.anyString(), Mockito.anyString())).thenReturn(seller);
-        Mockito.when(request.getSession()).thenReturn(session);
+        when(sellerService.validateSeller(Mockito.anyString(), Mockito.anyString())).thenReturn(seller);
+        when(request.getSession()).thenReturn(session);
         ResponseEntity<?> response = sellerController.login(seller, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        Mockito.verify(session).setAttribute("seller", seller);
+        verify(session).setAttribute("seller", seller);
     }
 
     @Test
     public void testLoginFailed() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "Company", true);
-        Mockito.when(sellerService.validateSeller(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
+        when(sellerService.validateSeller(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
         ResponseEntity<?> response = sellerController.login(seller, request);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-        Mockito.verify(session, Mockito.never()).setAttribute(Mockito.anyString(), Mockito.any());
+        verify(session, Mockito.never()).setAttribute(Mockito.anyString(), Mockito.any());
+    }
+
+    @Test
+    public void sellerInformationUpdateCompanyNameTest() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        ResponseEntity<?> responseEntity = sellerController.sellerInformationUpdateCompanyName(seller);
+        verify(sellerService, times(1)).updateCoverageIdAndCompanyNameSellerByEmail(seller.getEmail(), seller.getCompanyName(), seller.getCoverageID());
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 }

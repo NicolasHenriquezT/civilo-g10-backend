@@ -8,6 +8,7 @@ import com.civilo.roller.controllers.UserController;
 import com.civilo.roller.repositories.UserRepository;
 import com.civilo.roller.services.PermissionService;
 import com.civilo.roller.services.RoleService;
+import com.civilo.roller.services.SellerService;
 import com.civilo.roller.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -33,6 +34,9 @@ import java.util.Optional;
 public class UserControllerTest {
     @Mock
     private UserService userService;
+
+    @Mock
+    private SellerService sellerService;
     @InjectMocks
     private UserController userController;
 
@@ -238,4 +242,55 @@ public class UserControllerTest {
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 
+    @Test
+    void testGetSession() {
+        HttpSession session = mock(HttpSession.class);
+        String sessionId = "session-id-123";
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, new RoleEntity(Long.valueOf("9999"), "Cliente"));
+        when(session.getId()).thenReturn(sessionId);
+        when(session.getAttribute("user")).thenReturn(user);
+        String expected = "Session ID: " + sessionId + "\n" +
+                "User email      : " + user.getEmail() + "\n" +
+                "User full name  : " + user.getName() + " " + user.getSurname() + "\n" +
+                "User role       : " + user.getRole().getAccountType() + "\n" +
+                "User role ID    : " + user.getRole().getRoleID() + "\n" +
+                "User permissions: null\n";
+        String actual = userController.getSession(session);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testDeleteUserById(){
+        Long id = Long.valueOf("9999");
+        when(userService.existsUserById(id)).thenReturn(true);
+        ResponseEntity<String> response = userController.deleteUserById(id);
+        verify(userService).deleteUserById(id);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("USUARIO CON ID 9999 ELIMINADO CORRECTAMENTE\n", response.getBody());
+    }
+
+    @Test
+    public void deleteUserById_withNonExistingUser_shouldReturnNotFound() {
+        Long nonExistingUserId = Long.valueOf("1234");
+        when(userService.existsUserById(nonExistingUserId)).thenReturn(false);
+        ResponseEntity<String> response = userController.deleteUserById(nonExistingUserId);
+        assertEquals(ResponseEntity.notFound().build(), response);
+        verify(userService, never()).deleteUserById(nonExistingUserId);
+    }
+
+    @Test
+    public void testCreateUserAsSeller() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Vendedor");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        String accountType = "Vendedor";
+        Long IdRol = Long.valueOf("8888");
+        SellerEntity seller = new SellerEntity(null, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getCommune(), user.getBirthDate(), user.getAge(), user.getRole(), null, false);
+        Mockito.when(userService.validateEmail(user.getEmail())).thenReturn(Optional.empty());
+        Mockito.when(roleService.getRoleIdByAccountType(accountType)).thenReturn(IdRol);
+        Mockito.when(sellerService.saveSeller(Mockito.any(SellerEntity.class))).thenReturn(seller);
+        ResponseEntity<?> responseEntity = userController.createUser(user);
+        Mockito.verify(userService, Mockito.times(0)).createUser(user);
+        Mockito.verify(sellerService, Mockito.times(1)).saveSeller(Mockito.any(SellerEntity.class));
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
 }

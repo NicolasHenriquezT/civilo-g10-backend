@@ -2,10 +2,7 @@ package com.civilo.roller.controllers;
 
 import com.civilo.roller.Entities.RequestEntity;
 import com.civilo.roller.Entities.UserEntity;
-import com.civilo.roller.services.CoverageService;
-import com.civilo.roller.services.CurtainService;
-import com.civilo.roller.services.StatusService;
-import com.civilo.roller.services.RequestService;
+import com.civilo.roller.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,18 @@ public class RequestController {
     @Autowired
     RequestService requestService;
 
+    @Autowired
+    CoverageService coverageService;
+
+    @Autowired
+    StatusService statusService;
+
+    @Autowired
+    CurtainService curtainService;
+
+    @Autowired
+    UserService userService;
+
     // Permite obtener todas las solicitudes del sistema.
     @GetMapping()
     public List<RequestEntity> getRequests(){
@@ -42,6 +51,7 @@ public class RequestController {
         return new ResponseEntity<RequestEntity>(request.get(), HttpStatus.OK);
     }
 
+    /*
     @PostMapping("/clientRequest")
     public ResponseEntity<?> createRequest(@RequestBody RequestEntity requestEntity, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -60,35 +70,25 @@ public class RequestController {
         System.out.println("USUARIO SIN PERMISOS PARA ESTA ACCIÓN -> NO SE ENVIA LA SOLICITUD");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+     */
 
-    /*
     // Permite guardar una nueva solicitud en el sistema.
-    @PostMapping()
-    public ResponseEntity<?> createRequest(@RequestBody RequestEntity request){
-
-        //Se obtiene la id de la cobertura dependiendo de la comuna.
-        String commune = request.getCoverage().getCommune();
-        Long IdCoverage = coverageService.getCoverageIdByCommune(commune);
-
-        //Se obtiene la id del estado dependiendo del nombre del estado.
-        String statusName = request.getStatus().getStatusName();
-        Long IdStatus = statusService.getStatusIdByStatusName(statusName);
-
-        //Se obtiene la id de la cortina dependiendo del tipo de cortina.
-        String curtainType = request.getCurtain().getCurtainType();
-        Long IdCurtain = curtainService.getCurtainIdByCurtainType(curtainType);
-        
-
-        //Se guardan los ids de cobertura, estado y cortina dentro de la solicitud
-        request.getCoverage().setCoverageID(IdCoverage);
-        request.getStatus().setStatusID(IdStatus);
-        request.getCurtain().setCurtainID(IdCurtain);
-
-        requestService.createRequest(request);
-        System.out.println("REQUEST GUARDADO CON EXITO\n");
-        return ResponseEntity.ok().build();
+    @PostMapping("/clientRequest")
+    public ResponseEntity<?> createRequest(@RequestBody RequestEntity requestEntity) {
+        if (userService.validateUser(requestEntity.getUser().getEmail(), requestEntity.getUser().getPassword()) == null) {
+            System.out.println("NO EXISTE SESIÓN ACTIVA -> NO SE ENVÍA LA SOLICITUD");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        // Validamos que el usuario que envía la solicitud es del tipo cliente
+        if (requestEntity.getUser().getRole().getAccountType().equals("Cliente")){
+            requestEntity.setStatus(statusService.getStatus().get(0));
+            requestService.saveRequest(requestEntity);
+            System.out.println("SOLICITUD ENVIADA CORRECTAMENTE");
+            return ResponseEntity.ok().build();
+        }
+        System.out.println("USUARIO SIN PERMISOS PARA ESTA ACCIÓN -> NO SE ENVIA LA SOLICITUD");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-    */
     
     // Permite actualizar información de un usuario.
     @PutMapping("/{id}")

@@ -125,4 +125,9 @@ public class RequestController {
 
     }
 
+    @GetMapping("/sellerRequest/{sellerId}")
+    public List<RequestEntity> getRequestsBySellerId(@PathVariable("sellerId") Long sellerId){
+        return requestService.getRequestBySellerId(sellerId);
+    }
+
 }

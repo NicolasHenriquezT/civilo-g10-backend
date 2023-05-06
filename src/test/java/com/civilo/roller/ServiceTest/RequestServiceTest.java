@@ -1,6 +1,8 @@
 package com.civilo.roller.ServiceTest;
 
 import com.civilo.roller.Entities.RequestEntity;
+import com.civilo.roller.Entities.RoleEntity;
+import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.repositories.RequestRepository;
 import com.civilo.roller.services.RequestService;
 import org.junit.jupiter.api.Test;
@@ -15,9 +17,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -56,12 +59,69 @@ public class RequestServiceTest {
         requests.add(request1);
         requests.add(request2);
         when(requestService.getRequests()).thenReturn(requests);
-
-        // When
         List<RequestEntity> myRequest = requestService.getRequestBySellerId(sellerId);
-
-        // Then
         assertEquals(1, myRequest.size());
-        assertEquals(request1, myRequest.get(0));}
+        assertEquals(request1, myRequest.get(0));
+    }
 
+    @Test
+    void getRequestByIdShouldReturnRequestEntity() {
+        Long id = Long.valueOf("9999");
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        RequestEntity requestEntity = new RequestEntity(id, "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
+        when(requestRepository.findById(id)).thenReturn(Optional.of(requestEntity));
+        Optional<RequestEntity> result = requestService.getRequestById(id);
+        assertTrue(result.isPresent());
+        assertEquals(requestEntity, result.get());
+        verify(requestRepository, times(1)).findById(id);
+    }
+
+    @Test
+    public void testCreateRequest() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
+        when(requestRepository.save(requestEntity)).thenReturn(requestEntity);
+        RequestEntity result = requestService.createRequest(requestEntity);
+        verify(requestRepository, times(1)).save(requestEntity);
+        assertEquals(requestEntity, result);
+    }
+
+    @Test
+    void updateRequestTest() {
+        Long requestID = Long.valueOf("9999");
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        RequestEntity requestEntity = new RequestEntity(requestID, "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
+        when(requestRepository.findById(requestID)).thenReturn(Optional.of(requestEntity));
+        RequestEntity updatedRequestEntity = new RequestEntity(requestID, "Updated description", LocalDate.of(2022,9,21), LocalDate.of(2022,9,21), LocalDate.of(2022,9,21), "Updated reason", 2, null, user, null, null, null);
+        when(requestRepository.save(any(RequestEntity.class))).thenReturn(updatedRequestEntity);
+        RequestEntity result = requestService.updateRequest(requestID, updatedRequestEntity);
+        assertEquals(updatedRequestEntity, result);
+    }
+
+    @Test
+    public void testDeleteRequest() {
+        doNothing().when(requestRepository).deleteAll();
+        requestService.deleteRequest();
+        verify(requestRepository, times(1)).deleteAll();
+    }
+
+    @Test
+    public void testDeleteRequestById() {
+        Long id = Long.valueOf("9999");
+        doNothing().when(requestRepository).deleteById(id);
+        requestService.deleteRequestById(id);
+        verify(requestRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    public void testExistsRequestById() {
+        Long id = Long.valueOf("9999");
+        when(requestRepository.findById(id)).thenReturn(Optional.of(new RequestEntity(id, "Description", LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20), "Reason", 1, null, new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, new RoleEntity(Long.valueOf("9999"), "Cliente")), null, null, null)));
+        assertTrue(requestService.existsRequestById(id));
+        assertFalse(requestService.existsRequestById(Long.valueOf("8888")));
+        verify(requestRepository, times(2)).findById(anyLong());
+    }
 }

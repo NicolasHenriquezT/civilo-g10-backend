@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,5 +68,19 @@ public class SellerServiceTest {
         when(sellerRepository.findByEmail(email)).thenReturn(null);
         SellerEntity actualSeller = sellerService.validateSeller(email, password);
         assertNull(actualSeller);
+    }
+
+    @Test
+    public void updateCoverageIdAndCompanyNameSellerByEmailTest() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        seller.setUserID(Long.valueOf("9999"));
+        List<Integer> coverageID = Arrays.asList(1, 2, 3);
+        String newCompanyName = "newCompanyName";
+        when(sellerRepository.findByEmail("Email")).thenReturn(seller);
+        when(sellerRepository.save(seller)).thenReturn(seller);
+        SellerEntity updatedSeller = sellerService.updateCoverageIdAndCompanyNameSellerByEmail("Email", newCompanyName, coverageID);
+        assertEquals(newCompanyName, updatedSeller.getCompanyName());
+        assertEquals(coverageID, updatedSeller.getCoverageID());
     }
 }

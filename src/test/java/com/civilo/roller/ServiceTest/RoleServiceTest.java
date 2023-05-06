@@ -14,9 +14,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -32,7 +34,7 @@ public class RoleServiceTest {
     void saveRole(){
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Type 1");
         when(roleRepository.save(role)).thenReturn(role);
-        final RoleEntity currentResponse = roleService.saveRole(role);
+        final RoleEntity currentResponse = roleService.createRole(role);
         assertEquals(role,currentResponse);
     }
 
@@ -52,5 +54,54 @@ public class RoleServiceTest {
         Long roleId = 123L;
         when(roleRepository.findIdByAccountType(accountType)).thenReturn(roleId);
         assertEquals(roleId, roleService.getRoleIdByAccountType(accountType));
+    }
+
+    @Test
+    public void testGetRoleById() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        when(roleRepository.findById(role.getRoleID())).thenReturn(Optional.of(role));
+        Optional<RoleEntity> result = roleService.getRoleById(role.getRoleID());
+        assertTrue(result.isPresent());
+        assertEquals(role.getAccountType(), result.get().getAccountType());
+    }
+
+    @Test
+    public void testValidateAccountType() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        when(roleRepository.findByAccountType(role.getAccountType())).thenReturn(role);
+        Optional<RoleEntity> result = roleService.validateAccountType(role.getAccountType());
+        assertTrue(result.isPresent());
+        assertEquals(role.getRoleID(), result.get().getRoleID());
+    }
+
+    @Test
+    public void testUpdateRole() {
+        RoleEntity existingRole = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        RoleEntity updatedRole = new RoleEntity(Long.valueOf("9999"), "Vendedor");
+        when(roleRepository.findById(existingRole.getRoleID())).thenReturn(Optional.of(existingRole));
+        when(roleRepository.save(existingRole)).thenReturn(updatedRole);
+        RoleEntity result = roleService.updateRole(existingRole.getRoleID(), updatedRole);
+        assertEquals(updatedRole.getAccountType(), result.getAccountType());
+    }
+
+    @Test
+    public void testDeleteRoles() {
+        roleService.deleteRoles();
+        verify(roleRepository, times(1)).deleteAll();
+    }
+
+    @Test
+    public void testDeleteRoleById() {
+        Long roleId = Long.valueOf("9999");
+        roleService.deleteRoleById(roleId);
+        verify(roleRepository, times(1)).deleteById(roleId);
+    }
+
+    @Test
+    public void testExistsRoleById() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        when(roleRepository.findById(role.getRoleID())).thenReturn(Optional.of(role));
+        boolean result = roleService.existsRoleById(role.getRoleID());
+        assertTrue(result);
     }
 }

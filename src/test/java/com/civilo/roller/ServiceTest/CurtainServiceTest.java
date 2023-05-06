@@ -45,4 +45,12 @@ public class CurtainServiceTest {
         final List<CurtainEntity> currentResponse = curtainService.getCurtains();
         assertEquals(expectedAnswer, currentResponse);
     }
+
+    @Test
+    public void testGetCurtainIdByCurtainType() {
+        CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
+        when(curtainRepository.findIdByCurtainType("Curtain 1")).thenReturn(curtain.getCurtainID());
+        Long result = curtainService.getCurtainIdByCurtainType("Curtain 1");
+        assertEquals(curtain.getCurtainID(), result);
+    }
 }

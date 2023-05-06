@@ -56,4 +56,12 @@ public class CoverageServiceTest {
         Optional<CoverageEntity> result = coverageService.getCoverage(id);
         assertEquals(coverageEntity, result.get());
     }
+
+    @Test
+    void testGetCoverageIdByCommune() {
+        Long expectedCoverageId = Long.valueOf("9999");
+        when(coverageRepository.findIdByCommune("CommuneName")).thenReturn(expectedCoverageId);
+        Long actualCoverageId = coverageService.getCoverageIdByCommune("CommuneName");
+        assertEquals(expectedCoverageId, actualCoverageId);
+    }
 }

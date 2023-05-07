@@ -14,9 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
-
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,26 +48,24 @@ public class UserController {
         return this.userService.getUserByEmail(email);
     }
  
-    @PostMapping()
-    public UserEntity saveUser(@RequestBody UserEntity user) {
-        return this.userService.createUser(user);
-    }
     /*
     // Permite obtener un usuario en especifico del sistema.
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable long id){
         Optional<UserEntity> user = userService.getUserById(id);
         if(!user.isPresent()){
-            System.out.println("NO SE ENCONTRO EL USUARIO n");
+            System.out.println("NO SE ENCONTRO EL USUARIO \n");
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND); 
         }
         return new ResponseEntity<UserEntity>(user.get(), HttpStatus.OK);
     }
-    
-     */
+    */
 
-
-
+    // Permite guardar entidad usuario.
+    @PostMapping()
+    public UserEntity saveUser(@RequestBody UserEntity user) {
+        return this.userService.createUser(user);
+    }
 
     // Permite guardar un nuevo usuario en el sistema.
     @PostMapping("/register")
@@ -116,12 +113,12 @@ public class UserController {
         Optional<UserEntity> checkEmail = userService.validateEmail(user.getEmail());
 
         if(checkEmail.isPresent()){
-            System.out.println("CORREO EN USO\n");
+            System.out.println("CORREO EN USO \n");
             return ResponseEntity.status(HttpStatus.CONFLICT).body("El email a modificar ya se encuentra registrado"); 
         }
 
         userService.updateUser(id,user);
-        System.out.println("ACTUALIZADO CON EXITO\n");
+        System.out.println("ACTUALIZADO CON EXITO \n");
         return ResponseEntity.ok().build(); 
     }
 
@@ -140,8 +137,7 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         userService.deleteUserById(id);
-        return ResponseEntity.ok("USUARIO CON ID " + id + " ELIMINADO CORRECTAMENTE\n");
-
+        return ResponseEntity.ok("USUARIO CON ID " + id + " ELIMINADO CORRECTAMENTE \n");
     }
  
     //------------------------------------------------------------------------------------------------------------------------------------------------//

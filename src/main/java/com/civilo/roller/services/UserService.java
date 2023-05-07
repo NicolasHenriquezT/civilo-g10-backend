@@ -45,13 +45,9 @@ public class UserService {
     // Update
     // Permite actualizar los datos de un objeto del tipo "UserEntity" en la base de datos.
     public UserEntity updateUser(Long userID, UserEntity user){
-        System.out.println("ENTRO");
         
-        //UserEntity existingUser = userRepository.findById(userID);
-
         UserEntity existingUser = userRepository.findById(userID)
             .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con el ID: " + userID));
-
 
         existingUser.setName(user.getName());
         existingUser.setSurname(user.getSurname());
@@ -68,7 +64,7 @@ public class UserService {
 
     // Delete all
     // Permite eliminar todos los usuarios de un sistema.
-    public void deleteUsers() {
+    public void deleteUsers(){
         userRepository.deleteAll();
     }
 

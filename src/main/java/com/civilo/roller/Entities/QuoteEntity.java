@@ -25,7 +25,7 @@ public class QuoteEntity {
     private int amount;
     private int value;
     private String description;
-    private float commission;
+    private float commission; 
 
     //Relaciones
     @ManyToOne

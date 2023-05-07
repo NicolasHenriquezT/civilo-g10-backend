@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Optional; 
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -19,16 +19,50 @@ public class SellerController {
     @Autowired
     SellerService sellerService;
 
+    // Permite obtener todos los vendedores del sistema.
     @GetMapping()
     public List<SellerEntity> getSellers(){
         return sellerService.getSellers();
     }
 
+    //Permite obtener un vendedor en especifico del sistema.
+    @GetMapping("/{id}")
+    public ResponseEntity<SellerEntity> getSellerById(@PathVariable long id){
+        Optional<SellerEntity> seller = sellerService.getSellerById(id);
+        if(!seller.isPresent()){
+            System.out.println("NO SE ENCONTRO EL VENDEDOR \n");
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND); 
+        }
+        return new ResponseEntity<SellerEntity>(seller.get(), HttpStatus.OK);
+    }
+    
+    // Permite guardar entidad vendedor.
     @PostMapping()
     public SellerEntity saveSeller(@RequestBody SellerEntity seller){
         return this.sellerService.saveSeller(seller);
     }
 
+    //**Funciones register y update son implementadas directamente en UserController.**//
+
+    // Permite eliminar todos los vendedores del sistema
+    @DeleteMapping()
+    public ResponseEntity<String> deleteSellers(){
+        sellerService.deleteSellers();
+        return ResponseEntity.ok("SE ELIMINARON LOS VENDEDORES CORRECTAMENTE");
+    }
+
+    // Permite eliminar un vendedor en especifico del sistema.
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSellerById(@PathVariable Long id){
+        if(!sellerService.existsSellerById(id)){
+            System.out.println("NO SE ENCONTRO UN VENDEDOR CON EL ID: "+ id + "\n");
+            return ResponseEntity.notFound().build();
+        }
+        sellerService.deleteSellerById(id);
+        return ResponseEntity.ok("VENDEDOR CON ID " + id + " ELIMINADO CORRECTAMENTE\n");
+    }
+    
+    //------------------------------------------------------------------------------------------------------------------------------------------------//
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody SellerEntity userDTO, HttpServletRequest request){

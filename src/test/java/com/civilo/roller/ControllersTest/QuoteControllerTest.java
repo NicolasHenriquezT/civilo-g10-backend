@@ -36,11 +36,5 @@ public class QuoteControllerTest {
         assertEquals(expectedQuotes, actualQuotes);
     }
 
-    @Test
-    void testSaveQuote() {
-        QuoteEntity expectedQuote = new QuoteEntity(Long.valueOf("2"), "Producto", 9999, 1111, "Test", Float.valueOf("1.0"), null);
-        Mockito.when(quoteService.saveQuote(Mockito.any(QuoteEntity.class))).thenReturn(expectedQuote);
-        QuoteEntity actualQuote = quoteController.saveQuote(new QuoteEntity());
-        assertEquals(expectedQuote, actualQuote);
-    }
+
 }

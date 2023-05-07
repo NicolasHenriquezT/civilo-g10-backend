@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -82,5 +83,35 @@ public class SellerServiceTest {
         SellerEntity updatedSeller = sellerService.updateCoverageIdAndCompanyNameSellerByEmail("Email", newCompanyName, coverageID);
         assertEquals(newCompanyName, updatedSeller.getCompanyName());
         assertEquals(coverageID, updatedSeller.getCoverageID());
+    }
+
+    @Test
+    public void testGetSellerById() {
+        Long id = Long.valueOf("9999");
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, null, "companyName", true);
+        when(sellerRepository.findById(id)).thenReturn(Optional.of(seller));
+        Optional<SellerEntity> result = sellerService.getSellerById(id);
+        assertTrue(result.isPresent());
+        assertEquals(seller, result.get());
+    }
+
+    @Test
+    public void shouldDeleteAllSellers() {
+        sellerService.deleteSellers();
+        verify(sellerRepository, times(1)).deleteAll();
+    }
+
+    @Test
+    public void testDeleteSellerById() {
+        Long sellerId = Long.valueOf("9999");
+        sellerService.deleteSellerById(sellerId);
+        verify(sellerRepository).deleteById(sellerId);
+    }
+
+    @Test
+    public void testExistsSellerByIdWhenSellerExists() {
+        Long sellerId = Long.valueOf("9999");
+        when(sellerRepository.findById(sellerId)).thenReturn(Optional.of(new SellerEntity()));
+        assertTrue(sellerService.existsSellerById(sellerId));
     }
 }

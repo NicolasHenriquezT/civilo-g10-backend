@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -94,5 +95,42 @@ public class SellerControllerTest {
         ResponseEntity<?> responseEntity = sellerController.sellerInformationUpdateCompanyName(seller);
         verify(sellerService, times(1)).updateCoverageIdAndCompanyNameSellerByEmail(seller.getEmail(), seller.getCompanyName(), seller.getCoverageID());
         assertEquals(200, responseEntity.getStatusCodeValue());
+    }
+
+    @Test
+    public void getSellerByIdTest() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        when(sellerService.getSellerById(anyLong())).thenReturn(Optional.of(seller));
+        ResponseEntity<SellerEntity> response = sellerController.getSellerById(1L);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(seller, response.getBody());
+    }
+
+    @Test
+    public void testDeleteSellers() {
+        ResponseEntity<String> expectedResponse = ResponseEntity.ok("SE ELIMINARON LOS VENDEDORES CORRECTAMENTE");
+        doNothing().when(sellerService).deleteSellers();
+        ResponseEntity<String> response = sellerController.deleteSellers();
+        assertEquals(expectedResponse, response);
+    }
+
+    @Test
+    public void testDeleteSellerById() {
+        Long id = Long.valueOf("9999");
+        ResponseEntity<String> expectedResponse = ResponseEntity.ok("VENDEDOR CON ID " + id + " ELIMINADO CORRECTAMENTE\n");
+        when(sellerService.existsSellerById(id)).thenReturn(true);
+        doNothing().when(sellerService).deleteSellerById(id);
+        ResponseEntity<String> response = sellerController.deleteSellerById(id);
+        assertEquals(expectedResponse, response);
+    }
+
+    @Test
+    public void testDeleteSellerByIdNotFound() {
+        Long id = Long.valueOf("9999");
+        ResponseEntity<String> expectedResponse = ResponseEntity.notFound().build();
+        when(sellerService.existsSellerById(id)).thenReturn(false);
+        ResponseEntity<String> response = sellerController.deleteSellerById(id);
+        assertEquals(expectedResponse, response);
     }
 }

@@ -154,4 +154,16 @@ public class RequestServiceTest {
         verify(requestRepository, atLeastOnce()).findAll();
         verify(sellerService, atLeastOnce()).getSellers();
     }
+
+    @Test
+    void testGetRequestByUserId() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
+        ArrayList<RequestEntity> expected = new ArrayList<>();
+        expected.add(requestEntity);
+        when(requestRepository.findRequestByUserId(any(Long.class))).thenReturn(expected);
+        ArrayList<RequestEntity> result = requestService.getRequestByUserId(Long.valueOf("9999"));
+        assertEquals(expected, result);
+    }
 }

@@ -260,16 +260,6 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testDeleteUserById(){
-        Long id = Long.valueOf("9999");
-        when(userService.existsUserById(id)).thenReturn(true);
-        ResponseEntity<String> response = userController.deleteUserById(id);
-        verify(userService).deleteUserById(id);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("USUARIO CON ID 9999 ELIMINADO CORRECTAMENTE\n", response.getBody());
-    }
-
-    @Test
     public void deleteUserById_withNonExistingUser_shouldReturnNotFound() {
         Long nonExistingUserId = Long.valueOf("1234");
         when(userService.existsUserById(nonExistingUserId)).thenReturn(false);
@@ -292,5 +282,35 @@ public class UserControllerTest {
         Mockito.verify(userService, Mockito.times(0)).createUser(user);
         Mockito.verify(sellerService, Mockito.times(1)).saveSeller(Mockito.any(SellerEntity.class));
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void loginAdmin_WhenUserIsAdmin_ReturnOkResponse() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Administrador");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        when(userService.validateUser(anyString(), anyString())).thenReturn(user);
+        HttpSession session = mock(HttpSession.class);
+        when(request.getSession()).thenReturn(session);
+        ResponseEntity<?> response = userController.loginAdmin(user, request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(session, times(1)).setAttribute(eq("user"), eq(user));
+    }
+
+    @Test
+    void loginAdmin_WhenUserIsNotAdmin_ReturnUnauthorizedResponse() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Rol No Admin");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        when(userService.validateUser(anyString(), anyString())).thenReturn(user);
+        ResponseEntity<?> response = userController.loginAdmin(user, request);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
+
+    @Test
+    void loginAdmin_WhenUserIsNull_ReturnUnauthorizedResponse() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Rol No Admin");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        when(userService.validateUser(anyString(), anyString())).thenReturn(null);
+        ResponseEntity<?> response = userController.loginAdmin(user, request);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 }

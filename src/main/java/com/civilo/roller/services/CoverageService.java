@@ -68,4 +68,11 @@ public class CoverageService {
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------//
 
+    public Optional<CoverageEntity> getCoverage(Long id){
+        return coverageRepository.findById(id);
+    }
+
+    public Long getCoverageIdByCommune(String commune){
+        return coverageRepository.findByCommune(commune).getCoverageID();
+    }
 }

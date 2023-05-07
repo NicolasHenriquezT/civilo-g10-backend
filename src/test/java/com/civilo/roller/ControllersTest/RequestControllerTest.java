@@ -193,4 +193,18 @@ public class RequestControllerTest {
         verify(requestService, times(1)).automaticAssignment();
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
+    @Test
+    public void getRequestByUserIdTest() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
+        List<RequestEntity> requestList = new ArrayList<>();
+        requestList.add(requestEntity);
+        when(requestService.getRequestByUserId(anyLong())).thenReturn((ArrayList<RequestEntity>) requestList);
+        ArrayList<RequestEntity> result = requestController.getRequestByUserId(9999L);
+        verify(requestService, times(1)).getRequestByUserId(anyLong());
+        assertEquals(1, result.size());
+        assertEquals("Description", result.get(0).getDescription());
+    }
 }

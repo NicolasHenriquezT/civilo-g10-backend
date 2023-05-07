@@ -202,5 +202,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
+    @PostMapping("/loginAdmin")
+    public ResponseEntity<?> loginAdmin(@RequestBody UserEntity userDTO, HttpServletRequest request){
+        UserEntity user = userService.validateUser(userDTO.getEmail(), userDTO.getPassword());
+        if (user == null){
+            System.out.println("CORREO O CONTRASEÑA INCORRECTA\n");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        else if (user.getRole().getAccountType().equals("Administrador")){
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+            System.out.println("SESIÓN INICIADA CORRECTAMENTE");
+            return ResponseEntity.ok().build();
+        }
+        System.out.println("NO FIGURA CON EL ROL INGRESADO\n");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 
 }

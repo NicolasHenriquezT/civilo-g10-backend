@@ -130,4 +130,16 @@ public class RequestController {
         return requestService.getRequestBySellerId(sellerId);
     }
 
+    @PostMapping("/updateRequest/{requestID}/{sellerID}")
+    public ResponseEntity<?> manualAssignment(@PathVariable int requestID, @PathVariable int sellerID){
+        Optional<RequestEntity> request = requestService.getRequestById(Long.valueOf(String.valueOf(requestID)));
+        request.get().setSellerId(sellerID);
+        request.get().setStatus(statusService.getStatus().get(1));
+        requestService.saveRequest(request.get());
+        System.out.println("Request ID: " + requestID + " | " + "Seller ID: " + sellerID);
+        return ResponseEntity.ok().build();
+    }
+
+
+
 }

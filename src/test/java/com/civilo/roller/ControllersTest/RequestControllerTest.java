@@ -173,4 +173,24 @@ public class RequestControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
     }
+
+    @Test
+    void testManualAssignment() {
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
+        Optional<RequestEntity> requestOptional = Optional.of(requestEntity);
+        StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
+        when(statusService.getStatus()).thenReturn(Arrays.asList(new StatusEntity(), status));
+        when(requestService.getRequestById(anyLong())).thenReturn(requestOptional);
+        ResponseEntity<?> response = requestController.manualAssignment(9999, 9999);
+        assertEquals(200, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void testAutomaticAssignment() {
+        ResponseEntity<?> response = requestController.automaticAssignment();
+        verify(requestService, times(1)).automaticAssignment();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 }

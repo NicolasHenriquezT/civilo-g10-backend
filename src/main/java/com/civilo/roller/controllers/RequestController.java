@@ -136,7 +136,12 @@ public class RequestController {
         request.get().setSellerId(sellerID);
         request.get().setStatus(statusService.getStatus().get(1));
         requestService.saveRequest(request.get());
-        System.out.println("Request ID: " + requestID + " | " + "Seller ID: " + sellerID);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/automaticAssignment")
+    public ResponseEntity<?> automaticAssignment(){
+        requestService.automaticAssignment();
         return ResponseEntity.ok().build();
     }
 

@@ -1,10 +1,8 @@
 package com.civilo.roller.ServiceTest;
 
-import com.civilo.roller.Entities.RequestEntity;
-import com.civilo.roller.Entities.RoleEntity;
-import com.civilo.roller.Entities.UserEntity;
+import com.civilo.roller.Entities.*;
 import com.civilo.roller.repositories.RequestRepository;
-import com.civilo.roller.services.RequestService;
+import com.civilo.roller.services.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,9 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,6 +27,18 @@ public class RequestServiceTest {
 
     @InjectMocks
     RequestService requestService;
+
+    @Mock
+    SellerService sellerService;
+
+    @Mock
+    StatusService statusService;
+
+    @Mock
+    RoleService roleService;
+
+    @Mock
+    PermissionService permissionService;
 
     @Test
     void saveRequest(){
@@ -123,5 +131,27 @@ public class RequestServiceTest {
         assertTrue(requestService.existsRequestById(id));
         assertFalse(requestService.existsRequestById(Long.valueOf("8888")));
         verify(requestRepository, times(2)).findById(anyLong());
+    }
+
+    @Test
+    public void testAutomaticAssignment() {
+        List<RequestEntity> requestEntities = new ArrayList<>();
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
+        requestEntities.add(requestEntity);
+        List<SellerEntity> sellerEntities = new ArrayList<>();
+        RoleEntity sellerRole = new RoleEntity(Long.valueOf("9999"), "Vendedor");
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, sellerRole, "companyName", true);
+        sellerEntities.add(seller);
+        List<StatusEntity> statusEntities = new ArrayList<>();
+        StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
+        statusEntities.add(status);
+        statusEntities.add(status); // Para que la lista contenga al menos dos elementos
+        when(requestRepository.findAll()).thenReturn(requestEntities);
+        when(sellerService.getSellers()).thenReturn(sellerEntities);
+        requestService.automaticAssignment();
+        verify(requestRepository, atLeastOnce()).findAll();
+        verify(sellerService, atLeastOnce()).getSellers();
     }
 }

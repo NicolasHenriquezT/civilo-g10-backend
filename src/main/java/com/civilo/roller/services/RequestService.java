@@ -1,6 +1,7 @@
 package com.civilo.roller.services;
 
 import com.civilo.roller.Entities.RequestEntity;
+import com.civilo.roller.Entities.SellerEntity;
 import com.civilo.roller.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,19 @@ import com.civilo.roller.exceptions.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 
 @Service
 public class RequestService {
     @Autowired
     RequestRepository requestRepository;
+
+    @Autowired
+    SellerService sellerService;
+
+    @Autowired
+    StatusService statusService;
 
     // Get all
     // El siguiente método retorna un listado el cual contiene TODA la información asociada a las solicitudes
@@ -85,6 +93,21 @@ public class RequestService {
             }
         }
         return myRequest;
+    }
+
+    public void automaticAssignment(){
+        List<RequestEntity> requestEntities = getRequests();
+        List<SellerEntity> sellerEntities = sellerService.getSellers();
+        Random rand = new Random();
+        RequestEntity currentRequest = new RequestEntity();
+        for (int i = 0; i < requestEntities.size(); i++){
+            currentRequest = requestEntities.get(i);
+            if (currentRequest.getSellerId() == 0){
+                currentRequest.setSellerId(sellerEntities.get(rand.nextInt(sellerEntities.size())).getUserID().intValue());
+                currentRequest.setStatus(statusService.getStatus().get(1));
+                requestRepository.save(currentRequest);
+            }
+        }
     }
 
 }

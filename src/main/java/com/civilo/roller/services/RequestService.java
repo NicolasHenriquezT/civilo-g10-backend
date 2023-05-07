@@ -30,6 +30,16 @@ public class RequestService {
         return (List<RequestEntity>) requestRepository.findAll();
     }
 
+    //Get By CLient ID
+    //Permite obtener las solicitudes de un cliente especifico
+    public ArrayList<RequestEntity> getRequestByUserId(Long id_cliente){
+        //List<RequestEntity> listado =  (List<RequestEntity>) requestRepository.findRequestByUserId(id_cliente);
+        //System.out.println("HOLAAAAAAAAAAAAAAAAAA"+listado);
+        //System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+
+        return requestRepository.findRequestByUserId(id_cliente);
+    }
+
     // Get by id
     // Permite obtener la informacion de una solicitud en especifico.
     public Optional<RequestEntity> getRequestById(Long id){

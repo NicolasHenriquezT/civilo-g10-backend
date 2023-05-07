@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
-
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,6 +51,11 @@ public class RequestController {
         return new ResponseEntity<RequestEntity>(request.get(), HttpStatus.OK);
     }
 
+    @GetMapping("/clientRequest/{id_cliente}")
+    public ArrayList<RequestEntity> getRequestByUserId(@PathVariable long id_cliente){
+        
+        return requestService.getRequestByUserId(id_cliente);
+    }
     /*
     @PostMapping("/clientRequest")
     public ResponseEntity<?> createRequest(@RequestBody RequestEntity requestEntity, HttpServletRequest request) {

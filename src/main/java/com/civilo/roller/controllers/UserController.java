@@ -100,9 +100,8 @@ public class UserController {
     }
 
     // Permite actualizar información de un usuario.
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody UserEntity user) {
-        
         Optional<UserEntity> checkUser = userService.getUserById(id);
         
         if(!checkUser.isPresent()){
@@ -111,11 +110,11 @@ public class UserController {
         }
 
         Optional<UserEntity> checkEmail = userService.validateEmail(user.getEmail());
-
+        /*
         if(checkEmail.isPresent()){
             System.out.println("CORREO EN USO \n");
             return ResponseEntity.status(HttpStatus.CONFLICT).body("El email a modificar ya se encuentra registrado"); 
-        }
+        }*/
 
         userService.updateUser(id,user);
         System.out.println("ACTUALIZADO CON EXITO \n");

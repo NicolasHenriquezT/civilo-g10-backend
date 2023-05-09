@@ -55,8 +55,8 @@ public class UserService {
         existingUser.setPassword(user.getPassword());
         existingUser.setPhoneNumber(user.getPhoneNumber());
         existingUser.setCommune(user.getCommune());
-        existingUser.setBirthDate(user.getBirthDate()); //ESTO NO LO PUEDE EDITAR
-        existingUser.setAge(user.getAge());  //ESTO NO LO PUEDE EDITAR 
+        //existingUser.setBirthDate(user.getBirthDate()); //ESTO NO LO PUEDE EDITAR
+        //existingUser.setAge(user.getAge());  //ESTO NO LO PUEDE EDITAR
         
         UserEntity updatedUser = userRepository.save(existingUser);
         return updatedUser;

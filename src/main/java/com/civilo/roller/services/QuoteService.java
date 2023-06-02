@@ -38,7 +38,8 @@ public class QuoteService {
     }
 
     // Update
-    // Permite actualizar los datos de un objeto del tipo "QuoteEntity" en la base de datos. 
+    // Permite actualizar los datos de un objeto del tipo "QuoteEntity" en la base de datos.
+    /*
     public QuoteEntity updateQuote(Long quoteID, QuoteEntity quote){
 
         QuoteEntity existingQuote = quoteRepository.findById(quoteID)
@@ -55,6 +56,8 @@ public class QuoteService {
         QuoteEntity updatedQuote = quoteRepository.save(existingQuote);
         return updatedQuote;
     }
+
+     */
 
     // Delete all
     // Permite eliminar todas las cotizaciones de un sistema.

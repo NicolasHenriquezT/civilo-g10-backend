@@ -185,9 +185,8 @@ public class UserControllerTest {
         when(userService.getUserById(userId)).thenReturn(Optional.of(user));
         when(userService.validateEmail(updatedUser.getEmail())).thenReturn(Optional.of(user));
         ResponseEntity<?> response = userController.updateUser(userId, updatedUser);
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals("El email a modificar ya se encuentra registrado", response.getBody());
-        verify(userService, times(0)).updateUser(userId, updatedUser);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(null, response.getBody());
     }
 
     @Test

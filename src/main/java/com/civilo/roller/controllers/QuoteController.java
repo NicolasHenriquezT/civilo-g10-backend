@@ -47,6 +47,7 @@ public class QuoteController {
 
     // Permite actualizar informacion de una cotizacion.
     // FALTA: Ver si solo administradores pueden hacer esto
+    /*
     @PutMapping("/{id}")
     public ResponseEntity<?> updateQuote(@PathVariable long id, @RequestBody QuoteEntity quote){
         
@@ -63,6 +64,8 @@ public class QuoteController {
         System.out.println("ACTUALIZADO CON EXITO \n");
         return ResponseEntity.ok().build();
     }
+
+     */
 
     // Permite eliminar todas las cotizaciones del sistema.
     @DeleteMapping()

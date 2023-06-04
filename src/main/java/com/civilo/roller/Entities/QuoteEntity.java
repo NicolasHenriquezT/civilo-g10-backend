@@ -60,4 +60,8 @@ public class QuoteEntity {
     @ManyToOne
     @JoinColumn(name = "PIPES")
     PipeEntity pipe;
+
+    @ManyToOne
+    @JoinColumn(name = "currentIVA")
+    IVAEntity currentIVA;
 }

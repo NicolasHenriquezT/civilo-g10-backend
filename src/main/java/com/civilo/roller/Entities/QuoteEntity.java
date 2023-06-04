@@ -4,6 +4,8 @@ import lombok.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 
 @Entity
 @Table(name = "quotes")
@@ -27,16 +29,16 @@ public class QuoteEntity {
     private float totalSquareMeters;
     private float totalFabrics;
 
-    private float bracket;
-    private float cap;
-    private float pipe;
-    private float counterweight;
-    private float band;
-    private float chain;
+    private float bracketValue;
+    private float capValue;
+    private float pipeValue;
+    private float counterweightValue;
+    private float bandValue;
+    private float chainValue;
     private float totalMaterials;
 
-    private float assembly;
-    private float installation;
+    private float assemblyValue;
+    private float installationValue;
     private float totalLabor;
 
     private float productionCost;
@@ -44,6 +46,7 @@ public class QuoteEntity {
     private float percentageDiscount;
     private float IVA;
     private float total;
+    private Date date;
 
     //Relaciones
     @ManyToOne
@@ -53,4 +56,8 @@ public class QuoteEntity {
     @ManyToOne
     @JoinColumn(name = "CURTAINS")
     CurtainEntity curtain;
+
+    @ManyToOne
+    @JoinColumn(name = "PIPES")
+    PipeEntity pipe;
 }

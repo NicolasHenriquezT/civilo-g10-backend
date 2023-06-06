@@ -16,7 +16,17 @@ public class IVAService {
     public float getIVAPercentage(){
         List<IVAEntity> ivaEntityList = (List<IVAEntity>) ivaRepository.findAll();
         Integer size = ivaEntityList.size();
-        float percentage = ivaEntityList.get(size - 1).getIvaPercentage();
+        float percentage;
+
+        //ESTE IF LO HICE PARA CORREGIR EL PROBLEMA DE QUE SI SIZE ES CERO HAY VIOLACIÓN DE SEGMENTO
+        //nose que es lo que hace esta funcion y cual es su objetivo, el arreglo que hice fue momentaneo
+        //el que hizo esto que lo vea porfa para que vea que entregue la respuesta que se busca en caso de tener un size de 0
+        if(size > 0){
+            percentage = ivaEntityList.get(size - 1).getIvaPercentage();
+        }
+        else{
+            percentage = 0;
+        }
         return percentage;
     }
 

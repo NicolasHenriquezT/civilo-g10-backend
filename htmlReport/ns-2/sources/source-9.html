@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > StatusEntity</title>
+  <title>Coverage Report > RoleEntity</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.Entities</a>
 </div>
 
-<h1>Coverage Summary for Class: StatusEntity (com.civilo.roller.Entities)</h1>
+<h1>Coverage Summary for Class: RoleEntity (com.civilo.roller.Entities)</h1>
 
 <table class="coverageStats">
 
@@ -37,7 +37,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">StatusEntity</td>
+  <td class="name">RoleEntity</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -56,37 +56,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 </tr>
   <tr>
-    <td class="name">StatusEntity$HibernateProxy$9gIMTX9l</td>
+    <td class="name">RoleEntity$HibernateProxy$4XQf9OGz</td>
   </tr>
   <tr>
-    <td class="name">StatusEntity$HibernateProxy$JRiyxGAa</td>
+    <td class="name">RoleEntity$HibernateProxy$FpfwxD2o</td>
   </tr>
   <tr>
-    <td class="name">StatusEntity$HibernateProxy$MV46S7zk</td>
-  </tr>
-  <tr>
-    <td class="name">StatusEntity$MockitoMock$e702gekB</td>
-  </tr>
-  <tr>
-    <td class="name">StatusEntity$MockitoMock$e702gekB$auxiliary$coEISgs0</td>
-  </tr>
-  <tr>
-    <td class="name">StatusEntity$MockitoMock$e702gekB$auxiliary$H7Cb01Fs</td>
-  </tr>
-  <tr>
-    <td class="name">StatusEntity$MockitoMock$e702gekB$auxiliary$l7HyIiiw</td>
-  </tr>
-  <tr>
-    <td class="name">StatusEntity$MockitoMock$e702gekB$auxiliary$rGTC1ouW</td>
-  </tr>
-  <tr>
-    <td class="name">StatusEntity$MockitoMock$e702gekB$auxiliary$w1JQ8yGj</td>
-  </tr>
-  <tr>
-    <td class="name">StatusEntity$MockitoMock$e702gekB$auxiliary$w8SPPtLO</td>
-  </tr>
-  <tr>
-    <td class="name">StatusEntity$MockitoMock$e702gekB$auxiliary$xxnArXuc</td>
+    <td class="name">RoleEntity$HibernateProxy$TsycLzKN</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -120,20 +96,21 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import jakarta.persistence.Column;
 &nbsp;import jakarta.persistence.*;
 &nbsp;
+&nbsp;
 &nbsp;@Entity
-&nbsp;@Table(name = &quot;status&quot;)
+&nbsp;@Table(name = &quot;roles&quot;)
 <b class="fc">&nbsp;@Data</b>
 <b class="fc">&nbsp;@NoArgsConstructor</b>
 <b class="fc">&nbsp;@AllArgsConstructor</b>
 &nbsp;@Getter
 <b class="fc">&nbsp;@Setter</b>
-&nbsp;public class StatusEntity {
+&nbsp;public class RoleEntity {
 &nbsp;    //Atributos
 &nbsp;    @Id
 &nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
 &nbsp;    @Column(unique = true, nullable = false)
-<b class="fc">&nbsp;    private Long statusID;</b>
-<b class="fc">&nbsp;    private String statusName;</b>
+<b class="fc">&nbsp;    private Long roleID;</b>
+<b class="fc">&nbsp;    private String accountType;</b>
 &nbsp;
 &nbsp;    //Relaciones
 &nbsp;
@@ -161,7 +138,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-05-24 20:50</div>
+    <div style="float:right;">generated on 2023-06-08 21:34</div>
 </div>
 </body>
 </html>

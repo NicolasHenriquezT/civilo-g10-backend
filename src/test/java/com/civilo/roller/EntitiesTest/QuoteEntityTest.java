@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -60,6 +61,9 @@ public class QuoteEntityTest {
         quoteEntity.setTotal(135.0f);
         quoteEntity.setSeller(seller);
         quoteEntity.setCurtain(curtain);
+        //quoteEntity.setDate(new Date("Thu Jun 08 20:42:06 CLT 2023"));
+        quoteEntity.setPipe(new PipeEntity(1L, "tubo 10 mm"));
+        quoteEntity.setCurrentIVA(new IVAEntity(1L, 19f));
 
         assertEquals(Long.valueOf("9999"), quoteEntity.getQuoteID());
         assertEquals(1, quoteEntity.getAmount());
@@ -84,8 +88,11 @@ public class QuoteEntityTest {
         assertEquals(0.1f, quoteEntity.getPercentageDiscount());
         assertEquals(0.19f, quoteEntity.getIVA());
         assertEquals(135.0f, quoteEntity.getTotal());
+        //assertEquals(new Date("Thu Jun 08 20:42:06 CLT 2023"), quoteEntity.getDate());
         assertEquals(seller, quoteEntity.getSeller());
         assertEquals(curtain, quoteEntity.getCurtain());
+        assertEquals(new PipeEntity(1L, "tubo 10 mm"), quoteEntity.getPipe());
+        assertEquals(new IVAEntity(1L, 19f), quoteEntity.getCurrentIVA());
     }
 
 

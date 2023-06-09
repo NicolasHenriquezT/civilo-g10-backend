@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > StatusController</title>
+  <title>Coverage Report > RoleController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.controllers</a>
 </div>
 
-<h1>Coverage Summary for Class: StatusController (com.civilo.roller.controllers)</h1>
+<h1>Coverage Summary for Class: RoleController (com.civilo.roller.controllers)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -40,7 +40,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">StatusController</td>
+  <td class="name">RoleController</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -76,8 +76,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.controllers;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.StatusEntity;
-&nbsp;import com.civilo.roller.services.StatusService;
+&nbsp;import com.civilo.roller.Entities.RoleEntity;
+&nbsp;import com.civilo.roller.services.PermissionService;
+&nbsp;import com.civilo.roller.services.RoleService;
+&nbsp;import jakarta.servlet.http.HttpServletRequest;
+&nbsp;import jakarta.servlet.http.HttpSession;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.http.HttpStatus;
 &nbsp;import org.springframework.http.ResponseEntity;
@@ -90,86 +93,93 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;@CrossOrigin(origins = &quot;*&quot;, allowedHeaders = &quot;*&quot;)
 &nbsp;@RestController
-&nbsp;@RequestMapping(&quot;/status&quot;)
-<b class="fc">&nbsp;public class StatusController {</b>
+&nbsp;@RequestMapping(&quot;/roles&quot;)
+<b class="fc">&nbsp;public class RoleController {</b>
 &nbsp;    @Autowired
-&nbsp;    StatusService statusService;
+&nbsp;    RoleService roleService;
 &nbsp;
-&nbsp;    // Permite obtener todos los estados del sistema.
+&nbsp;    @Autowired
+&nbsp;    PermissionService permissionService;
+&nbsp;
+&nbsp;    // Permite obtener todos los roles del sistema.
 &nbsp;    @GetMapping()
-&nbsp;    public List&lt;StatusEntity&gt; getStatus(){
-<b class="fc">&nbsp;        return statusService.getStatus();</b>
+&nbsp;    public List&lt;RoleEntity&gt; getRoles(){
+<b class="fc">&nbsp;        return roleService.getRoles();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite obtener un estado en especifico del sistema.
+&nbsp;    // Permite obtener un rol en especifico del sistema.
 &nbsp;    @GetMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;StatusEntity&gt; getStatusById(@PathVariable long id){
-<b class="fc">&nbsp;        Optional&lt;StatusEntity&gt; status = statusService.getStatusById(id);</b>
-<b class="fc">&nbsp;        if(!status.isPresent()){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO EL ESTADO \n&quot;);</b>
+&nbsp;    public ResponseEntity&lt;RoleEntity&gt; getRoleById(@PathVariable long id){
+<b class="fc">&nbsp;        Optional&lt;RoleEntity&gt; role = roleService.getRoleById(id);</b>
+<b class="fc">&nbsp;        if(!role.isPresent()){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO EL ROL \n&quot;);</b>
 <b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(null,HttpStatus.NOT_FOUND); </b>
 &nbsp;        }
-<b class="fc">&nbsp;        return new ResponseEntity&lt;StatusEntity&gt;(status.get(), HttpStatus.OK);</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;RoleEntity&gt;(role.get(), HttpStatus.OK);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite guardar un nuevo estado en el sistema.
+&nbsp;    // Permite guardar un nuevo rol en el sistema.
+&nbsp;    // (Se definió como alcance del proyecto que la plataforma contaria solo con 4 roles definidos)
 &nbsp;    @PostMapping()
-&nbsp;    public ResponseEntity&lt;?&gt; createStatus(@RequestBody StatusEntity status){
+&nbsp;    public ResponseEntity&lt;?&gt; createRole(@RequestBody RoleEntity role){
 &nbsp;
-<b class="fc">&nbsp;        Optional&lt;StatusEntity&gt; existingStatus = statusService.validateStatusName(status.getStatusName());</b>
+<b class="fc">&nbsp;        Optional&lt;RoleEntity&gt; existingRole = roleService.validateAccountType(role.getAccountType());</b>
 &nbsp;
-&nbsp;        //Se verifica si el estado ya existe
-<b class="fc">&nbsp;        if(existingStatus.isPresent()){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;ESTADO YA EXISTE\n&quot;);</b>
-<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;El estado ingresado ya existe&quot;); </b>
+&nbsp;        //Se verifica si ya está definido un rol para el tipo de cuenta ingresado.
+<b class="fc">&nbsp;        if(existingRole.isPresent()){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;ESTE ROL YA EXISTE\n&quot;);</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;Ya existe el rol para el tipo de cuenta ingresado&quot;); </b>
 &nbsp;        }
 &nbsp;
-<b class="fc">&nbsp;        statusService.createStatus(status);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;ESTADO GUARDADO CON EXITO\n&quot;);</b>
+&nbsp;        //PENDIENTE: ¿De que manera se le asignaran los permisos a un nuevo rol desconocido?
+&nbsp;
+<b class="fc">&nbsp;        roleService.createRole(role);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;ROL GUARDADO CON EXITO\n&quot;);</b>
 <b class="fc">&nbsp;        return ResponseEntity.ok().build();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite actualizar información de un estado.
+&nbsp;    // Permite actualizar información de un rol.
 &nbsp;    @PutMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;?&gt; updateUser(@PathVariable long id, @RequestBody StatusEntity status) {
+&nbsp;    public ResponseEntity&lt;?&gt; updateRole(@PathVariable long id, @RequestBody RoleEntity role) {
 &nbsp;        
-<b class="fc">&nbsp;        Optional&lt;StatusEntity&gt; checkStatus = statusService.getStatusById(id);</b>
+<b class="fc">&nbsp;        Optional&lt;RoleEntity&gt; checkRole = roleService.getRoleById(id);</b>
 &nbsp;        
-<b class="fc">&nbsp;        if(!checkStatus.isPresent()){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO EL ESTADO CON ID: &quot; + id + &quot; \n&quot;);</b>
-<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;El estado con el ID especificado no existe.&quot;); </b>
+<b class="fc">&nbsp;        if(!checkRole.isPresent()){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO EL ROL CON ID: &quot; + id + &quot; \n&quot;);</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;El rol con el ID especificado no existe.&quot;); </b>
 &nbsp;        }
 &nbsp;
-<b class="fc">&nbsp;        Optional&lt;StatusEntity&gt; checkStatusName = statusService.validateStatusName(status.getStatusName());</b>
+<b class="fc">&nbsp;        Optional&lt;RoleEntity&gt; checkAccountType = roleService.validateAccountType(role.getAccountType());</b>
 &nbsp;
-<b class="fc">&nbsp;        if(checkStatusName.isPresent()){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;ESTADO INGRESADO YA EXISTE\n&quot;);</b>
-<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;El estado ingresado ya existe&quot;); </b>
+<b class="fc">&nbsp;        if(checkAccountType.isPresent()){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;TIPO DE CUENTA INGRESADO YA EXISTE\n&quot;);</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;El tipo de cuenta ingresado ya existe&quot;); </b>
 &nbsp;        }
 &nbsp;
-<b class="fc">&nbsp;        statusService.updateStatus(id,status);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;ESTADO ACTUALIZADO CON EXITO\n&quot;);</b>
+<b class="fc">&nbsp;        roleService.updateRole(id,role);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;ROL ACTUALIZADO CON EXITO\n&quot;);</b>
 <b class="fc">&nbsp;        return ResponseEntity.ok().build(); </b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite eliminar todos los estados del sistema.
+&nbsp;    // Permite eliminar todos los roles del sistema.
 &nbsp;    @DeleteMapping()
-&nbsp;    public ResponseEntity&lt;String&gt; deleteStatus(){
-<b class="fc">&nbsp;        statusService.deleteStatus();</b>
-<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;SE ELIMINARON LOS ESTADOS CORRECTAMENTE&quot;);</b>
+&nbsp;    public ResponseEntity&lt;String&gt; deleteRoles(){
+<b class="fc">&nbsp;        roleService.deleteRoles();</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;SE ELIMINARON LOS ROLES CORRECTAMENTE&quot;);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite eliminar un estado en especifico del sistema.
+&nbsp;    // Permite eliminar un rol en especifico del sistema.
 &nbsp;    @DeleteMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;String&gt; deleteStatusById(@PathVariable Long id){
-<b class="fc">&nbsp;        if(!statusService.existsStatusById(id)){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO UN ESTADO CON EL ID: &quot;+ id + &quot;\n&quot;);</b>
+&nbsp;    public ResponseEntity&lt;String&gt; deleteRoleById(@PathVariable Long id){
+<b class="fc">&nbsp;        if(!roleService.existsRoleById(id)){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO UN ROL CON EL ID: &quot;+ id + &quot;\n&quot;);</b>
 <b class="fc">&nbsp;            return ResponseEntity.notFound().build();</b>
 &nbsp;        }
-<b class="fc">&nbsp;        statusService.deleteStatusById(id);</b>
-<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;ESTADO CON ID &quot; + id + &quot; ELIMINADO CORRECTAMENTE\n&quot;);</b>
+<b class="fc">&nbsp;        roleService.deleteRoleById(id);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;ROLE CON ID &quot; + id + &quot; ELIMINADO CORRECTAMENTE\n&quot;);</b>
 &nbsp;
 &nbsp;    }
+&nbsp;    
 &nbsp;}
 </code>
 </pre>
@@ -194,7 +204,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-05-24 20:50</div>
+    <div style="float:right;">generated on 2023-06-08 21:34</div>
 </div>
 </body>
 </html>

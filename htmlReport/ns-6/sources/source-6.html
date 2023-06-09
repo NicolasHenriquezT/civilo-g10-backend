@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > QuoteRepository</title>
+  <title>Coverage Report > CurtainRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.repositories</a>
 </div>
 
-<h1>Coverage Summary for Class: QuoteRepository (com.civilo.roller.repositories)</h1>
+<h1>Coverage Summary for Class: CurtainRepository (com.civilo.roller.repositories)</h1>
 
 <table class="coverageStats">
 
@@ -29,13 +29,13 @@ Current scope:     <a href="../../index.html">all classes</a>
   <th class="name">Class</th>
 </tr>
   <tr>
-    <td class="name">QuoteRepository$MockitoMock$aePkLkK8</td>
+    <td class="name">CurtainRepository$MockitoMock$WbSOE1np</td>
   </tr>
   <tr>
-    <td class="name">QuoteRepository$MockitoMock$aePkLkK8$auxiliary$jjm9dbKk</td>
+    <td class="name">CurtainRepository$MockitoMock$WbSOE1np$auxiliary$Dnxr3Jts</td>
   </tr>
   <tr>
-    <td class="name">QuoteRepository$MockitoMock$aePkLkK8$auxiliary$lMGtWENx</td>
+    <td class="name">CurtainRepository$MockitoMock$WbSOE1np$auxiliary$n41IYCLA</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -49,12 +49,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.repositories;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.QuoteEntity;
+&nbsp;import com.civilo.roller.Entities.CurtainEntity;
+&nbsp;import org.springframework.data.jpa.repository.Query;
 &nbsp;import org.springframework.data.repository.CrudRepository;
+&nbsp;import org.springframework.data.repository.query.Param;
 &nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
 &nbsp;@Repository
-&nbsp;public interface QuoteRepository extends CrudRepository&lt;QuoteEntity, Long&gt; {
+&nbsp;public interface CurtainRepository extends CrudRepository&lt;CurtainEntity, Long&gt; {
+&nbsp;
+&nbsp;    //Se consulta la id de una cortina especifica
+&nbsp;    @Query(value = &quot;select curtainid idcurtain from curtain r where r.curtain_type = :curtainType&quot;, nativeQuery = true)
+&nbsp;    Long findIdByCurtainType(@Param(&quot;curtainType&quot;) String curtainType);
 &nbsp;}
 </code>
 </pre>
@@ -79,7 +85,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-05-24 20:50</div>
+    <div style="float:right;">generated on 2023-06-08 21:34</div>
 </div>
 </body>
 </html>

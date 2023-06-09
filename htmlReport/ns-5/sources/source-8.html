@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > StatusService</title>
+  <title>Coverage Report > RoleService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.services</a>
 </div>
 
-<h1>Coverage Summary for Class: StatusService (com.civilo.roller.services)</h1>
+<h1>Coverage Summary for Class: RoleService (com.civilo.roller.services)</h1>
 
 <table class="coverageStats">
 
@@ -37,7 +37,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">StatusService</td>
+  <td class="name">RoleService</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -56,40 +56,40 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$02CCZKez</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$16OfE3br</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$2A0ABa9Q</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$cMWKrOxT</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$2nBIYdVs</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$dUYmIvKi</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$FiUJPzno</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$m2eeWATz</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$J5BGZqym</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$mBGQQmyB</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$JX1WZ8P6</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$ONLhk79P</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$KkKIDlhv</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$QbgOmJOF</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$LwWUZ2ph</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$SbMb6IGL</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$sFkVHonn</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$tFyWS3Em</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$sZfd9jNS</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$tGBPBlT8</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$bEJMyi3l$auxiliary$uaN5AgR7</td>
+    <td class="name">RoleService$MockitoMock$p980BlMy$auxiliary$XwgXMYcH</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -119,8 +119,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.services;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.StatusEntity;
-&nbsp;import com.civilo.roller.repositories.StatusRepository;
+&nbsp;import com.civilo.roller.Entities.RoleEntity;
+&nbsp;import com.civilo.roller.repositories.RoleRepository;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Service;
 &nbsp;import com.civilo.roller.exceptions.EntityNotFoundException;
@@ -128,67 +128,68 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.util.Optional;
 &nbsp;
 &nbsp;@Service
-<b class="fc">&nbsp;public class StatusService {</b>
+<b class="fc">&nbsp;public class RoleService {</b>
 &nbsp;    @Autowired
-&nbsp;    StatusRepository statusRepository;
+&nbsp;    RoleRepository roleRepository;
 &nbsp;
-&nbsp;    // Get All
-&nbsp;    // El siguiente método retorna un listado el cual contiene TODA la información asociada a los estados
-&nbsp;    public List&lt;StatusEntity&gt; getStatus(){
-<b class="fc">&nbsp;        return (List&lt;StatusEntity&gt;) statusRepository.findAll();</b>
+&nbsp;    // Get all
+&nbsp;    // El siguiente método retorna un listado el cual contiene TODA la información asociada a los roles
+&nbsp;    public List&lt;RoleEntity&gt; getRoles(){
+<b class="fc">&nbsp;        return (List&lt;RoleEntity&gt;) roleRepository.findAll();</b>
 &nbsp;    }
-&nbsp;    
+&nbsp;
 &nbsp;    // Get by id
-&nbsp;    // Permite obtener la informacion de un estado en especifico.
-&nbsp;    public Optional&lt;StatusEntity&gt; getStatusById(Long id){
-<b class="fc">&nbsp;        return statusRepository.findById(id);</b>
+&nbsp;    // Permite obtener la informacion de un rol en especifico.
+&nbsp;    public Optional&lt;RoleEntity&gt; getRoleById(Long id){
+<b class="fc">&nbsp;        return roleRepository.findById(id);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Create
-&nbsp;    // Permite guardar un objeto del tipo &quot;StatusEntity&quot; en la base de datos.
-&nbsp;    public StatusEntity createStatus(StatusEntity status){   
-<b class="fc">&nbsp;        return statusRepository.save(status);  </b>
+&nbsp;    // Permite guardar un objeto del tipo &quot;RoleEntity&quot; en la base de datos.
+&nbsp;    public RoleEntity createRole(RoleEntity role){   
+<b class="fc">&nbsp;        return roleRepository.save(role);  </b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Permite verificar si existe el tipo de cuenta ingresado.
-&nbsp;    public Optional&lt;StatusEntity&gt; validateStatusName(String statusName){
-<b class="fc">&nbsp;        return Optional.ofNullable(statusRepository.findByStatusName(statusName));  </b>
+&nbsp;    public Optional&lt;RoleEntity&gt; validateAccountType(String accountType){
+<b class="fc">&nbsp;        return Optional.ofNullable(roleRepository.findByAccountType(accountType));  </b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Update
-&nbsp;    // Permite actualizar los datos de un objeto del tipo &quot;StatusEntity&quot; en la base de datos.
-&nbsp;    public StatusEntity updateStatus(Long statusID, StatusEntity status){
-<b class="fc">&nbsp;        StatusEntity existingStatus = statusRepository.findById(statusID)</b>
-<b class="fc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Estado no encontrado con el ID: &quot; + statusID));</b>
+&nbsp;    // Permite actualizar los datos de un objeto del tipo &quot;RoleEntity&quot; en la base de datos.
+&nbsp;    public RoleEntity updateRole(Long roleID, RoleEntity role){
+<b class="fc">&nbsp;        RoleEntity existingRole = roleRepository.findById(roleID)</b>
+<b class="fc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Rol no encontrado con el ID: &quot; + roleID));</b>
 &nbsp;
-<b class="fc">&nbsp;        existingStatus.setStatusName(status.getStatusName());</b>
+<b class="fc">&nbsp;        existingRole.setAccountType(role.getAccountType()); //No deberia poder cambiarse</b>
 &nbsp;        
-<b class="fc">&nbsp;        StatusEntity updatedStatus = statusRepository.save(existingStatus);</b>
-<b class="fc">&nbsp;        return updatedStatus;</b>
+<b class="fc">&nbsp;        RoleEntity updatedRole = roleRepository.save(existingRole);</b>
+<b class="fc">&nbsp;        return updatedRole;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Delete all
-&nbsp;    // Permite eliminar todos los estados de un sistema.
-&nbsp;    public void deleteStatus() {
-<b class="fc">&nbsp;        statusRepository.deleteAll();</b>
+&nbsp;    // Permite eliminar todos los roles del sistema.
+&nbsp;    public void deleteRoles() {
+<b class="fc">&nbsp;        roleRepository.deleteAll();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Delete by id
-&nbsp;    // Permite eliminar un estado en especifico del sistema.
-&nbsp;    public void deleteStatusById(Long id){
-<b class="fc">&nbsp;        statusRepository.deleteById(id);</b>
+&nbsp;    // Permite eliminar un rol en especifico del sistema.
+&nbsp;    public void deleteRoleById(Long id){
+<b class="fc">&nbsp;        roleRepository.deleteById(id);</b>
 &nbsp;    }
 &nbsp;    
-&nbsp;    // Permite verificar si existe un estado en el sistema, segun el id ingresado.
-&nbsp;    public boolean existsStatusById(Long id){
-<b class="fc">&nbsp;        return statusRepository.findById(id).isPresent();</b>
+&nbsp;    // Permite verificar si existe un usario en el sistema, segun el id ingresado.
+&nbsp;    public boolean existsRoleById(Long id){
+<b class="fc">&nbsp;        return roleRepository.findById(id).isPresent();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    //Se obtiene la ID del estado dependiendo del nombre del estado
-&nbsp;    public Long getStatusIdByStatusName(String statusName){
-<b class="fc">&nbsp;        return statusRepository.findIdByStatusName(statusName);</b>
+&nbsp;    //Se obtiene la ID del rol dependiendo del tipo de cuenta
+&nbsp;    public Long getRoleIdByAccountType(String accountType){
+<b class="fc">&nbsp;        return roleRepository.findIdByAccountType(accountType);</b>
 &nbsp;
 &nbsp;    }
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -213,7 +214,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-05-24 20:50</div>
+    <div style="float:right;">generated on 2023-06-08 21:34</div>
 </div>
 </body>
 </html>

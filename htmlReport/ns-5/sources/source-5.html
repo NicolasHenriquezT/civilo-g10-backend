@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > RequestService</title>
+  <title>Coverage Report > PipeService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.services</a>
 </div>
 
-<h1>Coverage Summary for Class: RequestService (com.civilo.roller.services)</h1>
+<h1>Coverage Summary for Class: PipeService (com.civilo.roller.services)</h1>
 
 <table class="coverageStats">
 
@@ -37,65 +37,38 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">RequestService</td>
+  <td class="name">PipeService</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (12/12)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    91,2%
+    100%
   </span>
   <span class="absValue">
-    (31/34)
+    (3/3)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e</td>
+    <td class="name">PipeService$MockitoMock$ICS2FhIa</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$0m42oDvF</td>
+    <td class="name">PipeService$MockitoMock$ICS2FhIa$auxiliary$7O6p13xX</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$5b0qay83</td>
+    <td class="name">PipeService$MockitoMock$ICS2FhIa$auxiliary$cVLlytqz</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$7nQSZPlQ</td>
+    <td class="name">PipeService$MockitoMock$ICS2FhIa$auxiliary$Iy5WcyCB</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$CKZcRTuZ</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$Fj6DC5wp</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$Ka1fP3T6</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$nKqthtID</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$q4rHKb1f</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$RTOU557x</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$TpymqUpe</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$Yd6gQfdb</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$yDFkinUJ</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$pVcFSC9e$auxiliary$ZaN7S2ag</td>
+    <td class="name">PipeService$MockitoMock$ICS2FhIa$auxiliary$S0cFCs0S</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -104,15 +77,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (12/12)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    91,2%
+    100%
   </span>
   <span class="absValue">
-    (31/34)
+    (3/3)
   </span>
 </td>
 </tr>
@@ -125,124 +98,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.services;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.RequestEntity;
-&nbsp;import com.civilo.roller.Entities.SellerEntity;
-&nbsp;import com.civilo.roller.repositories.RequestRepository;
+&nbsp;import com.civilo.roller.Entities.PipeEntity;
+&nbsp;import com.civilo.roller.repositories.PipeRepository;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Service;
-&nbsp;import com.civilo.roller.exceptions.EntityNotFoundException;
 &nbsp;
-&nbsp;import java.util.ArrayList;
 &nbsp;import java.util.List;
 &nbsp;import java.util.Optional;
-&nbsp;import java.util.Random;
-&nbsp;
 &nbsp;
 &nbsp;@Service
-<b class="fc">&nbsp;public class RequestService {</b>
+<b class="fc">&nbsp;public class PipeService {</b>
 &nbsp;    @Autowired
-&nbsp;    RequestRepository requestRepository;
-&nbsp;
-&nbsp;    @Autowired
-&nbsp;    SellerService sellerService;
-&nbsp;
-&nbsp;    @Autowired
-&nbsp;    StatusService statusService;
+&nbsp;    PipeRepository pipeRepository;
 &nbsp;
 &nbsp;    // Get all
-&nbsp;    // El siguiente método retorna un listado el cual contiene TODA la información asociada a las solicitudes
-&nbsp;    public List&lt;RequestEntity&gt; getRequests(){
-<b class="fc">&nbsp;        return (List&lt;RequestEntity&gt;) requestRepository.findAll();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    //Get By CLient ID
-&nbsp;    //Permite obtener las solicitudes de un cliente especifico
-&nbsp;    public ArrayList&lt;RequestEntity&gt; getRequestByUserId(Long id_cliente){
-&nbsp;        //List&lt;RequestEntity&gt; listado =  (List&lt;RequestEntity&gt;) requestRepository.findRequestByUserId(id_cliente);
-&nbsp;        //System.out.println(&quot;HOLAAAAAAAAAAAAAAAAAA&quot;+listado);
-&nbsp;        //System.out.println(&quot;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&quot;);
-&nbsp;
-<b class="fc">&nbsp;        return requestRepository.findRequestByUserId(id_cliente);</b>
+&nbsp;    // El siguiente método retorna un listado el cual contiene TODA la información asociada a los tubos
+&nbsp;    public List&lt;PipeEntity&gt; getPipes(){
+<b class="fc">&nbsp;        return (List&lt;PipeEntity&gt;) pipeRepository.findAll();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Get by id
-&nbsp;    // Permite obtener la informacion de una solicitud en especifico.
-&nbsp;    public Optional&lt;RequestEntity&gt; getRequestById(Long id){
-<b class="fc">&nbsp;        return requestRepository.findById(id);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Create
-&nbsp;    // Permite guardar un objeto del tipo &quot;RequestEntity&quot; en la base de datos.
-&nbsp;    public RequestEntity createRequest(RequestEntity request){   
-<b class="fc">&nbsp;        return requestRepository.save(request);  </b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Update
-&nbsp;    // Permite actualizar los datos de un objeto del tipo &quot;RequestEntity&quot; en la base de datos.
-&nbsp;    public RequestEntity updateRequest(Long requestID, RequestEntity request){
-&nbsp;
-<b class="fc">&nbsp;        RequestEntity existingRequest = requestRepository.findById(requestID)</b>
-<b class="fc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Solicitud no encontrada con el ID: &quot; + requestID));</b>
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;        existingRequest.setDescription(request.getDescription());</b>
-<b class="fc">&nbsp;        existingRequest.setDeadline(request.getDeadline());</b>
-<b class="fc">&nbsp;        existingRequest.setAdmissionDate(request.getAdmissionDate());</b>
-<b class="fc">&nbsp;        existingRequest.setClosingDate(request.getClosingDate());</b>
-<b class="fc">&nbsp;        existingRequest.setReason(request.getReason());</b>
-&nbsp;    
-<b class="fc">&nbsp;        RequestEntity updatedRequest = requestRepository.save(existingRequest);</b>
-<b class="fc">&nbsp;        return updatedRequest;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Delete all
-&nbsp;    // Permite eliminar todas las solicitudes de un sistema.
-&nbsp;    public void deleteRequest() {
-<b class="fc">&nbsp;        requestRepository.deleteAll();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Delete by id
-&nbsp;    // Permite eliminar una solicitud en especifico del sistema.
-&nbsp;    public void deleteRequestById(Long id){
-<b class="fc">&nbsp;        requestRepository.deleteById(id);</b>
-&nbsp;    }
-&nbsp;    
-&nbsp;    // Permite verificar si existe una solicitud en el sistema, según el id ingresado.
-&nbsp;    public boolean existsRequestById(Long id){
-<b class="fc">&nbsp;        return requestRepository.findById(id).isPresent();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    //----------------------------------------------------------------------------------------------
-&nbsp;
-&nbsp;    public RequestEntity saveRequest(RequestEntity request){
-<b class="fc">&nbsp;        return requestRepository.save(request);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public List&lt;RequestEntity&gt; getRequestBySellerId(Long sellerId) {
-<b class="fc">&nbsp;        List&lt;RequestEntity&gt; requests = getRequests();</b>
-<b class="fc">&nbsp;        List&lt;RequestEntity&gt; myRequest = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;        for (int i = 0; i &lt; requests.size(); i++){</b>
-<b class="fc">&nbsp;            if (requests.get(i).getSellerId() == sellerId){</b>
-<b class="fc">&nbsp;                myRequest.add(requests.get(i));</b>
-&nbsp;            }
-&nbsp;        }
-<b class="fc">&nbsp;        return myRequest;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void automaticAssignment(){
-<b class="fc">&nbsp;        List&lt;RequestEntity&gt; requestEntities = getRequests();</b>
-<b class="fc">&nbsp;        List&lt;SellerEntity&gt; sellerEntities = sellerService.getSellers();</b>
-<b class="fc">&nbsp;        Random rand = new Random();</b>
-<b class="fc">&nbsp;        RequestEntity currentRequest = new RequestEntity();</b>
-<b class="fc">&nbsp;        for (int i = 0; i &lt; requestEntities.size(); i++){</b>
-<b class="fc">&nbsp;            currentRequest = requestEntities.get(i);</b>
-<b class="fc">&nbsp;            if (currentRequest.getSellerId() == 0){</b>
-<b class="nc">&nbsp;                currentRequest.setSellerId(sellerEntities.get(rand.nextInt(sellerEntities.size())).getUserID().intValue());</b>
-<b class="nc">&nbsp;                currentRequest.setStatus(statusService.getStatus().get(1));</b>
-<b class="nc">&nbsp;                requestRepository.save(currentRequest);</b>
-&nbsp;            }
-&nbsp;        }
+&nbsp;    // Permite obtener la informacion de un pipe en especifico.
+&nbsp;    public Optional&lt;PipeEntity&gt; getPipe(Long id){
+<b class="fc">&nbsp;        return pipeRepository.findById(id);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;}
@@ -269,7 +147,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-05-24 20:50</div>
+    <div style="float:right;">generated on 2023-06-08 21:34</div>
 </div>
 </body>
 </html>

@@ -41,7 +41,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f, new Date(), seller, curtain, null);
+        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f, new Date(), seller, curtain, null, null);
 
         List<QuoteEntity> quoteList = new ArrayList<>();
         quoteList.add(quoteEntity);
@@ -64,7 +64,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null);
+        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null, null);
 
         when(quoteRepository.findById(anyLong())).thenReturn(Optional.of(quoteEntity));
 
@@ -85,7 +85,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null);
+        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null, null);
 
         when(quoteRepository.save(any(QuoteEntity.class))).thenReturn(quoteEntity);
 
@@ -106,7 +106,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null);
+        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null, null);
 
         when(quoteRepository.save(any(QuoteEntity.class))).thenReturn(quoteEntity);
 

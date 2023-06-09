@@ -22,6 +22,7 @@ public class QuoteController {
     }
 
     // Permite obtener los datos de una cotizacion en especifico.
+    /*
     @GetMapping("/{id}")
     public ResponseEntity<QuoteEntity> getQuoteById(@PathVariable long id){
         Optional<QuoteEntity> quote = quoteService.getQuoteById(id);
@@ -31,6 +32,8 @@ public class QuoteController {
         }
         return new ResponseEntity<QuoteEntity>(quote.get(), HttpStatus.OK);
     }
+
+     */
 
     // Permite guardar entidad cotizacion.
     @PostMapping()
@@ -68,6 +71,7 @@ public class QuoteController {
      */
 
     // Permite eliminar todas las cotizaciones del sistema.
+    /*
     @DeleteMapping()
     public ResponseEntity<String> deleteQuotes(){
         quoteService.deleteQuotes();
@@ -84,6 +88,8 @@ public class QuoteController {
         quoteService.deleteQuoteById(id);
         return ResponseEntity.ok("COTIZACION CON ID " + id + " ELIMINADA CORRECTAMENTE \n");
     }
+    
+     */
 
     //------------------------------------------------------------------------------------------------------------------------------------------------//
 

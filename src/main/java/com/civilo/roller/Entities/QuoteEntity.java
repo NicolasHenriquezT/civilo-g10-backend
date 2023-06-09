@@ -44,7 +44,7 @@ public class QuoteEntity {
     private float productionCost;
     private float saleValue;
     private float percentageDiscount;
-    private float IVA;
+    private float iva;
     private float total;
     private Date date;
 

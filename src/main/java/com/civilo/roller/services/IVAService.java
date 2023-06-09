@@ -30,5 +30,11 @@ public class IVAService {
         return percentage;
     }
 
+    public IVAEntity getLastIVA(){
+        List<IVAEntity> ivaEntityList = (List<IVAEntity>) ivaRepository.findAll();
+        Integer size = ivaEntityList.size();
+        return ivaEntityList.get(size - 1);
+    }
+
 
 }

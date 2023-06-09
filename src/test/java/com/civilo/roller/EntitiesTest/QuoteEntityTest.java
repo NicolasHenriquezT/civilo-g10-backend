@@ -57,7 +57,7 @@ public class QuoteEntityTest {
         quoteEntity.setProductionCost(100.0f);
         quoteEntity.setSaleValue(150.0f);
         quoteEntity.setPercentageDiscount(0.1f);
-        quoteEntity.setIVA(0.19f);
+        quoteEntity.setIva(0.19f);
         quoteEntity.setTotal(135.0f);
         quoteEntity.setSeller(seller);
         quoteEntity.setCurtain(curtain);
@@ -94,7 +94,7 @@ public class QuoteEntityTest {
         assertEquals(100.0f, quoteEntity.getProductionCost());
         assertEquals(150.0f, quoteEntity.getSaleValue());
         assertEquals(0.1f, quoteEntity.getPercentageDiscount());
-        assertEquals(0.19f, quoteEntity.getIVA());
+        assertEquals(0.19f, quoteEntity.getIva());
         assertEquals(135.0f, quoteEntity.getTotal());
         assertEquals(dateFake, quoteEntity.getDate());
         assertEquals(seller, quoteEntity.getSeller());

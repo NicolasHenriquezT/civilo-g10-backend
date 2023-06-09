@@ -1,11 +1,14 @@
 package com.civilo.roller.controllers;
 
 import com.civilo.roller.Entities.QuoteEntity;
+import com.civilo.roller.services.IVAService;
 import com.civilo.roller.services.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+
+import java.util.Date;
 import java.util.Optional;
 import java.util.List;
 
@@ -15,6 +18,9 @@ import java.util.List;
 public class QuoteController {
     @Autowired
     QuoteService quoteService;
+
+    @Autowired
+    IVAService ivaService;
 
     // Permite obtener todas las cotizaciones del sistema.
     @GetMapping()
@@ -39,6 +45,10 @@ public class QuoteController {
     // Permite guardar entidad cotizacion.
     @PostMapping()
     public QuoteEntity saveQuote(@RequestBody QuoteEntity quote){
+        Date currentDate = new Date();
+        quote.setDate(currentDate);
+        quote.setCurrentIVA(ivaService.getLastIVA());
+        System.out.println(quote);
         return this.quoteService.createQuote(quote);
     }
 

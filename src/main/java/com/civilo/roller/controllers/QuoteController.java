@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import java.util.Optional;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/quotes")
 public class QuoteController {
@@ -88,7 +89,7 @@ public class QuoteController {
         quoteService.deleteQuoteById(id);
         return ResponseEntity.ok("COTIZACION CON ID " + id + " ELIMINADA CORRECTAMENTE \n");
     }
-    
+
      */
 
     //------------------------------------------------------------------------------------------------------------------------------------------------//

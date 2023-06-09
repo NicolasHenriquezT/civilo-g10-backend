@@ -85,6 +85,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.util.Optional;
 &nbsp;import java.util.List;
 &nbsp;
+&nbsp;@CrossOrigin(origins = &quot;*&quot;, allowedHeaders = &quot;*&quot;)
 &nbsp;@RestController
 &nbsp;@RequestMapping(&quot;/quotes&quot;)
 <b class="fc">&nbsp;public class QuoteController {</b>
@@ -164,7 +165,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        quoteService.deleteQuoteById(id);
 &nbsp;        return ResponseEntity.ok(&quot;COTIZACION CON ID &quot; + id + &quot; ELIMINADA CORRECTAMENTE \n&quot;);
 &nbsp;    }
-&nbsp;    
+&nbsp;
 &nbsp;     */
 &nbsp;
 &nbsp;    //------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -193,7 +194,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 21:34</div>
+    <div style="float:right;">generated on 2023-06-08 23:14</div>
 </div>
 </body>
 </html>

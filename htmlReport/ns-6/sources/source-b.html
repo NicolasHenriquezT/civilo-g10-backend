@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > StatusRepository</title>
+  <title>Coverage Report > PipeRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.repositories</a>
 </div>
 
-<h1>Coverage Summary for Class: StatusRepository (com.civilo.roller.repositories)</h1>
+<h1>Coverage Summary for Class: PipeRepository (com.civilo.roller.repositories)</h1>
 
 <table class="coverageStats">
 
@@ -29,13 +29,13 @@ Current scope:     <a href="../../index.html">all classes</a>
   <th class="name">Class</th>
 </tr>
   <tr>
-    <td class="name">StatusRepository$MockitoMock$io0SW38t</td>
+    <td class="name">PipeRepository$MockitoMock$wevqYw6g</td>
   </tr>
   <tr>
-    <td class="name">StatusRepository$MockitoMock$io0SW38t$auxiliary$nWwxj3xb</td>
+    <td class="name">PipeRepository$MockitoMock$wevqYw6g$auxiliary$C4C0yML0</td>
   </tr>
   <tr>
-    <td class="name">StatusRepository$MockitoMock$io0SW38t$auxiliary$pxJN9eal</td>
+    <td class="name">PipeRepository$MockitoMock$wevqYw6g$auxiliary$w56hVdNa</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -49,21 +49,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.repositories;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.StatusEntity;
-&nbsp;import org.springframework.data.jpa.repository.Query;
+&nbsp;import com.civilo.roller.Entities.PipeEntity;
 &nbsp;import org.springframework.data.repository.CrudRepository;
-&nbsp;import org.springframework.data.repository.query.Param;
 &nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
 &nbsp;@Repository
-&nbsp;public interface StatusRepository extends CrudRepository&lt;StatusEntity, Long&gt; {
-&nbsp;
-&nbsp;    //Se consulta la id de un estado especifico
-&nbsp;    @Query(value = &quot;select statusid idstatus from status r where r.status_name = :statusName&quot;, nativeQuery = true)
-&nbsp;    Long findIdByStatusName(@Param(&quot;statusName&quot;) String statusName);
-&nbsp;    
-&nbsp;    StatusEntity findByStatusName(String statusName);
-&nbsp;
+&nbsp;public interface PipeRepository extends CrudRepository&lt;PipeEntity, Long&gt; {
 &nbsp;}
 </code>
 </pre>
@@ -88,7 +79,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 21:34</div>
+    <div style="float:right;">generated on 2023-06-08 23:14</div>
 </div>
 </body>
 </html>

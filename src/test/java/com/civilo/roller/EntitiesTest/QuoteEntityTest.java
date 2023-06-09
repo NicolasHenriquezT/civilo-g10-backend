@@ -61,7 +61,15 @@ public class QuoteEntityTest {
         quoteEntity.setTotal(135.0f);
         quoteEntity.setSeller(seller);
         quoteEntity.setCurtain(curtain);
-        //quoteEntity.setDate(new Date("Thu Jun 08 20:42:06 CLT 2023"));
+        Date dateFake = new Date();
+        dateFake.setYear(122);
+        dateFake.setMonth(5);
+        dateFake.setDate(1);
+        dateFake.setHours(10);
+        dateFake.setMinutes(30);
+        dateFake.setSeconds(0);
+        quoteEntity.setDate(dateFake);
+
         quoteEntity.setPipe(new PipeEntity(1L, "tubo 10 mm"));
         quoteEntity.setCurrentIVA(new IVAEntity(1L, 19f));
 
@@ -88,7 +96,7 @@ public class QuoteEntityTest {
         assertEquals(0.1f, quoteEntity.getPercentageDiscount());
         assertEquals(0.19f, quoteEntity.getIVA());
         assertEquals(135.0f, quoteEntity.getTotal());
-        //assertEquals(new Date("Thu Jun 08 20:42:06 CLT 2023"), quoteEntity.getDate());
+        assertEquals(dateFake, quoteEntity.getDate());
         assertEquals(seller, quoteEntity.getSeller());
         assertEquals(curtain, quoteEntity.getCurtain());
         assertEquals(new PipeEntity(1L, "tubo 10 mm"), quoteEntity.getPipe());

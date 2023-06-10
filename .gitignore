@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+#Carpeta de persistencia de datos de tabla al ejecutar la aplicacion como contenedor docker
+data/db/
+

@@ -36,5 +36,15 @@ public class IVAService {
         return ivaEntityList.get(size - 1);
     }
 
+    public IVAEntity getIVAByPercentage(float percentage){
+        List<IVAEntity> ivaEntities = (List<IVAEntity>) ivaRepository.findAll();
+        for (int i = 0; i < ivaEntities.size(); i++){
+            if (percentage == ivaEntities.get(i).getIvaPercentage()){
+                return ivaEntities.get(i);
+            }
+        }
+        return null;
+    }
+
 
 }

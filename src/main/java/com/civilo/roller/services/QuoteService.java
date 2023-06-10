@@ -80,7 +80,9 @@ public class QuoteService {
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------//
 
-    //Función
+    //Función que permite extraer/cálcular y settear las variables referentes a la fecha, total en metros
+    //cuadrados (área), valor total de telas (fabrics), valor total de materiales, valor total de mano
+    //de obra (labor), valor total de producción y valor total de venta
     public void calculation(QuoteEntity quote) {
         Date currentDate = new Date();
         quote.setDate(currentDate);
@@ -97,14 +99,10 @@ public class QuoteService {
         quote.setSaleValue((int) Math.ceil((quote.getProductionCost() / (1 - 0.4f)) * quote.getAmount()));
     }
 
-
-
+    // Función que recibe una lista de elementos QuoteEntity para agregarlos a la base de datos uno a uno
     public void createQuotes(List<QuoteEntity> quoteList){
         for (int i = 0; i < quoteList.size(); i ++){
             quoteRepository.save(quoteList.get(i));
         }
     }
-
-
-
 }

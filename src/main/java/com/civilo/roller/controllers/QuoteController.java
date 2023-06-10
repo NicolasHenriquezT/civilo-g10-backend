@@ -1,8 +1,10 @@
 package com.civilo.roller.controllers;
 
 import com.civilo.roller.Entities.QuoteEntity;
+import com.civilo.roller.Entities.QuoteSummaryEntity;
 import com.civilo.roller.services.IVAService;
 import com.civilo.roller.services.QuoteService;
+import com.civilo.roller.services.QuoteSummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ import java.util.List;
 public class QuoteController {
     @Autowired
     QuoteService quoteService;
+
+    @Autowired
+    QuoteSummaryService quoteSummaryService;
 
     @Autowired
     IVAService ivaService;
@@ -44,12 +49,20 @@ public class QuoteController {
 
     // Permite guardar entidad cotizacion.
     @PostMapping()
-    public boolean saveQuotes(@RequestBody List<QuoteEntity> quoteList){
+    public ResponseEntity<Void> saveQuotes(@RequestBody List<QuoteEntity> quoteList){
         for (int i = 0; i < quoteList.size(); i ++) {
             quoteService.calculation(quoteList.get(i));
+            if (quoteList.get(i).getAmount() == 0){
+                quoteList.remove(quoteList.get(i));
+                i--;
+            }
+        }
+        QuoteSummaryEntity quoteSummary = quoteSummaryService.summaryCalculation(quoteList);
+        for (int i = 0; i < quoteList.size(); i ++) {
+            quoteList.get(i).setQuoteSummary(quoteSummary);
         }
         this.quoteService.createQuotes(quoteList);
-        return true;
+        return ResponseEntity.ok().build();
     }
 
     // Permite guardar una nueva cotizacion en el sistema.

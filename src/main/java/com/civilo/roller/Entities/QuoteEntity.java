@@ -40,6 +40,7 @@ public class QuoteEntity {
     private float installationValue;
     private float totalLabor;
 
+    private float percentageDiscount;
     private float productionCost;
     private float saleValue;
 
@@ -57,4 +58,8 @@ public class QuoteEntity {
     @ManyToOne
     @JoinColumn(name = "PIPES")
     PipeEntity pipe;
+
+    @ManyToOne
+    @JoinColumn(name = "QUOTE_SUMMARY")
+    QuoteSummaryEntity quoteSummary;
 }

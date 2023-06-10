@@ -44,12 +44,12 @@ public class QuoteController {
 
     // Permite guardar entidad cotizacion.
     @PostMapping()
-    public QuoteEntity saveQuote(@RequestBody QuoteEntity quote){
-        Date currentDate = new Date();
-        quote.setDate(currentDate);
-        quote.setCurrentIVA(ivaService.getLastIVA());
-        System.out.println(quote);
-        return this.quoteService.createQuote(quote);
+    public boolean saveQuotes(@RequestBody List<QuoteEntity> quoteList){
+        for (int i = 0; i < quoteList.size(); i ++) {
+            quoteService.calculation(quoteList.get(i));
+        }
+        this.quoteService.createQuotes(quoteList);
+        return true;
     }
 
     // Permite guardar una nueva cotizacion en el sistema.

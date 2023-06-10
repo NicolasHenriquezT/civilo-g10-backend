@@ -21,7 +21,6 @@ public class QuoteEntity {
     @Column(unique = true, nullable = false)
     private Long quoteID;
     private int amount;
-    private String description;
 
     private float valueSquareMeters;
     private float width;
@@ -43,9 +42,7 @@ public class QuoteEntity {
 
     private float productionCost;
     private float saleValue;
-    private float percentageDiscount;
-    private float iva;
-    private float total;
+
     private Date date;
 
     //Relaciones
@@ -60,8 +57,4 @@ public class QuoteEntity {
     @ManyToOne
     @JoinColumn(name = "PIPES")
     PipeEntity pipe;
-
-    @ManyToOne
-    @JoinColumn(name = "currentIVA")
-    IVAEntity currentIVA;
 }

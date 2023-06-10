@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
 import com.civilo.roller.exceptions.EntityNotFoundException;
+
+import java.util.Date;
 import java.util.Optional;
 import java.util.List;
 
@@ -78,8 +80,30 @@ public class QuoteService {
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------//
 
+    //Función
+    public void calculation(QuoteEntity quote) {
+        Date currentDate = new Date();
+        quote.setDate(currentDate);
+        quote.setTotalSquareMeters((int) Math.ceil(quote.getHeight() + quote.getWidth()));
+        quote.setTotalFabrics((int) Math.ceil(quote.getHeight() * quote.getValueSquareMeters() * quote.getAmount()));
+        quote.setTotalMaterials((int) Math.ceil((quote.getBracketValue() + quote.getCapValue() + (quote.getPipeValue() *
+                quote.getAmount() * quote.getWidth()) + (quote.getCounterweightValue() * quote.getAmount() *
+                quote.getWidth()) + (quote.getBandValue() * quote.getAmount() * quote.getWidth()) +
+                (quote.getChainValue()) * quote.getAmount() * quote.getHeight()) *
+                quote.getAmount()));
+        quote.setTotalLabor((int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));
+        quote.setProductionCost((int) Math.ceil((quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics()) *
+                quote.getAmount()));
+        quote.setSaleValue((int) Math.ceil((quote.getProductionCost() / (1 - 0.4f)) * quote.getAmount()));
+    }
 
 
+
+    public void createQuotes(List<QuoteEntity> quoteList){
+        for (int i = 0; i < quoteList.size(); i ++){
+            quoteRepository.save(quoteList.get(i));
+        }
+    }
 
 
 

@@ -1,7 +1,6 @@
 INSERT INTO quotes (
   quoteID,
   amount,
-  description,
   value_square_meters,
   width,
   height,
@@ -19,19 +18,13 @@ INSERT INTO quotes (
   total_labor,
   production_cost,
   sale_value,
-  percentage_discount,
-  iva,
-  total,
   date,
   seller_sellerid,
   curtains,
-  pipes,
-  currentIVA
-)
+  pipes)
 VALUES (
   1,
   40,
-  'Descripción',
   12500,
   1.00,
   1.00,
@@ -49,11 +42,7 @@ VALUES (
   7000,
   27590,
   45983,
-  0.0,
-  19,
-  54719,
   '2021-09-06 15:30:45',
   3,
   1,
-  5,
-  2);
+  5);

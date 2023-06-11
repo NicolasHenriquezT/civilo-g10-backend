@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   contenedor-mysql: # Nombre de contenedor MYSQL
+    container_name: contenedor-mysql
     image: mysql
     restart: always
     volumes:

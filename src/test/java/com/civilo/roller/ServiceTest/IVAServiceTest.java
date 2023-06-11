@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class IVAServiceTest {
@@ -49,5 +49,41 @@ public class IVAServiceTest {
         float result = ivaService.getIVAPercentage();
 
         assertEquals(0.0f, result); // Verifica que el resultado sea 0 cuando la lista está vacía
+    }
+
+    @Test
+    public void testGetLastIVA() {
+        List<IVAEntity> ivaEntityList = new ArrayList<>();
+        ivaEntityList.add(new IVAEntity(1L, 10f));
+        ivaEntityList.add(new IVAEntity(2L, 20f));
+        ivaEntityList.add(new IVAEntity(3L, 30f));
+        when(ivaRepository.findAll()).thenReturn(ivaEntityList);
+        IVAEntity result = ivaService.getLastIVA();
+        assertNotNull(result);
+        assertEquals(30f, result.getIvaPercentage());
+    }
+
+    @Test
+    public void testGetIVAByPercentage_NonExistingPercentage() {
+        List<IVAEntity> ivaEntityList = new ArrayList<>();
+        ivaEntityList.add(new IVAEntity(1L, 10f));
+        ivaEntityList.add(new IVAEntity(2L, 20f));
+        ivaEntityList.add(new IVAEntity(3L, 30f));
+        when(ivaRepository.findAll()).thenReturn(ivaEntityList);
+        IVAEntity result = ivaService.getIVAByPercentage(0.4f);
+
+        assertNull(result);
+    }
+
+    @Test
+    public void testGetIVAByPercentage_ExistingPercentage() {
+        List<IVAEntity> ivaEntityList = new ArrayList<>();
+        ivaEntityList.add(new IVAEntity(1L, 10f));
+        ivaEntityList.add(new IVAEntity(2L, 20f));
+        ivaEntityList.add(new IVAEntity(3L, 30f));
+        when(ivaRepository.findAll()).thenReturn(ivaEntityList);
+        IVAEntity result = ivaService.getIVAByPercentage(30f);
+        assertNotNull(result);
+        assertEquals(30f,result.getIvaPercentage());
     }
 }

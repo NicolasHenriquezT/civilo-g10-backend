@@ -2,6 +2,7 @@ package com.civilo.roller.EntitiesTest;
 
 import com.civilo.roller.Entities.*;
 import com.civilo.roller.services.RequestService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,10 +36,8 @@ public class QuoteEntityTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
-
         quoteEntity.setQuoteID(Long.valueOf("9999"));
         quoteEntity.setAmount(1);
-        quoteEntity.setDescription("Description");
         quoteEntity.setValueSquareMeters(10.0f);
         quoteEntity.setWidth(5.0f);
         quoteEntity.setHeight(2.5f);
@@ -57,8 +56,6 @@ public class QuoteEntityTest {
         quoteEntity.setProductionCost(100.0f);
         quoteEntity.setSaleValue(150.0f);
         quoteEntity.setPercentageDiscount(0.1f);
-        quoteEntity.setIva(0.19f);
-        quoteEntity.setTotal(135.0f);
         quoteEntity.setSeller(seller);
         quoteEntity.setCurtain(curtain);
         Date dateFake = new Date();
@@ -69,13 +66,10 @@ public class QuoteEntityTest {
         dateFake.setMinutes(30);
         dateFake.setSeconds(0);
         quoteEntity.setDate(dateFake);
-
         quoteEntity.setPipe(new PipeEntity(1L, "tubo 10 mm"));
-        quoteEntity.setCurrentIVA(new IVAEntity(1L, 19f));
-
+        quoteEntity.setQuoteSummary(new QuoteSummaryEntity());
         assertEquals(Long.valueOf("9999"), quoteEntity.getQuoteID());
         assertEquals(1, quoteEntity.getAmount());
-        assertEquals("Description", quoteEntity.getDescription());
         assertEquals(10.0f, quoteEntity.getValueSquareMeters());
         assertEquals(5.0f, quoteEntity.getWidth());
         assertEquals(2.5f, quoteEntity.getHeight());
@@ -94,15 +88,30 @@ public class QuoteEntityTest {
         assertEquals(100.0f, quoteEntity.getProductionCost());
         assertEquals(150.0f, quoteEntity.getSaleValue());
         assertEquals(0.1f, quoteEntity.getPercentageDiscount());
-        assertEquals(0.19f, quoteEntity.getIva());
-        assertEquals(135.0f, quoteEntity.getTotal());
         assertEquals(dateFake, quoteEntity.getDate());
         assertEquals(seller, quoteEntity.getSeller());
         assertEquals(curtain, quoteEntity.getCurtain());
         assertEquals(new PipeEntity(1L, "tubo 10 mm"), quoteEntity.getPipe());
-        assertEquals(new IVAEntity(1L, 19f), quoteEntity.getCurrentIVA());
+        assertEquals(new QuoteSummaryEntity(), quoteEntity.getQuoteSummary());
     }
 
+    @Test
+    public void testDataMethods() {
+        IVAEntity ivaEntity = new IVAEntity();
+        Long ivaID = 1L;
+        float ivaPercentage = 0.15f;
+        ivaEntity.setIvaID(ivaID);
+        ivaEntity.setIvaPercentage(ivaPercentage);
+        Assertions.assertEquals(ivaID, ivaEntity.getIvaID(), "Error en el método getIvaID()");
+        Assertions.assertEquals(ivaPercentage, ivaEntity.getIvaPercentage(), "Error en el método getIvaPercentage()");
+        IVAEntity anotherIvaEntity = new IVAEntity();
+        anotherIvaEntity.setIvaID(ivaID);
+        anotherIvaEntity.setIvaPercentage(ivaPercentage);
+        Assertions.assertEquals(ivaEntity, anotherIvaEntity, "Error en el método equals()");
+        Assertions.assertEquals(ivaEntity.hashCode(), anotherIvaEntity.hashCode(), "Error en el método hashCode()");
+        String expectedToString = "IVAEntity(ivaID=" + ivaID + ", ivaPercentage=" + ivaPercentage + ")";
+        Assertions.assertEquals(expectedToString, ivaEntity.toString(), "Error en el método toString()");
+    }
 
 
 }

@@ -41,7 +41,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f,1f, new Date(), seller, curtain, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null);
 
         List<QuoteEntity> quoteList = new ArrayList<>();
         quoteList.add(quoteEntity);
@@ -51,7 +51,6 @@ public class QuoteServiceTest {
 
         verify(quoteRepository, times(1)).findAll();
         assertEquals(1, result.size());
-        assertEquals("Description", result.get(0).getDescription());
     }
 
     @Test
@@ -64,7 +63,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null);
 
         when(quoteRepository.findById(anyLong())).thenReturn(Optional.of(quoteEntity));
 
@@ -72,7 +71,6 @@ public class QuoteServiceTest {
 
         verify(quoteRepository, times(1)).findById(anyLong());
         assertTrue(result.isPresent());
-        assertEquals("Description", result.get().getDescription());
     }
 
     @Test
@@ -85,7 +83,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null);
 
         when(quoteRepository.save(any(QuoteEntity.class))).thenReturn(quoteEntity);
 
@@ -93,7 +91,6 @@ public class QuoteServiceTest {
 
         verify(quoteRepository, times(1)).save(any(QuoteEntity.class));
         assertNotNull(result);
-        assertEquals("Description", result.getDescription());
     }
 
     @Test
@@ -106,7 +103,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(Long.valueOf("9999"), 1, "Description", 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 15.0f, 60.0f, 10000f, new Date(), seller, curtain, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null);
 
         when(quoteRepository.save(any(QuoteEntity.class))).thenReturn(quoteEntity);
 
@@ -114,7 +111,6 @@ public class QuoteServiceTest {
 
         verify(quoteRepository, times(1)).save(any(QuoteEntity.class));
         assertNotNull(result);
-        assertEquals("Description", result.getDescription());
     }
 
     @Test
@@ -137,5 +133,41 @@ public class QuoteServiceTest {
         boolean result = quoteService.existsQuoteById(id);
         verify(quoteRepository, times(1)).findById(id);
         assertTrue(result);
+    }
+
+    @Test
+    public void calculation_UpdatesQuoteEntityCorrectly() {
+        QuoteEntity quote = new QuoteEntity();
+        quote.setHeight(1f);
+        quote.setWidth(1f);
+        quote.setValueSquareMeters(12500f);
+        quote.setAmount(1);
+        quote.setBracketValue(2500f);
+        quote.setCapValue(1400f);
+        quote.setPipeValue(2300f);
+        quote.setCounterweightValue(1400f);
+        quote.setBandValue(300f);
+        quote.setChainValue(190f);
+        quote.setAssemblyValue(2000f);
+        quote.setInstallationValue(5000f);
+        QuoteService quoteService = new QuoteService();
+        quoteService.calculation(quote);
+        assertNotNull(quote.getDate());
+        assertEquals(2f, quote.getTotalSquareMeters());
+        assertEquals(12500f, quote.getTotalFabrics());
+        assertEquals(8090f, quote.getTotalMaterials());
+        assertEquals(7000f, quote.getTotalLabor());
+        assertEquals(27590f, quote.getProductionCost());
+        assertEquals(45984f, quote.getSaleValue());
+    }
+
+    @Test
+    public void createQuotes_SavesQuoteEntitiesToRepository() {
+        List<QuoteEntity> quoteList = new ArrayList<>();
+        quoteList.add(new QuoteEntity());
+        quoteList.add(new QuoteEntity());
+        quoteList.add(new QuoteEntity());
+        quoteService.createQuotes(quoteList);
+        Mockito.verify(quoteRepository, times(3)).save(Mockito.any(QuoteEntity.class));
     }
 }

@@ -49,7 +49,7 @@ public class QuoteController {
 
     // Permite guardar entidad cotizacion.
     @PostMapping()
-    public ResponseEntity<Void> saveQuotes(@RequestBody List<QuoteEntity> quoteList){
+    public ResponseEntity<QuoteSummaryEntity> saveQuotes(@RequestBody List<QuoteEntity> quoteList){
         for (int i = 0; i < quoteList.size(); i ++) {
             quoteService.calculation(quoteList.get(i));
             if (quoteList.get(i).getAmount() == 0){
@@ -62,7 +62,7 @@ public class QuoteController {
             quoteList.get(i).setQuoteSummary(quoteSummary);
         }
         this.quoteService.createQuotes(quoteList);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(quoteSummary);
     }
 
     // Permite guardar una nueva cotizacion en el sistema.

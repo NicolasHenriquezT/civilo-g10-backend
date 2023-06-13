@@ -22,7 +22,8 @@ public class SellerEntity extends UserEntity {
     private String rut;
     private String bank;
     private String bankAccountType;
-    private int bankAccountNumber; 
+    private Integer bankAccountNumber; 
+    
 
     @ElementCollection
     private List<Integer> coverageID;

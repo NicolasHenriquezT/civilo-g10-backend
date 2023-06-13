@@ -2,6 +2,7 @@ package com.civilo.roller.Entities;
 
 import lombok.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +29,8 @@ public class UserEntity {
     private String commune;
     private LocalDate birthDate;
     private int age;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     //Relaciones
     @ManyToOne

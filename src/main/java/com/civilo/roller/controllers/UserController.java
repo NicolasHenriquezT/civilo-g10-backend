@@ -87,7 +87,7 @@ public class UserController {
         user.getRole().setRoleID(IdRol);
 
         if (accountType.equals("Vendedor")){
-            SellerEntity seller = new SellerEntity(null, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getCommune(), user.getBirthDate(), user.getAge(), user.getRole(), null, false, null, null, null, 0);
+            SellerEntity seller = new SellerEntity(null, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getCommune(), user.getBirthDate(), user.getAge(), user.getStartTime(), user.getEndTime(), user.getRole(), null, false, null, null, null, 0);
             sellerService.saveSeller(seller);
             System.out.println("GUARDADO CON EXITO\n");
             return ResponseEntity.ok().build();

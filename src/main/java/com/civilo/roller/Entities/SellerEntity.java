@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -37,9 +38,9 @@ public class SellerEntity extends UserEntity {
     //Constructor
     public SellerEntity(Long userID, String name, String surname, String email,
                         String password, String phoneNumber, String commune,
-                        LocalDate birthDate, int age, RoleEntity role, String companyName, boolean disponibility,
+                        LocalDate birthDate, int age, LocalTime startTime, LocalTime endTime, RoleEntity role, String companyName, boolean disponibility,
                         String rut, String bank, String bankAccountType, int bankAccountNumber) {
-        super(userID, name, surname, email, password, phoneNumber, commune, birthDate, age, role);
+        super(userID, name, surname, email, password, phoneNumber, commune, birthDate, age, startTime, endTime, role);
         this.companyName = companyName;
         this.disponibility = disponibility;
         this.rut = rut;

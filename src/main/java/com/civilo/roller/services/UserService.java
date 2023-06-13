@@ -55,6 +55,8 @@ public class UserService {
         existingUser.setPassword(user.getPassword());
         existingUser.setPhoneNumber(user.getPhoneNumber());
         existingUser.setCommune(user.getCommune());
+        existingUser.setStartTime(user.getStartTime());
+        existingUser.setEndTime(user.getEndTime());
         //existingUser.setBirthDate(user.getBirthDate()); //ESTO NO LO PUEDE EDITAR
         //existingUser.setAge(user.getAge());  //ESTO NO LO PUEDE EDITAR
         
@@ -89,7 +91,7 @@ public class UserService {
             return user;
         }
         return null;
-    }
+    } 
      
         
 

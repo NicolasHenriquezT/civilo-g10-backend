@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,9 +52,11 @@ public class SellerControllerTest {
 
     @Test
     void testGetSellers() {
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
         List<SellerEntity> expectedSellers = new ArrayList<>();
-        expectedSellers.add(new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, new RoleEntity(1L, "Cliente"), "Company", true));
-        expectedSellers.add(new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"), "Company", true));
+        expectedSellers.add(new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"), "Company", true, "012345678", "Banco 1", "Tipo de cuenta", 1));
+        expectedSellers.add(new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"), "Company", true, "01234578", "Banco 1", "Tipo de cuenta", 2));
         when(sellerService.getSellers()).thenReturn(expectedSellers);
         List<SellerEntity> actualSeller = sellerController.getSellers();
         assertEquals(expectedSellers, actualSeller);
@@ -61,7 +64,9 @@ public class SellerControllerTest {
 
     @Test
     void testSaveSeller() {
-        SellerEntity expectedSeller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"), "Company", true);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        SellerEntity expectedSeller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"), "Company", true, "rut", "banco", "cuenta", 1);
         when(sellerService.saveSeller(Mockito.any(SellerEntity.class))).thenReturn(expectedSeller);
         SellerEntity actualSeller = sellerController.saveSeller(new SellerEntity());
         assertEquals(expectedSeller, actualSeller);
@@ -70,7 +75,9 @@ public class SellerControllerTest {
     @Test
     public void testLoginSuccessful() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "Company", true);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "Company", true, "rut", "banco", "cuenta", 1);
         when(sellerService.validateSeller(Mockito.anyString(), Mockito.anyString())).thenReturn(seller);
         when(request.getSession()).thenReturn(session);
         ResponseEntity<?> response = sellerController.login(seller, request);
@@ -81,7 +88,9 @@ public class SellerControllerTest {
     @Test
     public void testLoginFailed() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "Company", true);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "Company", true, "rut", "banco", "cuenta", 1);
         when(sellerService.validateSeller(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
         ResponseEntity<?> response = sellerController.login(seller, request);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
@@ -91,7 +100,9 @@ public class SellerControllerTest {
     @Test
     public void sellerInformationUpdateCompanyNameTest() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
         ResponseEntity<?> responseEntity = sellerController.sellerInformationUpdateCompanyName(seller);
         verify(sellerService, times(1)).updateCoverageIdAndCompanyNameSellerByEmail(seller.getEmail(), seller.getCompanyName(), seller.getCoverageID());
         assertEquals(200, responseEntity.getStatusCodeValue());
@@ -100,7 +111,9 @@ public class SellerControllerTest {
     @Test
     public void getSellerByIdTest() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
         when(sellerService.getSellerById(anyLong())).thenReturn(Optional.of(seller));
         ResponseEntity<SellerEntity> response = sellerController.getSellerById(1L);
         assertEquals(HttpStatus.OK, response.getStatusCode());

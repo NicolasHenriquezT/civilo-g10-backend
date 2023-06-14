@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,9 @@ public class UserServiceTest {
 
     @Test
     void saveUser(){
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         when(userRepository.save(user)).thenReturn(user);
         final UserEntity currentResponse = userService.createUser(user);
         assertEquals(user,currentResponse);
@@ -44,7 +47,9 @@ public class UserServiceTest {
 
     @Test
     void getUsers(){
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         List<UserEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(user);
         when((List<UserEntity>) userRepository.findAll()).thenReturn(expectedAnswer);
@@ -54,7 +59,9 @@ public class UserServiceTest {
 
     @Test
     void getUserById(){
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         List<UserEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(user);
         when(userRepository.findById(Long.valueOf("9999"))).thenReturn(Optional.of(user));
@@ -64,7 +71,9 @@ public class UserServiceTest {
 
     @Test
     void validateUser(){
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
         user.setPassword("p");
         UserEntity currentResponse = userService.validateUser(user.getEmail(), user.getPassword());
@@ -151,7 +160,9 @@ public class UserServiceTest {
 
     @Test
     void deleteUsers_shouldCallDeleteAllMethodInUserRepository() {
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20,  new RoleEntity(1L, "Cliente"));
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         userService.deleteUsers();
         verify(userRepository, times(1)).deleteAll();
     }

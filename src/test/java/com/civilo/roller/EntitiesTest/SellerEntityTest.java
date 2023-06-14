@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,9 @@ public class SellerEntityTest {
         boolean disponibility = true;
         List<Integer> coverageID = Arrays.asList(1, 2, 3);
         List<QuoteEntity> quoteEntities = new ArrayList<>();
-        SellerEntity seller = new SellerEntity(userID, name, surname, email, password, phoneNumber, commune, birthDate, age, role, companyName, disponibility);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        SellerEntity seller = new SellerEntity(userID, name, surname, email, password, phoneNumber, commune, birthDate, age, startTime, endTime, role, companyName, disponibility, "rut", "banco", "cuenta", 1);
         seller.setUserID(1L);
         seller.setName("John");
         seller.setSurname("Doe");
@@ -59,6 +62,12 @@ public class SellerEntityTest {
         assertEquals(disponibility, seller.isDisponibility());
         assertEquals(coverageID, seller.getCoverageID());
         assertEquals(quoteEntities, seller.getQuoteEntities());
+        assertEquals(startTime, seller.getStartTime());
+        assertEquals(endTime, seller.getEndTime());
+        assertEquals("rut", seller.getRut());
+        assertEquals("banco", seller.getBank());
+        assertEquals("cuenta", seller.getBankAccountType());
+        assertEquals(1, seller.getBankAccountNumber());
     }
 
     @Test

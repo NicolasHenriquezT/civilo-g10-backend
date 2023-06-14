@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,10 +35,12 @@ public class QuoteServiceTest {
     @Test
     public void getQuotesTest() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
@@ -56,10 +59,12 @@ public class QuoteServiceTest {
     @Test
     public void getQuoteByIdTest() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
@@ -76,10 +81,12 @@ public class QuoteServiceTest {
     @Test
     public void saveQuoteTest() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
@@ -96,10 +103,12 @@ public class QuoteServiceTest {
     @Test
     public void createQuoteTest() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role);
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, role, "companyName", true);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");

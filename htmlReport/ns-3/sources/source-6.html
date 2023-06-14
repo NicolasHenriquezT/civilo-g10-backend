@@ -62,7 +62,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (3/3)
+    (15/15)
   </span>
 </td>
 </tr>
@@ -77,11 +77,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.controllers;
 &nbsp;
 &nbsp;import com.civilo.roller.Entities.QuoteEntity;
+&nbsp;import com.civilo.roller.Entities.QuoteSummaryEntity;
+&nbsp;import com.civilo.roller.services.IVAService;
 &nbsp;import com.civilo.roller.services.QuoteService;
+&nbsp;import com.civilo.roller.services.QuoteSummaryService;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.web.bind.annotation.*;
 &nbsp;import org.springframework.http.ResponseEntity;
 &nbsp;import org.springframework.http.HttpStatus;
+&nbsp;
+&nbsp;import java.util.Date;
 &nbsp;import java.util.Optional;
 &nbsp;import java.util.List;
 &nbsp;
@@ -91,6 +96,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;public class QuoteController {</b>
 &nbsp;    @Autowired
 &nbsp;    QuoteService quoteService;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    QuoteSummaryService quoteSummaryService;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    IVAService ivaService;
 &nbsp;
 &nbsp;    // Permite obtener todas las cotizaciones del sistema.
 &nbsp;    @GetMapping()
@@ -114,8 +125,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    // Permite guardar entidad cotizacion.
 &nbsp;    @PostMapping()
-&nbsp;    public QuoteEntity saveQuote(@RequestBody QuoteEntity quote){
-<b class="fc">&nbsp;        return this.quoteService.createQuote(quote);</b>
+&nbsp;    public ResponseEntity&lt;QuoteSummaryEntity&gt; saveQuotes(@RequestBody List&lt;QuoteEntity&gt; quoteList){
+<b class="fc">&nbsp;        for (int i = 0; i &lt; quoteList.size(); i ++) {</b>
+<b class="fc">&nbsp;            if (quoteList.get(i).getAmount() == 0){</b>
+<b class="fc">&nbsp;                quoteList.remove(quoteList.get(i));</b>
+<b class="fc">&nbsp;                i--;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        for (int i = 0; i &lt; quoteList.size(); i ++) {</b>
+<b class="fc">&nbsp;            System.out.println(&quot;-------------------------------\n&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(quoteList.get(i));</b>
+<b class="fc">&nbsp;            quoteService.calculation(quoteList.get(i));</b>
+&nbsp;        }
+<b class="fc">&nbsp;        QuoteSummaryEntity quoteSummary = quoteSummaryService.summaryCalculation(quoteList);</b>
+<b class="fc">&nbsp;        for (int i = 0; i &lt; quoteList.size(); i ++) {</b>
+<b class="fc">&nbsp;            quoteList.get(i).setQuoteSummary(quoteSummary);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.quoteService.createQuotes(quoteList);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(quoteSummary);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Permite guardar una nueva cotizacion en el sistema.
@@ -194,7 +221,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 23:14</div>
+    <div style="float:right;">generated on 2023-06-14 17:09</div>
 </div>
 </body>
 </html>

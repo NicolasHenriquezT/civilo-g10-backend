@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > StatusService</title>
+  <title>Coverage Report > SellerService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.services</a>
 </div>
 
-<h1>Coverage Summary for Class: StatusService (com.civilo.roller.services)</h1>
+<h1>Coverage Summary for Class: SellerService (com.civilo.roller.services)</h1>
 
 <table class="coverageStats">
 
@@ -37,13 +37,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">StatusService</td>
+  <td class="name">SellerService</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (10/10)
+    (9/9)
   </span>
 </td>
 <td class="coverageStat">
@@ -51,45 +51,42 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (14/14)
+    (17/17)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$400HEfCa</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$1xqqoIqi</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$c1fuu6z1</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$auYR3PpM</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$g5blLptd</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$eEkeFC0j</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$H3uWFbl5</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$EutFYwDK</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$LP5If93d</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$HPfA2oKD</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$mNQbsmdp</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$I8p3hEXo</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$QArFzA8q</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$K6hEY3iJ</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$ri6y8H1y</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$uXWxOGp9</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$rQIAgtD4</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$wWJJRHlq</td>
   </tr>
   <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$SEBHqB8q</td>
-  </tr>
-  <tr>
-    <td class="name">StatusService$MockitoMock$rcu6oICp$auxiliary$t2JfPshF</td>
+    <td class="name">SellerService$MockitoMock$0MWg3BCZ$auxiliary$yhICQxvE</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -98,7 +95,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (10/10)
+    (9/9)
   </span>
 </td>
 <td class="coverageStat">
@@ -106,7 +103,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (14/14)
+    (17/17)
   </span>
 </td>
 </tr>
@@ -119,76 +116,76 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.services;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.StatusEntity;
-&nbsp;import com.civilo.roller.repositories.StatusRepository;
+&nbsp;import com.civilo.roller.Entities.SellerEntity;
+&nbsp;import com.civilo.roller.Entities.UserEntity;
+&nbsp;import com.civilo.roller.repositories.SellerRepository;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Service;
-&nbsp;import com.civilo.roller.exceptions.EntityNotFoundException;
-&nbsp;import java.util.List;
 &nbsp;import java.util.Optional;
+&nbsp;import java.util.List;
 &nbsp;
 &nbsp;@Service
-<b class="fc">&nbsp;public class StatusService {</b>
+<b class="fc">&nbsp;public class SellerService {</b>
 &nbsp;    @Autowired
-&nbsp;    StatusRepository statusRepository;
+&nbsp;    SellerRepository sellerRepository;
 &nbsp;
-&nbsp;    // Get All
-&nbsp;    // El siguiente método retorna un listado el cual contiene TODA la información asociada a los estados
-&nbsp;    public List&lt;StatusEntity&gt; getStatus(){
-<b class="fc">&nbsp;        return (List&lt;StatusEntity&gt;) statusRepository.findAll();</b>
+&nbsp;    // Get all
+&nbsp;    // Permite obtener un listado con toda la informacion asociada a los vendedores.
+&nbsp;    public List&lt;SellerEntity&gt; getSellers(){
+<b class="fc">&nbsp;        return (List&lt;SellerEntity&gt;) sellerRepository.findAll();</b>
 &nbsp;    }
-&nbsp;    
+&nbsp;
 &nbsp;    // Get by id
-&nbsp;    // Permite obtener la informacion de un estado en especifico.
-&nbsp;    public Optional&lt;StatusEntity&gt; getStatusById(Long id){
-<b class="fc">&nbsp;        return statusRepository.findById(id);</b>
-&nbsp;    }
+&nbsp;    // Permite obtener la informacion de un vendedor en especifico.
+&nbsp;    public Optional&lt;SellerEntity&gt; getSellerById(Long id){
+<b class="fc">&nbsp;        return sellerRepository.findById(id);</b>
+&nbsp;    } 
 &nbsp;
 &nbsp;    // Create
-&nbsp;    // Permite guardar un objeto del tipo &quot;StatusEntity&quot; en la base de datos.
-&nbsp;    public StatusEntity createStatus(StatusEntity status){   
-<b class="fc">&nbsp;        return statusRepository.save(status);  </b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Permite verificar si existe el tipo de cuenta ingresado.
-&nbsp;    public Optional&lt;StatusEntity&gt; validateStatusName(String statusName){
-<b class="fc">&nbsp;        return Optional.ofNullable(statusRepository.findByStatusName(statusName));  </b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Update
-&nbsp;    // Permite actualizar los datos de un objeto del tipo &quot;StatusEntity&quot; en la base de datos.
-&nbsp;    public StatusEntity updateStatus(Long statusID, StatusEntity status){
-<b class="fc">&nbsp;        StatusEntity existingStatus = statusRepository.findById(statusID)</b>
-<b class="fc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Estado no encontrado con el ID: &quot; + statusID));</b>
-&nbsp;
-<b class="fc">&nbsp;        existingStatus.setStatusName(status.getStatusName());</b>
-&nbsp;        
-<b class="fc">&nbsp;        StatusEntity updatedStatus = statusRepository.save(existingStatus);</b>
-<b class="fc">&nbsp;        return updatedStatus;</b>
+&nbsp;    // Permite guardar un objeto del tipo &quot;SellerEntity&quot; en la base de datos.
+&nbsp;    public SellerEntity saveSeller(SellerEntity seller){
+<b class="fc">&nbsp;        return sellerRepository.save(seller);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Delete all
-&nbsp;    // Permite eliminar todos los estados de un sistema.
-&nbsp;    public void deleteStatus() {
-<b class="fc">&nbsp;        statusRepository.deleteAll();</b>
+&nbsp;    // Permite eliminar todos los vendedores de un sistema.
+&nbsp;    public void deleteSellers() {
+<b class="fc">&nbsp;        sellerRepository.deleteAll();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Delete by id
-&nbsp;    // Permite eliminar un estado en especifico del sistema.
-&nbsp;    public void deleteStatusById(Long id){
-<b class="fc">&nbsp;        statusRepository.deleteById(id);</b>
+&nbsp;    // Permite eliminar un vendedor en especifico del sistema.
+&nbsp;    public void deleteSellerById(Long id){
+<b class="fc">&nbsp;        sellerRepository.deleteById(id);</b>
 &nbsp;    }
 &nbsp;    
-&nbsp;    // Permite verificar si existe un estado en el sistema, segun el id ingresado.
-&nbsp;    public boolean existsStatusById(Long id){
-<b class="fc">&nbsp;        return statusRepository.findById(id).isPresent();</b>
+&nbsp;    // Permite verificar si existe un vendedor en el sistema, segun el id ingresado.
+&nbsp;    public boolean existsSellerById(Long id){
+<b class="fc">&nbsp;        return sellerRepository.findById(id).isPresent();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    //Se obtiene la ID del estado dependiendo del nombre del estado
-&nbsp;    public Long getStatusIdByStatusName(String statusName){
-<b class="fc">&nbsp;        return statusRepository.findIdByStatusName(statusName);</b>
+&nbsp;    //-----------------------------------------------------------------------------------------------------------------------------------------------//
 &nbsp;
+&nbsp;    // Login
+&nbsp;    // Permite verificar si el email y password de un usuario son correctos.
+&nbsp;    public SellerEntity validateSeller(String email, String password){
+<b class="fc">&nbsp;        SellerEntity seller = sellerRepository.findByEmail(email);</b>
+<b class="fc">&nbsp;        if (seller != null &amp;&amp; seller.getPassword().equals(password)){</b>
+<b class="fc">&nbsp;            return seller;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return null;</b>
 &nbsp;    }
+&nbsp;
+&nbsp;    // Permite actualizar el id de cobertura y el nombre de compañia
+&nbsp;    public SellerEntity updateCoverageIdAndCompanyNameSellerByEmail(String email, String companyName, List&lt;Integer&gt; coverageID){
+<b class="fc">&nbsp;        email = email.replaceAll(&quot;\&quot;&quot;, &quot;&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(email);</b>
+<b class="fc">&nbsp;        SellerEntity seller = sellerRepository.findByEmail(email);</b>
+<b class="fc">&nbsp;        seller.setCompanyName(companyName);</b>
+<b class="fc">&nbsp;        seller.setCoverageID(coverageID);</b>
+<b class="fc">&nbsp;        return sellerRepository.save(seller);</b>
+&nbsp;    }
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -213,7 +210,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 23:14</div>
+    <div style="float:right;">generated on 2023-06-14 17:09</div>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > RoleRepository</title>
+  <title>Coverage Report > PermissionRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.repositories</a>
 </div>
 
-<h1>Coverage Summary for Class: RoleRepository (com.civilo.roller.repositories)</h1>
+<h1>Coverage Summary for Class: PermissionRepository (com.civilo.roller.repositories)</h1>
 
 <table class="coverageStats">
 
@@ -29,13 +29,13 @@ Current scope:     <a href="../../index.html">all classes</a>
   <th class="name">Class</th>
 </tr>
   <tr>
-    <td class="name">RoleRepository$MockitoMock$4Fr4auPv</td>
+    <td class="name">PermissionRepository$MockitoMock$SrsV6WTM</td>
   </tr>
   <tr>
-    <td class="name">RoleRepository$MockitoMock$4Fr4auPv$auxiliary$5fmqNe1t</td>
+    <td class="name">PermissionRepository$MockitoMock$SrsV6WTM$auxiliary$4pfVpDrc</td>
   </tr>
   <tr>
-    <td class="name">RoleRepository$MockitoMock$4Fr4auPv$auxiliary$OMdnBQfB</td>
+    <td class="name">PermissionRepository$MockitoMock$SrsV6WTM$auxiliary$sWIsVA4q</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -49,21 +49,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.repositories;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.RoleEntity;
-&nbsp;
-&nbsp;import org.springframework.data.jpa.repository.Query;
+&nbsp;import com.civilo.roller.Entities.PermissionEntity;
 &nbsp;import org.springframework.data.repository.CrudRepository;
-&nbsp;import org.springframework.data.repository.query.Param;
 &nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
 &nbsp;@Repository
-&nbsp;public interface RoleRepository extends CrudRepository&lt;RoleEntity, Long&gt; {
+&nbsp;public interface PermissionRepository extends CrudRepository&lt;PermissionEntity, Long&gt; {
 &nbsp;
-&nbsp;    //Se consulta la id de un rol especifico
-&nbsp;    @Query(value = &quot;select roleid idrol from roles r where r.account_type = :accountType&quot;, nativeQuery = true)
-&nbsp;    Long findIdByAccountType(@Param(&quot;accountType&quot;) String accountType);
-&nbsp;
-&nbsp;    RoleEntity findByAccountType(String accountType);
+&nbsp;    PermissionEntity findByPermission(String permission);
 &nbsp;
 &nbsp;}
 </code>
@@ -89,7 +82,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 23:14</div>
+    <div style="float:right;">generated on 2023-06-14 17:09</div>
 </div>
 </body>
 </html>

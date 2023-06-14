@@ -163,7 +163,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        user.getRole().setRoleID(IdRol);</b>
 &nbsp;
 <b class="fc">&nbsp;        if (accountType.equals(&quot;Vendedor&quot;)){</b>
-<b class="fc">&nbsp;            SellerEntity seller = new SellerEntity(null, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getCommune(), user.getBirthDate(), user.getAge(), user.getRole(), null, false);</b>
+<b class="fc">&nbsp;            SellerEntity seller = new SellerEntity(null, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getCommune(), user.getBirthDate(), user.getAge(), user.getStartTime(), user.getEndTime(), user.getRole(), null, false, null, null, null, 0);</b>
 <b class="fc">&nbsp;            sellerService.saveSeller(seller);</b>
 <b class="fc">&nbsp;            System.out.println(&quot;GUARDADO CON EXITO\n&quot;);</b>
 <b class="fc">&nbsp;            return ResponseEntity.ok().build();</b>
@@ -318,7 +318,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 23:14</div>
+    <div style="float:right;">generated on 2023-06-14 17:09</div>
 </div>
 </body>
 </html>

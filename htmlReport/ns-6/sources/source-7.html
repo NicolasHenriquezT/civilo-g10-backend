@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > PermissionRepository</title>
+  <title>Coverage Report > StatusRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.repositories</a>
 </div>
 
-<h1>Coverage Summary for Class: PermissionRepository (com.civilo.roller.repositories)</h1>
+<h1>Coverage Summary for Class: StatusRepository (com.civilo.roller.repositories)</h1>
 
 <table class="coverageStats">
 
@@ -29,13 +29,13 @@ Current scope:     <a href="../../index.html">all classes</a>
   <th class="name">Class</th>
 </tr>
   <tr>
-    <td class="name">PermissionRepository$MockitoMock$VDuLPjgG</td>
+    <td class="name">StatusRepository$MockitoMock$DZMsi9WQ</td>
   </tr>
   <tr>
-    <td class="name">PermissionRepository$MockitoMock$VDuLPjgG$auxiliary$GT4IANuv</td>
+    <td class="name">StatusRepository$MockitoMock$DZMsi9WQ$auxiliary$Jg5HiBAm</td>
   </tr>
   <tr>
-    <td class="name">PermissionRepository$MockitoMock$VDuLPjgG$auxiliary$wca3tz6K</td>
+    <td class="name">StatusRepository$MockitoMock$DZMsi9WQ$auxiliary$ZrsaIQPS</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -49,14 +49,20 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.repositories;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.PermissionEntity;
+&nbsp;import com.civilo.roller.Entities.StatusEntity;
+&nbsp;import org.springframework.data.jpa.repository.Query;
 &nbsp;import org.springframework.data.repository.CrudRepository;
+&nbsp;import org.springframework.data.repository.query.Param;
 &nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
 &nbsp;@Repository
-&nbsp;public interface PermissionRepository extends CrudRepository&lt;PermissionEntity, Long&gt; {
+&nbsp;public interface StatusRepository extends CrudRepository&lt;StatusEntity, Long&gt; {
 &nbsp;
-&nbsp;    PermissionEntity findByPermission(String permission);
+&nbsp;    //Se consulta la id de un estado especifico
+&nbsp;    @Query(value = &quot;select statusid idstatus from status r where r.status_name = :statusName&quot;, nativeQuery = true)
+&nbsp;    Long findIdByStatusName(@Param(&quot;statusName&quot;) String statusName);
+&nbsp;    
+&nbsp;    StatusEntity findByStatusName(String statusName);
 &nbsp;
 &nbsp;}
 </code>
@@ -82,7 +88,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 23:14</div>
+    <div style="float:right;">generated on 2023-06-14 17:09</div>
 </div>
 </body>
 </html>

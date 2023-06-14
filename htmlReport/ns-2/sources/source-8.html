@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > RequestEntity</title>
+  <title>Coverage Report > QuoteSummaryEntity</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.Entities</a>
 </div>
 
-<h1>Coverage Summary for Class: RequestEntity (com.civilo.roller.Entities)</h1>
+<h1>Coverage Summary for Class: QuoteSummaryEntity (com.civilo.roller.Entities)</h1>
 
 <table class="coverageStats">
 
@@ -37,52 +37,52 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">RequestEntity</td>
+  <td class="name">QuoteSummaryEntity</td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    93,3%
   </span>
   <span class="absValue">
-    (16/16)
+    (14/15)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    93,3%
   </span>
   <span class="absValue">
-    (16/16)
+    (14/15)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">RequestEntity$HibernateProxy$5nkv4glG</td>
+    <td class="name">QuoteSummaryEntity$HibernateProxy$J0wvBVqj</td>
   </tr>
   <tr>
-    <td class="name">RequestEntity$HibernateProxy$dWFHbgN3</td>
+    <td class="name">QuoteSummaryEntity$HibernateProxy$pmYkQqKA</td>
   </tr>
   <tr>
-    <td class="name">RequestEntity$HibernateProxy$FsinJxs6</td>
+    <td class="name">QuoteSummaryEntity$HibernateProxy$RHk7wDj3</td>
   </tr>
   <tr>
-    <td class="name">RequestEntity$HibernateProxy$HLjmwvp4</td>
+    <td class="name">QuoteSummaryEntity$HibernateProxy$UBgRIDkq</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    93,3%
   </span>
   <span class="absValue">
-    (16/16)
+    (14/15)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    93,3%
   </span>
   <span class="absValue">
-    (16/16)
+    (14/15)
   </span>
 </td>
 </tr>
@@ -95,53 +95,41 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.Entities;
 &nbsp;
-&nbsp;import lombok.*;
-&nbsp;import jakarta.persistence.Column;
 &nbsp;import jakarta.persistence.*;
+&nbsp;import lombok.*;
 &nbsp;
-&nbsp;import java.time.LocalDate;
-&nbsp;import java.util.List;
-&nbsp;
+&nbsp;import java.util.Date;
 &nbsp;
 &nbsp;@Entity
-&nbsp;@Table(name = &quot;requests&quot;)
+&nbsp;@Table(name = &quot;quotes_summary&quot;)
 <b class="fc">&nbsp;@Data</b>
 <b class="fc">&nbsp;@NoArgsConstructor</b>
-<b class="fc">&nbsp;@AllArgsConstructor</b>
+<b class="nc">&nbsp;@AllArgsConstructor</b>
 &nbsp;@Getter
 <b class="fc">&nbsp;@Setter</b>
-&nbsp;public class RequestEntity {
+&nbsp;public class QuoteSummaryEntity {
 &nbsp;    //Atributos
 &nbsp;    @Id
 &nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
 &nbsp;    @Column(unique = true, nullable = false)
-<b class="fc">&nbsp;    private Long requestID;</b>
+<b class="fc">&nbsp;    private Long quoteSummaryID;</b>
 <b class="fc">&nbsp;    private String description;</b>
-<b class="fc">&nbsp;    private LocalDate deadline;</b>
-<b class="fc">&nbsp;    private LocalDate admissionDate;</b>
-<b class="fc">&nbsp;    private LocalDate closingDate;</b>
-<b class="fc">&nbsp;    private String reason;</b>
-<b class="fc">&nbsp;    private int sellerId;</b>
-&nbsp;
-&nbsp;    @ElementCollection
-<b class="fc">&nbsp;    private List&lt;Integer&gt; userID;</b>
+<b class="fc">&nbsp;    private float totalCostOfProduction;</b>
+<b class="fc">&nbsp;    private float totalSaleValue;</b>
+<b class="fc">&nbsp;    private float valueAfterDiscount;</b>
+<b class="fc">&nbsp;    private float netTotal;</b>
+<b class="fc">&nbsp;    private float percentageDiscount;</b>
+<b class="fc">&nbsp;    private float total;</b>
+<b class="fc">&nbsp;    private Date date;</b>
 &nbsp;
 &nbsp;    //Relaciones
 &nbsp;    @ManyToOne
-&nbsp;    @JoinColumn(name = &quot;USERS&quot;)
-<b class="fc">&nbsp;    UserEntity user;</b>
+&nbsp;    @JoinColumn(name = &quot;SELLER_sellerid&quot;)
+<b class="fc">&nbsp;    private SellerEntity seller;</b>
 &nbsp;
 &nbsp;    @ManyToOne
-&nbsp;    @JoinColumn(name = &quot;COVERAGES&quot;)
-<b class="fc">&nbsp;    CoverageEntity coverage;</b>
-&nbsp;
-&nbsp;    @ManyToOne
-&nbsp;    @JoinColumn(name = &quot;CURTAINS&quot;)
-<b class="fc">&nbsp;    CurtainEntity curtain;</b>
-&nbsp;
-&nbsp;    @ManyToOne
-&nbsp;    @JoinColumn(name = &quot;STATUS&quot;)
-<b class="fc">&nbsp;    StatusEntity status;</b>
+&nbsp;    @JoinColumn(name = &quot;currentIVA&quot;)
+<b class="fc">&nbsp;    IVAEntity currentIVA;</b>
 &nbsp;}
 </code>
 </pre>
@@ -166,7 +154,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 23:14</div>
+    <div style="float:right;">generated on 2023-06-14 17:09</div>
 </div>
 </body>
 </html>

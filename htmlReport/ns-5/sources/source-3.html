@@ -43,7 +43,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (2/2)
+    (4/4)
   </span>
 </td>
 <td class="coverageStat">
@@ -51,21 +51,27 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (7/7)
+    (15/15)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">IVAService$MockitoMock$6nzFUBTC</td>
+    <td class="name">IVAService$MockitoMock$nxkSn4Hq</td>
   </tr>
   <tr>
-    <td class="name">IVAService$MockitoMock$6nzFUBTC$auxiliary$0bFzzJsF</td>
+    <td class="name">IVAService$MockitoMock$nxkSn4Hq$auxiliary$07yewTTh</td>
   </tr>
   <tr>
-    <td class="name">IVAService$MockitoMock$6nzFUBTC$auxiliary$9FhFn6JD</td>
+    <td class="name">IVAService$MockitoMock$nxkSn4Hq$auxiliary$0sJsh0bJ</td>
   </tr>
   <tr>
-    <td class="name">IVAService$MockitoMock$6nzFUBTC$auxiliary$TQG5Xosv</td>
+    <td class="name">IVAService$MockitoMock$nxkSn4Hq$auxiliary$6yOHScnV</td>
+  </tr>
+  <tr>
+    <td class="name">IVAService$MockitoMock$nxkSn4Hq$auxiliary$8Oc264C8</td>
+  </tr>
+  <tr>
+    <td class="name">IVAService$MockitoMock$nxkSn4Hq$auxiliary$nFHlHL34</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -74,7 +80,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (2/2)
+    (4/4)
   </span>
 </td>
 <td class="coverageStat">
@@ -82,7 +88,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (7/7)
+    (15/15)
   </span>
 </td>
 </tr>
@@ -125,6 +131,22 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        return percentage;</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    public IVAEntity getLastIVA(){
+<b class="fc">&nbsp;        List&lt;IVAEntity&gt; ivaEntityList = (List&lt;IVAEntity&gt;) ivaRepository.findAll();</b>
+<b class="fc">&nbsp;        Integer size = ivaEntityList.size();</b>
+<b class="fc">&nbsp;        return ivaEntityList.get(size - 1);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public IVAEntity getIVAByPercentage(float percentage){
+<b class="fc">&nbsp;        List&lt;IVAEntity&gt; ivaEntities = (List&lt;IVAEntity&gt;) ivaRepository.findAll();</b>
+<b class="fc">&nbsp;        for (int i = 0; i &lt; ivaEntities.size(); i++){</b>
+<b class="fc">&nbsp;            if (percentage == ivaEntities.get(i).getIvaPercentage()){</b>
+<b class="fc">&nbsp;                return ivaEntities.get(i);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
 &nbsp;
 &nbsp;}
 </code>
@@ -150,7 +172,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-08 23:14</div>
+    <div style="float:right;">generated on 2023-06-14 17:09</div>
 </div>
 </body>
 </html>

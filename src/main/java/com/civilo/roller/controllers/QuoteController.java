@@ -51,11 +51,15 @@ public class QuoteController {
     @PostMapping()
     public ResponseEntity<QuoteSummaryEntity> saveQuotes(@RequestBody List<QuoteEntity> quoteList){
         for (int i = 0; i < quoteList.size(); i ++) {
-            quoteService.calculation(quoteList.get(i));
             if (quoteList.get(i).getAmount() == 0){
                 quoteList.remove(quoteList.get(i));
                 i--;
             }
+        }
+        for (int i = 0; i < quoteList.size(); i ++) {
+            System.out.println("-------------------------------\n");
+            System.out.println(quoteList.get(i));
+            quoteService.calculation(quoteList.get(i));
         }
         QuoteSummaryEntity quoteSummary = quoteSummaryService.summaryCalculation(quoteList);
         for (int i = 0; i < quoteList.size(); i ++) {

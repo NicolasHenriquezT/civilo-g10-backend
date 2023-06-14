@@ -162,7 +162,7 @@ public class QuoteServiceTest {
         QuoteService quoteService = new QuoteService();
         quoteService.calculation(quote);
         assertNotNull(quote.getDate());
-        assertEquals(2f, quote.getTotalSquareMeters());
+        assertEquals(1f, quote.getTotalSquareMeters());
         assertEquals(12500f, quote.getTotalFabrics());
         assertEquals(8090f, quote.getTotalMaterials());
         assertEquals(7000f, quote.getTotalLabor());

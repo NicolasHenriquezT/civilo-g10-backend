@@ -86,18 +86,61 @@ public class QuoteService {
     public void calculation(QuoteEntity quote) {
         Date currentDate = new Date();
         quote.setDate(currentDate);
-        quote.setTotalSquareMeters((int) Math.ceil(quote.getHeight() + quote.getWidth()));
+        quote.setTotalSquareMeters((int) Math.ceil(quote.getHeight() * quote.getWidth() * quote.getAmount()));
+        System.out.println("Metros cuadrados: " + (int) Math.ceil(quote.getHeight() * quote.getWidth() * quote.getAmount()));
         quote.setTotalFabrics((int) Math.ceil(quote.getHeight() * quote.getValueSquareMeters() * quote.getAmount()));
-        quote.setTotalMaterials((int) Math.ceil((quote.getBracketValue() + quote.getCapValue() + (quote.getPipeValue() *
-                quote.getAmount() * quote.getWidth()) + (quote.getCounterweightValue() * quote.getAmount() *
-                quote.getWidth()) + (quote.getBandValue() * quote.getAmount() * quote.getWidth()) +
-                (quote.getChainValue()) * quote.getAmount() * quote.getHeight()) *
-                quote.getAmount()));
+        System.out.println("Total fabricación: " + (int) Math.ceil(quote.getHeight() * quote.getValueSquareMeters() * quote.getAmount()));
+        quote.setTotalMaterials((int) Math.ceil(
+                (calculateBracket(quote.getBracketValue(), quote.getAmount()) +
+                        calculateCap(quote.getCapValue(), quote.getAmount()) +
+                        calculatePipe(quote.getPipeValue(), quote.getAmount(), quote.getWidth()) +
+                        calculateCounterweight(quote.getCounterweightValue(), quote.getAmount(), quote.getWidth()) +
+                        calculateBand(quote.getBandValue(), quote.getAmount(), quote.getWidth()) +
+                        calculateChain(quote.getChainValue(), quote.getAmount(), quote.getWidth()))
+        ));
+        System.out.println("Total materiales: " +
+                (int) Math.ceil(
+                        (calculateBracket(quote.getBracketValue(), quote.getAmount()) +
+                            calculateCap(quote.getCapValue(), quote.getAmount()) +
+                                calculatePipe(quote.getPipeValue(), quote.getAmount(), quote.getWidth()) +
+                                calculateCounterweight(quote.getCounterweightValue(), quote.getAmount(), quote.getWidth()) +
+                                calculateBand(quote.getBandValue(), quote.getAmount(), quote.getWidth()) +
+                                calculateChain(quote.getChainValue(), quote.getAmount(), quote.getWidth()))
+                        )
+        );
         quote.setTotalLabor((int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));
-        quote.setProductionCost((int) Math.ceil((quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics()) *
-                quote.getAmount()));
-        quote.setSaleValue((int) Math.ceil((quote.getProductionCost() / (1 - 0.4f)) * quote.getAmount()));
+        System.out.println("Total MO: " + (int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));
+        quote.setProductionCost((int) Math.ceil(quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics()));
+        System.out.println("Total Costo producción: " + (int) Math.ceil((quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics())));
+        quote.setSaleValue((int) Math.ceil((quote.getProductionCost() / (1 - 0.4f))));
+        System.out.println("Total Venta: " + (int) Math.ceil((quote.getProductionCost() / (1 - 0.4f))));
     }
+
+    public float calculateBracket(float bracket, int amount){
+        return bracket * amount;
+    }
+
+    public float calculateCap(float cap, int amount){
+        return cap * amount;
+    }
+
+    public float calculatePipe(float pipe, int amount, float width){
+        return pipe * amount * width;
+    }
+
+    public float calculateBand(float band, int amount, float width){
+        return band * amount * width;
+    }
+
+    public float calculateChain(float chain, int amount, float width){
+        return chain * amount * width;
+    }
+
+    public float calculateCounterweight(float counterWeight, int amount, float width){
+        return counterWeight * amount * width;
+    }
+
+
 
     // Función que recibe una lista de elementos QuoteEntity para agregarlos a la base de datos uno a uno
     public void createQuotes(List<QuoteEntity> quoteList){

@@ -16,6 +16,9 @@ public class QuoteService {
     @Autowired
     QuoteRepository quoteRepository;
 
+    @Autowired
+    ProfitMarginService profitMarginService;
+
     // Get all
     // Permite obtener un listado con toda la informacion asociada a las solicitudes.
     public List<QuoteEntity> getQuotes(){
@@ -87,9 +90,10 @@ public class QuoteService {
         Date currentDate = new Date();
         quote.setDate(currentDate);
         quote.setTotalSquareMeters((int) Math.ceil(quote.getHeight() * quote.getWidth() * quote.getAmount()));
-        System.out.println("Metros cuadrados: " + (int) Math.ceil(quote.getHeight() * quote.getWidth() * quote.getAmount()));
+        quote.setProfitMarginEntity(profitMarginService.getLastProfitMargin());
+        System.out.println("Área (m2)                   = Ancho (m) × Alto (m) × Cantidad de cortinas                                                    = " + (int) Math.ceil(quote.getHeight() * quote.getWidth() * quote.getAmount()));
         quote.setTotalFabrics((int) Math.ceil(quote.getHeight() * quote.getValueSquareMeters() * quote.getAmount()));
-        System.out.println("Total fabricación: " + (int) Math.ceil(quote.getHeight() * quote.getValueSquareMeters() * quote.getAmount()));
+        System.out.println("Total en telas (CLP)        = Alto (m) × Valor tela (m2) × Cantidad de cortinas                                              = " + (int) Math.ceil(quote.getHeight() * quote.getValueSquareMeters() * quote.getAmount()));
         quote.setTotalMaterials((int) Math.ceil(
                 (calculateBracket(quote.getBracketValue(), quote.getAmount()) +
                         calculateCap(quote.getCapValue(), quote.getAmount()) +
@@ -98,7 +102,7 @@ public class QuoteService {
                         calculateBand(quote.getBandValue(), quote.getAmount(), quote.getWidth()) +
                         calculateChain(quote.getChainValue(), quote.getAmount(), quote.getWidth()))
         ));
-        System.out.println("Total materiales: " +
+        System.out.println("Total en materiales (CLP)   = Valor brackets + Valor tapas + Valor tubos + Valor contrapesos + Valor zunchos + Valor cadenas = " +
                 (int) Math.ceil(
                         (calculateBracket(quote.getBracketValue(), quote.getAmount()) +
                             calculateCap(quote.getCapValue(), quote.getAmount()) +
@@ -109,11 +113,11 @@ public class QuoteService {
                         )
         );
         quote.setTotalLabor((int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));
-        System.out.println("Total MO: " + (int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));
+        System.out.println("Total en mano de obra (CLP) = (Valor armado + Valor instalación) × Cantidad                                                  = " + (int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));
         quote.setProductionCost((int) Math.ceil(quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics()));
-        System.out.println("Total Costo producción: " + (int) Math.ceil((quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics())));
-        quote.setSaleValue((int) Math.ceil((quote.getProductionCost() / (1 - 0.4f))));
-        System.out.println("Total Venta: " + (int) Math.ceil((quote.getProductionCost() / (1 - 0.4f))));
+        System.out.println("Costo de producción (CLP)   = Total en mano de obra + Total en materiales + Total en telas                                   = " + (int) Math.ceil((quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics())));
+        quote.setSaleValue((int) Math.ceil((quote.getProductionCost() / (1 - profitMarginService.getLastProfitMargin().getDecimalProfitMargin()))));
+        System.out.println("Valor de venta (CLP)        = Costo de producción ( 1 - Margen de utilidad)                                                  = " + (int) Math.ceil((quote.getProductionCost() / (1 - profitMarginService.getLastProfitMargin().getDecimalProfitMargin()))));
     }
 
     public float calculateBracket(float bracket, int amount){

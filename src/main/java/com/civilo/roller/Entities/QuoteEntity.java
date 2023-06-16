@@ -62,4 +62,8 @@ public class QuoteEntity {
     @ManyToOne
     @JoinColumn(name = "QUOTE_SUMMARY")
     QuoteSummaryEntity quoteSummary;
+
+    @ManyToOne
+    @JoinColumn(name = "PROFIT_MARGIN")
+    ProfitMarginEntity profitMarginEntity;
 }

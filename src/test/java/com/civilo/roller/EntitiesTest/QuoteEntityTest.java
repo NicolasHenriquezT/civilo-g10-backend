@@ -61,6 +61,7 @@ public class QuoteEntityTest {
         quoteEntity.setPercentageDiscount(0.1f);
         quoteEntity.setSeller(seller);
         quoteEntity.setCurtain(curtain);
+        quoteEntity.setProfitMarginEntity(new ProfitMarginEntity(1L, 40f, 0.4f));
         Date dateFake = new Date();
         dateFake.setYear(122);
         dateFake.setMonth(5);
@@ -96,6 +97,7 @@ public class QuoteEntityTest {
         assertEquals(curtain, quoteEntity.getCurtain());
         assertEquals(new PipeEntity(1L, "tubo 10 mm"), quoteEntity.getPipe());
         assertEquals(new QuoteSummaryEntity(), quoteEntity.getQuoteSummary());
+        assertEquals(new ProfitMarginEntity(1L, 40f, 0.4f), quoteEntity.getProfitMarginEntity());
     }
 
     @Test

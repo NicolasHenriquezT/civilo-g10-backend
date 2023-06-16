@@ -1,5 +1,6 @@
 package com.civilo.roller.ControllersTest;
 
+import com.civilo.roller.Entities.CurtainEntity;
 import com.civilo.roller.Entities.IVAEntity;
 import com.civilo.roller.Entities.QuoteEntity;
 import com.civilo.roller.Entities.QuoteSummaryEntity;
@@ -48,8 +49,8 @@ public class QuoteSummaryControllerTest {
     @Test
     public void testSaveQuotes() {
         List<QuoteEntity> quoteList = new ArrayList<>();
-        QuoteEntity quote1 = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, new Date(), null, null, null, null);
-        QuoteEntity quote2 = new QuoteEntity(1L, 0, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, new Date(), null, null, null, null);
+        QuoteEntity quote1 = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, new Date(), null, new CurtainEntity(1L, "cor 1"), null, null, null);
+        QuoteEntity quote2 = new QuoteEntity(1L, 0, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, new Date(), null, new CurtainEntity(2L, "cor 2"), null, null, null);
         quoteList.add(quote1);
         quoteList.add(quote2);
         QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();

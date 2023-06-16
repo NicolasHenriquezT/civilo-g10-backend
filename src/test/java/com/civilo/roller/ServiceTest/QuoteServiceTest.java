@@ -2,12 +2,15 @@ package com.civilo.roller.ServiceTest;
 
 import com.civilo.roller.Entities.*;
 import com.civilo.roller.repositories.QuoteRepository;
+import com.civilo.roller.services.ProfitMarginService;
 import com.civilo.roller.services.QuoteService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -32,6 +35,9 @@ public class QuoteServiceTest {
     @InjectMocks
     private QuoteService quoteService;
 
+    @Mock
+    private ProfitMarginService profitMarginService;
+
     @Test
     public void getQuotesTest() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
@@ -44,7 +50,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null, null);
 
         List<QuoteEntity> quoteList = new ArrayList<>();
         quoteList.add(quoteEntity);
@@ -68,7 +74,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null, null);
 
         when(quoteRepository.findById(anyLong())).thenReturn(Optional.of(quoteEntity));
 
@@ -90,7 +96,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null, null);
 
         when(quoteRepository.save(any(QuoteEntity.class))).thenReturn(quoteEntity);
 
@@ -112,7 +118,7 @@ public class QuoteServiceTest {
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
-        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null, null);
 
         when(quoteRepository.save(any(QuoteEntity.class))).thenReturn(quoteEntity);
 
@@ -159,8 +165,12 @@ public class QuoteServiceTest {
         quote.setChainValue(190f);
         quote.setAssemblyValue(2000f);
         quote.setInstallationValue(5000f);
-        QuoteService quoteService = new QuoteService();
+        ProfitMarginEntity profitMarginEntity = new ProfitMarginEntity(1L, 40f, 0.4f);
+        quote.setProfitMarginEntity(profitMarginEntity);
+        when(profitMarginService.getLastProfitMargin()).thenReturn(profitMarginEntity);
+
         quoteService.calculation(quote);
+
         assertNotNull(quote.getDate());
         assertEquals(1f, quote.getTotalSquareMeters());
         assertEquals(12500f, quote.getTotalFabrics());

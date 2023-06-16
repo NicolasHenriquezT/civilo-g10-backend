@@ -57,14 +57,21 @@ public class QuoteController {
             }
         }
         for (int i = 0; i < quoteList.size(); i ++) {
-            System.out.println("-------------------------------\n");
-            System.out.println(quoteList.get(i));
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("Cotización del tipo de cortina: " + quoteList.get(i).getCurtain().getCurtainType());
             quoteService.calculation(quoteList.get(i));
         }
         QuoteSummaryEntity quoteSummary = quoteSummaryService.summaryCalculation(quoteList);
         for (int i = 0; i < quoteList.size(); i ++) {
             quoteList.get(i).setQuoteSummary(quoteSummary);
         }
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("Resumen de cotización: ");
+        System.out.println("Costo total de producción (CLP) = Sum(Costo de producción)                    = " + quoteSummary.getTotalCostOfProduction() +
+                           "\nValor de venta total (CLP)      = Sum(Valor de venta)                         = " + quoteSummary.getTotalSaleValue() +
+                           "\nValor tras descuento (CLP)      = Valor de venta total × Descuento / 100      = " + quoteSummary.getValueAfterDiscount() +
+                           "\nTotal neto (CLP)                = Valor de venta total - Valor tras descuento = " + quoteSummary.getNetTotal() +
+                           "\nTotal (CLP)                     = Total neto × (1 + IVA / 100)                = " + quoteSummary.getTotal());
         this.quoteService.createQuotes(quoteList);
         return ResponseEntity.ok(quoteSummary);
     }

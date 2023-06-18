@@ -10,6 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.springframework.http.MediaType;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import java.util.Date;
 import java.util.Optional;
 import java.util.List;
@@ -127,5 +136,50 @@ public class QuoteController {
      */
 
     //------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> generatePDFquote(@PathVariable("id") Long id) {
+        // Obtener la cotización por su ID desde la base de datos (o servicio correspondiente)
+        Optional<QuoteEntity> quote = quoteService.getQuoteById(id);
+
+        try (PDDocument document = new PDDocument();
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            // Crear una nueva página
+            PDPage page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+
+            // Crear el contenido del PDF
+            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                // Escribir los datos de la cotización en el PDF
+                contentStream.beginText();
+                //contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                contentStream.newLineAtOffset(50, 700);
+                contentStream.showText("ID de cotizacion: " + id);
+                // Agregar más campos de la cotización según sea necesario
+                contentStream.endText();
+            }
+
+            // Guardar el documento PDF en un flujo de bytes
+            document.save(baos);
+            document.close();
+
+            // Obtener los bytes del PDF generado
+            byte[] pdfBytes = baos.toByteArray();
+
+            // Devolver una respuesta HTTP con los bytes del PDF y los encabezados adecuados
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header("Content-Disposition", "attachment; filename=cotizacion.pdf")
+                    .body(pdfBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Manejar cualquier error que pueda ocurrir al generar el PDF
+            // Devolver una respuesta de error apropiada si es necesario
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
 
 }

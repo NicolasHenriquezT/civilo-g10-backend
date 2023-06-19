@@ -44,7 +44,7 @@ public class QuoteEntity {
     private float productionCost;
     private float saleValue;
 
-    private Date date;
+    private Date date;  
 
     //Relaciones
     @ManyToOne
@@ -66,4 +66,8 @@ public class QuoteEntity {
     @ManyToOne
     @JoinColumn(name = "PROFIT_MARGIN")
     ProfitMarginEntity profitMarginEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "REQUESTS")
+    RequestEntity RequestEntity;
 }

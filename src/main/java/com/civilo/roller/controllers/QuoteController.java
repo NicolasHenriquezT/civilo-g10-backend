@@ -293,16 +293,55 @@ public class QuoteController {
         Document document = new Document();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            PdfWriter.getInstance(document, outputStream);
+            PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 
             // Se abre el documento
             document.open();
 
-            // Se agregan los atributos al PDF
-            document.add(new Paragraph("COTIZACION")); 
+            // Configuración de la caja
+            float borderWidth = 2f;
+            float padding = 10f;
+            float spacingAfter = 20f;
+            BaseColor boxColor = new BaseColor(0, 153, 255); // Color azul
+            BaseColor textColor = BaseColor.WHITE; // Color del texto dentro de la caja
 
-            document.add(new Paragraph("Amount: " + quote.getAmount()));
-            document.add(new Paragraph("Value Square Meters: " + quote.getValueSquareMeters()));
+            // Se configura el rectángulo 1 de fondo
+            PdfContentByte canvas = writer.getDirectContentUnder();
+            //Rectangle rect = new Rectangle(36, 750, 559, 800);
+            Rectangle rect = new Rectangle(36, 765, 559, 810);
+            rect.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            canvas.rectangle(rect);
+
+            // Se agrega el texto "COTIZACION" dentro del rectángulo
+            Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
+            Paragraph paragraph = new Paragraph("COTIZACION", font);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            document.add(paragraph);
+
+            document.add(new Paragraph("\n\n"));
+
+            PdfContentByte canvas2 = writer.getDirectContent();
+            // Definir las coordenadas y el tamaño de la caja
+            float x = 36f; // Posición X de la esquina inferior izquierda
+            float y = 400f; // Posición Y de la esquina inferior izquierda
+            float width2 = 522f; // Ancho de la caja
+            float height2 = 360f; // Alto de la caja
+            BaseColor borderColor = BaseColor.BLACK;
+            BaseColor backgroundColor = BaseColor.WHITE;
+            // Dibujar el rectángulo de la caja
+            canvas2.rectangle(x, y, width2, height2);
+            // Establecer el color del borde
+            canvas2.setColorStroke(borderColor);
+            // Establecer el color del fondo
+            canvas2.setColorFill(backgroundColor);
+            // Dibujar el borde y el fondo
+            canvas2.stroke();
+            canvas2.fill();
+
+            // Se agregan los atributos al PDF
+            document.add(new Paragraph("  Materiales: "));
+            document.add(new Paragraph("  - Amount: " + quote.getAmount()));
+            document.add(new Paragraph("  - Value Square Meters: " + quote.getValueSquareMeters()));
             
 
             // Se cierra el documento
@@ -314,7 +353,8 @@ public class QuoteController {
             // Guardar el archivo PDF en la carpeta deseada
             // Se guarda el archivo PDF en la carpeta seleccionada
 
-            String filePath = "C:/Users/Golden Gamers/Desktop/Usach/2023/2- Segundo Semestre/test.pdf";
+            // Se define la ruta donde se guardará el archivo PDF
+            String filePath = "C:/Users/javie/Desktop/Cotizaciones/test.pdf";
             try (FileOutputStream fos = new FileOutputStream(filePath)) {
                 fos.write(pdfBytes);
                 System.out.println("PDF guardado exitosamente en: " + filePath);

@@ -152,4 +152,13 @@ public class QuoteService {
             quoteRepository.save(quoteList.get(i));
         }
     }
+
+    public void generatePDF(Long idseller) {
+        List<QuoteSummaryEntity> quoteSummary = quoteRepository.findAll();
+
+        for(int i = quoteSummary.size()-1; i != 0; i--) {
+            if(quoteSummary.get(i).getSeller.getUserID  )
+        }
+    }
+
 }

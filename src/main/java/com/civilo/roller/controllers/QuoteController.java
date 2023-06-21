@@ -59,6 +59,13 @@ public class QuoteController {
             System.out.println("NO SE ENCONTRO LA COTIZACION \n");
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
+
+        System.out.println("nombre del cliente: " + quote.get().getRequestEntity().getUser().getName() + "\n");
+        System.out.println("telefono del cliente: " + quote.get().getRequestEntity().getUser().getPhoneNumber() + "\n");
+
+
+
+
         return new ResponseEntity<QuoteEntity>(quote.get(), HttpStatus.OK);
     }
 
@@ -148,150 +155,31 @@ public class QuoteController {
 
     //------------------------------------------------------------------------------------------------------------------------------------------------//
 
-    /* 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> generatePDFquote(@PathVariable long id) {
-        // Obtener la cotización por su ID desde la base de datos (o servicio correspondiente)
-        Optional<QuoteEntity> checkQuote = quoteService.getQuoteById(id);
-        
-        if(!checkQuote.isPresent()){
-            System.out.println("NO SE ENCONTRO LA COTIZACION CON ID: " + id + " \n");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La cotizacion con el ID especificado no se encuentra registrada."); 
-        }
-
-        System.out.println(checkUser);
-        return ResponseEntity.ok().build();
-    
-         
-        try (PDDocument document = new PDDocument();
-             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            // Crear una nueva página
-            PDPage page = new PDPage(PDRectangle.A4);
-            document.addPage(page);
-
-            // Crear el contenido del PDF
-            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                // Escribir los datos de la cotización en el PDF
-                contentStream.beginText();
-                //contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
-                contentStream.newLineAtOffset(50, 700);
-                contentStream.showText("ID de cotizacion: " + id);
-                // Agregar más campos de la cotización según sea necesario
-                contentStream.endText();
-            }
-
-            // Guardar el documento PDF en un flujo de bytes
-            document.save(baos);
-            document.close();
-
-            // Obtener los bytes del PDF generado
-            byte[] pdfBytes = baos.toByteArray();
-
-            // Devolver una respuesta HTTP con los bytes del PDF y los encabezados adecuados
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .header("Content-Disposition", "attachment; filename=cotizacion.pdf")
-                    .body(pdfBytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Manejar cualquier error que pueda ocurrir al generar el PDF
-            // Devolver una respuesta de error apropiada si es necesario
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-        
-    
-    }
-    */
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> generatePDF(@PathVariable long id, @RequestBody QuoteEntity quote) {
+    public ResponseEntity<?> generatePDF(@RequestBody SellerEntity seller) {
+
+        
+
+        //System.out.println("PRINT DE PDFFFFFFFFFFFFFFFFFFFFFFFFFFFF \n\n\n");
+
+        //System.out.println(quote);
+
+        //{}
+        //id de solicitud, idvendedor
+        //filtrar en 
 
 
 
+
+
+        // Se revisa si existe la cotizacion
         Optional<QuoteEntity> checkQuote = quoteService.getQuoteById(id);
 
         if(!checkQuote.isPresent()){
             System.out.println("NO SE ENCONTRO LA COTIZACION CON ID: " + id + " \n");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La cotizacion con el ID especificado no se encuentra registrada."); 
         }
-
-        //FALTA VER QUE ALGUNOS PARAMETROS NO SE RECIBEN CORRECTAMENTE
-        /* 
-        System.out.println("amount : " + quote.getAmount() + " \n");
-        System.out.println("value_square_meters : " + quote.getValueSquareMeters() + " \n");
-        System.out.println("width : " + quote.getWidth() + " \n");
-        System.out.println("height : " + quote.getHeight() + " \n");
-        System.out.println("total_square_meters : " + quote.getTotalSquareMeters() + " \n");
-        System.out.println("total_fabrics : " + quote.getTotalFabrics() + " \n");
-        System.out.println("bracket_value : " + quote.getBracketValue() + " \n");
-        System.out.println("cap_value : " + quote.getCapValue() + " \n");
-        System.out.println("pipe_value : " + quote.getPipeValue() + " \n");
-        System.out.println("counterweight_value : " + quote.getCounterweightValue() + " \n");
-        System.out.println("band_value : " + quote.getBandValue() + " \n");
-        System.out.println("chain_value : " + quote.getChainValue() + " \n");
-        System.out.println("total_materials : " + quote.getTotalMaterials() + " \n");
-        System.out.println("assembly_value : " + quote.getAssemblyValue() + " \n");
-        System.out.println("installation_value : " + quote.getInstallationValue() + " \n");
-        System.out.println("total_labor : " + quote.getTotalLabor() + " \n");
-        System.out.println("percentage_discount : " + quote.getPercentageDiscount() + " \n");
-        System.out.println("production_cost : " + quote.getProductionCost() + " \n");
-        System.out.println("sale_value : " + quote.getSaleValue() + " \n");
-        System.out.println("date : " + quote.getDate() + " \n");
-        System.out.println("seller_sellerid : " + quote.getSeller() + " \n");
-        System.out.println("curtains : " + quote.getCurtain() + " \n");
-        System.out.println("pipes : " + quote.getPipe() + " \n");
-        */
-        
-        // PARA TESTEAR
-        int amount = 40;
-        float value_square_meters = 12500f;
-        float width = 1.00f;
-        float height = 1.00f;
-        float total_square_meters = 1.00f;
-        float total_fabrics = 12500f;
-        float bracket_value = 2500f;
-        float cap_value = 1400f;
-        float pipe_value = 2300f;
-        float counterweight_value = 1400f;
-        float band_value = 300f;
-        float chain_value = 190f;
-        float total_materials = 8090f;
-        float assembly_value = 2000f;
-        float installation_value = 5000f;
-        float total_labor = 7000f;
-        float percentage_discount = 0f;
-        float production_cost = 27590f;
-        float sale_value = 45983f;
-        String dateString = "2021-09-06";
-        float seller_sellerid = 3f;
-        float curtains = 1f;
-        float pipes = 5f;
-        
-        /* 
-        System.out.println("amount : " + amount + " \n");
-        System.out.println("value_square_meters : " + value_square_meters + " \n");
-        System.out.println("width : " + width + " \n");
-        System.out.println("height : " + height + " \n");
-        System.out.println("total_square_meters : " + total_square_meters + " \n");
-        System.out.println("total_fabrics : " + total_fabrics + " \n");
-        System.out.println("bracket_value : " + bracket_value + " \n");
-        System.out.println("cap_value : " + cap_value + " \n");
-        System.out.println("pipe_value : " + pipe_value + " \n");
-        System.out.println("counterweight_value : " + counterweight_value + " \n");
-        System.out.println("band_value : " + band_value + " \n");
-        System.out.println("chain_value : " + chain_value + " \n");
-        System.out.println("total_materials : " + total_materials + " \n");
-        System.out.println("assembly_value : " + assembly_value + " \n");
-        System.out.println("installation_value : " + installation_value + " \n");
-        System.out.println("total_labor : " + total_labor + " \n");
-        System.out.println("percentage_discount : " + percentage_discount + " \n");
-        System.out.println("production_cost : " + production_cost + " \n");
-        System.out.println("sale_value : " + sale_value + " \n");
-        System.out.println("date : " + dateString + " \n");
-        System.out.println("seller_sellerid : " + seller_sellerid + " \n");
-        System.out.println("curtains : " + curtains + " \n");
-        System.out.println("pipes : " + pipes + " \n");
-        */
 
         //Se crea el documento PDF
         Document document = new Document();
@@ -322,28 +210,7 @@ public class QuoteController {
             paragraph.setAlignment(Element.ALIGN_CENTER);
             document.add(paragraph);
 
-            //document.add(new Paragraph("\n\n"));
-
-            /* 
-            PdfContentByte canvas2 = writer.getDirectContent();
-            // Definir las coordenadas y el tamaño de la caja
-            float x = 36f; // Posición X de la esquina inferior izquierda
-            float y = 400f; // Posición Y de la esquina inferior izquierda
-            float width2 = 522f; // Ancho de la caja
-            float height2 = 360f; // Alto de la caja
-            BaseColor borderColor = BaseColor.BLACK;
-            BaseColor backgroundColor = BaseColor.WHITE;
-            // Dibujar el rectángulo de la caja
-            canvas2.rectangle(x, y, width2, height2);
-            // Establecer el color del borde
-            canvas2.setColorStroke(borderColor);
-            // Establecer el color del fondo
-            canvas2.setColorFill(backgroundColor);
-            // Dibujar el borde y el fondo
-            canvas2.stroke();
-            canvas2.fill();
-            */
-
+            // Se configura el rectangulo 2
             PdfContentByte canvas2 = writer.getDirectContent();
             float x2 = 36f; // Posición X de la esquina inferior izquierda del nuevo rectángulo
             float y2 = 690f; // Posición Y de la esquina inferior izquierda del nuevo rectángulo
@@ -416,10 +283,10 @@ public class QuoteController {
             
             //Datos de las celdas de la tabla
             String[][] data = {
-                {"Cliente:", "Hernan Astudillo", "Número: " + 17},
-                {"Fono contacto", "+569 92297540", "Fecha: 5/6/2020"},
-                {"RUT:", "", ""},
-                {"Ciudad:", "Santiago", "www.rollerdeco.cl"},
+                {"Cliente:", quote.getRequestEntity().getUser().getName(), "Número: " + quote.getRequestEntity().getRequestID()},
+                {"Fono contacto", quote.getRequestEntity().getUser().getPhoneNumber(), "Fecha: " + quote.getRequestEntity().getAdmissionDate()},
+                //{"RUT:", "", ""},
+                {"Comuna:", quote.getRequestEntity().getCoverage().getCommune(), "www.rollerdeco.cl"},
                 {"Pais:", "Chile", "contacto@rollerdeco.cl"},
             };
 
@@ -435,6 +302,81 @@ public class QuoteController {
 
             // Agregar la tabla al documento
             document.add(table);
+
+
+            /* 
+            [  {"amount":50,"valueSquareMeters":50,"width":50,"height":50,"bracketValue":50,"capValue":50,"counterweightValue":50,"bandValue":50,"chainValue":50,"pipe":{"pipeID":5,"pipeName":"Tubo 38 mm"},"pipeValue":50,"assemblyValue":"50","installationValue":"50","description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}},
+            
+               {"amount":100,"valueSquareMeters":100,"width":100,"height":100,"bracketValue":10,"capValue":100,"counterweightValue":100,"bandValue":100,"chainValue":100,"pipe":{"pipeID":5,"pipeName":"Tubo 38 mm"},"pipeValue":100,"assemblyValue":"100","installationValue":"100","description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":2,"curtainType":"Roller Screen"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}},
+               
+               {"amount":null,"valueSquareMeters":null,"width":null,"height":null,"bracketValue":null,"capValue":null,"counterweightValue":null,"bandValue":null,"chainValue":null,"pipe":null,"pipeValue":null,"assemblyValue":null,"installationValue":null,"description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":3,"curtainType":"Duo Blackout"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}},
+               
+               {"amount":null,"valueSquareMeters":null,"width":null,"height":null,"bracketValue":null,"capValue":null,"counterweightValue":null,"bandValue":null,"chainValue":null,"pipe":null,"pipeValue":null,"assemblyValue":null,"installationValue":null,"description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":4,"curtainType":"Duo Transparente"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}}]
+            */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             document.add(new Paragraph("\n"));

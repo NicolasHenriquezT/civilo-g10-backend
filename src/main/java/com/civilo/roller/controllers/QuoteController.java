@@ -2,6 +2,7 @@ package com.civilo.roller.controllers;
 
 import com.civilo.roller.Entities.QuoteEntity;
 import com.civilo.roller.Entities.QuoteSummaryEntity;
+import com.civilo.roller.Entities.SellerEntity;
 import com.civilo.roller.services.IVAService;
 import com.civilo.roller.services.QuoteService;
 import com.civilo.roller.services.QuoteSummaryService;
@@ -157,28 +158,18 @@ public class QuoteController {
 
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> generatePDF(@RequestBody SellerEntity seller) {
+    public ResponseEntity<?> generatePDF(@PathVariable Long id, @RequestBody SellerEntity seller) {
 
-        
-
-        //System.out.println("PRINT DE PDFFFFFFFFFFFFFFFFFFFFFFFFFFFF \n\n\n");
-
-        //System.out.println(quote);
-
-        //{}
-        //id de solicitud, idvendedor
-        //filtrar en 
+        List<QuoteEntity> quoteEntities = new ArrayList<>();
+        QuoteSummaryEntity quoteSummaryEntity = new QuoteSummaryEntity();
+        quoteSummaryEntity = quoteService.lastQuoteSummary(seller.getUserID());
+        quoteEntities = quoteService.lastQuotes(quoteSummaryEntity.getQuoteSummaryID());
+        QuoteEntity quote = quoteEntities.get(0);
 
 
-
-
-
-        // Se revisa si existe la cotizacion
-        Optional<QuoteEntity> checkQuote = quoteService.getQuoteById(id);
-
-        if(!checkQuote.isPresent()){
-            System.out.println("NO SE ENCONTRO LA COTIZACION CON ID: " + id + " \n");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La cotizacion con el ID especificado no se encuentra registrada."); 
+        // Se revisa si existe el resumen de cotizacion (si no existe entonces no hay cotizaciones)
+        if(quoteSummaryEntity.getQuoteSummaryID() == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La cotizacion con el ID especificado no se encuentra registrada.");
         }
 
         //Se crea el documento PDF
@@ -256,7 +247,7 @@ public class QuoteController {
             float width3 = width2 - shift - (2 * padding); // Ancho del rectángulo derecho
             float height3 = height2 - (2 * padding); // Altura del rectángulo derecho
 
-            String imagePath = "C:/Users/Golden Gamers/Desktop/Usach/2023/1- Primer Semestre/4- TALLER DE INGENIERIA DE SOFTWARE/civilo-g10-backend/fotopdf/roller.png"; // Ruta o URL de la imagen
+            String imagePath = "C:\\Users\\tomaq\\OneDrive\\Escritorio\\civilo-g10-backend\\fotopdf\\roller.png"; // Ruta o URL de la imagen
             //String imagePath = "C:/Users/javie/Cotizaciones/civilo-g10-backend/fotopdf/roller.png"; // Ruta o URL de la imagen
 
             try {
@@ -280,7 +271,6 @@ public class QuoteController {
 
             // Establecer el ancho de la tabla para que ocupe el ancho completo
             table.setWidthPercentage(100f);
-            
             //Datos de las celdas de la tabla
             String[][] data = {
                 {"Cliente:", quote.getRequestEntity().getUser().getName(), "Número: " + quote.getRequestEntity().getRequestID()},
@@ -302,7 +292,6 @@ public class QuoteController {
 
             // Agregar la tabla al documento
             document.add(table);
-
 
             /* 
             [  {"amount":50,"valueSquareMeters":50,"width":50,"height":50,"bracketValue":50,"capValue":50,"counterweightValue":50,"bandValue":50,"chainValue":50,"pipe":{"pipeID":5,"pipeName":"Tubo 38 mm"},"pipeValue":50,"assemblyValue":"50","installationValue":"50","description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}},
@@ -408,7 +397,7 @@ public class QuoteController {
             table2.addCell(cell3);
 
             // Cuarta columna
-            PdfPCell cell4 = new PdfPCell(new Paragraph("Tela", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            PdfPCell cell4 = new PdfPCell(new Paragraph("Costo de producción", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
             cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
             cell4.setBorderColor(BaseColor.BLACK);
             table2.addCell(cell4);
@@ -420,28 +409,35 @@ public class QuoteController {
             table2.addCell(cell5);
 
             // Sexta columna
-            PdfPCell cell6 = new PdfPCell(new Paragraph("Nota", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            PdfPCell cell6 = new PdfPCell(new Paragraph("Descripción", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
             cell6.setBackgroundColor(BaseColor.LIGHT_GRAY);
             cell6.setBorderColor(BaseColor.BLACK);
             table2.addCell(cell6);
 
             // Septima columna
-            PdfPCell cell7 = new PdfPCell(new Paragraph("Valor Unitario", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            PdfPCell cell7 = new PdfPCell(new Paragraph("Margen de utilidad", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
             cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
             cell7.setBorderColor(BaseColor.BLACK);
             table2.addCell(cell7);
 
             // Octava columna
-            PdfPCell cell8 = new PdfPCell(new Paragraph("Total", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            PdfPCell cell8 = new PdfPCell(new Paragraph("Valor de venta", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
             cell8.setBackgroundColor(BaseColor.LIGHT_GRAY);
             cell8.setBorderColor(BaseColor.BLACK);
             table2.addCell(cell8);
 
             // Datos para las filas (ejemplo)
             List<String[]> data2 = new ArrayList<>();
-            data2.add(new String[]{"Tipo 1", "Ancho 1", "Alto 1", "Tela 1", "Unidades 1", "Nota 1", "Valor Unitario 1", "Total 1"});
-            data2.add(new String[]{"Tipo 2", "Ancho 2", "Alto 2", "Tela 2", "Unidades 2", "Nota 2", "Valor Unitario 2", "Total 2"});
-            data2.add(new String[]{"Tipo 3", "Ancho 3", "Alto 3", "Tela 3", "Unidades 3", "Nota 3", "Valor Unitario 3", "Total 3"});
+            for (int i = 0; i < quoteEntities.size(); i++){
+                data2.add(new String[]{quoteEntities.get(i).getCurtain().getCurtainType().toString(),
+                        String.valueOf(quoteEntities.get(i).getWidth()),
+                        String.valueOf(quoteEntities.get(i).getHeight()),
+                        String.valueOf(quoteEntities.get(i).getProductionCost()),
+                        String.valueOf(quoteEntities.get(i).getAmount()),
+                        null,
+                        String.valueOf(quoteEntities.get(i).getProfitMarginEntity().getProfitMarginPercentaje()),
+                        String.valueOf(quoteEntities.get(i).getSaleValue())});
+            }
 
             // Agregar las filas a la tabla
             for (String[] row : data2) {
@@ -475,19 +471,20 @@ public class QuoteController {
             PdfPTable nestedTable = new PdfPTable(2);
             nestedTable.setWidthPercentage(101f);
 
+            String instalation = quoteService.instalation(quote.getTotalLabor());
             // Agregar celdas a la tabla anidada
             nestedTable.addCell(new PdfPCell(new Paragraph("Subtotal", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph("$ Subtotal", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getTotalCostOfProduction()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("Descuento", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph("$ Descuento", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getValueAfterDiscount()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("Neto", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph("$ Neto", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getNetTotal()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("IVA", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph("$ IVA", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getCurrentIVA().getIvaPercentage()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("TOTAL", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph("$ TOTAL", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getTotal()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("Incluye instalación?", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph("Si / No", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph(instalation, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
 
             cell20.addElement(nestedTable);
             table3.addCell(cell20);
@@ -518,7 +515,7 @@ public class QuoteController {
 
             // Se define la ruta donde se guardará el archivo PDF
             //String filePath = "C:/Users/javie/Desktop/Cotizaciones/test.pdf";
-            String filePath = "C:/Users/Golden Gamers/Desktop/Usach/2023/2- Segundo Semestre/test.pdf";
+            String filePath = "C:\\Users\\tomaq\\Downloads\\test.pdf";
             try (FileOutputStream fos = new FileOutputStream(filePath)) {
                 fos.write(pdfBytes);
                 System.out.println("PDF guardado exitosamente en: " + filePath);
@@ -544,6 +541,8 @@ public class QuoteController {
             document.close();
         }
     }
-            
+
+
+
 
 }

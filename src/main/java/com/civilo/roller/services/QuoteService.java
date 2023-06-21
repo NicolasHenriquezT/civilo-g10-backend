@@ -1,12 +1,15 @@
 package com.civilo.roller.services;
 
 import com.civilo.roller.Entities.QuoteEntity;
+import com.civilo.roller.Entities.QuoteSummaryEntity;
 import com.civilo.roller.repositories.QuoteRepository;
+import com.civilo.roller.repositories.QuoteSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
 import com.civilo.roller.exceptions.EntityNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import java.util.List;
@@ -17,28 +20,31 @@ public class QuoteService {
     QuoteRepository quoteRepository;
 
     @Autowired
+    QuoteSummaryRepository quoteSummaryRepository;
+
+    @Autowired
     ProfitMarginService profitMarginService;
 
     // Get all
     // Permite obtener un listado con toda la informacion asociada a las solicitudes.
-    public List<QuoteEntity> getQuotes(){
+    public List<QuoteEntity> getQuotes() {
         return (List<QuoteEntity>) quoteRepository.findAll();
     }
 
     // Get by id
     // Permite obtener la informacion de una solicitud en especifico.
-    public Optional<QuoteEntity> getQuoteById(Long id){ 
+    public Optional<QuoteEntity> getQuoteById(Long id) {
         return quoteRepository.findById(id);
     }
 
     // Permite guardar un objeto del tipo "QuoteEntity" en la base de datos.
-    public QuoteEntity saveQuote(QuoteEntity quote){
+    public QuoteEntity saveQuote(QuoteEntity quote) {
         return quoteRepository.save(quote);
     }
 
     // Create
     // Permite guardar un objeto del tipo "QuoteEntity" en la base de datos.
-    public QuoteEntity createQuote(QuoteEntity quote){
+    public QuoteEntity createQuote(QuoteEntity quote) {
         return quoteRepository.save(quote);
     }
 
@@ -66,18 +72,18 @@ public class QuoteService {
 
     // Delete all
     // Permite eliminar todas las cotizaciones de un sistema.
-    public void deleteQuotes(){
+    public void deleteQuotes() {
         quoteRepository.deleteAll();
     }
 
     // Delete by id
     // Permite eliminar una cotizacion en especifico del sistema.
-    public void deleteQuoteById(Long id){
+    public void deleteQuoteById(Long id) {
         quoteRepository.deleteById(id);
     }
 
     // Permite verificar si existe una cotizacion en el sistema, segun el id ingresado.
-    public boolean existsQuoteById(Long id){
+    public boolean existsQuoteById(Long id) {
         return quoteRepository.findById(id).isPresent();
     }
 
@@ -105,12 +111,12 @@ public class QuoteService {
         System.out.println("Total en materiales (CLP)   = Valor brackets + Valor tapas + Valor tubos + Valor contrapesos + Valor zunchos + Valor cadenas = " +
                 (int) Math.ceil(
                         (calculateBracket(quote.getBracketValue(), quote.getAmount()) +
-                            calculateCap(quote.getCapValue(), quote.getAmount()) +
+                                calculateCap(quote.getCapValue(), quote.getAmount()) +
                                 calculatePipe(quote.getPipeValue(), quote.getAmount(), quote.getWidth()) +
                                 calculateCounterweight(quote.getCounterweightValue(), quote.getAmount(), quote.getWidth()) +
                                 calculateBand(quote.getBandValue(), quote.getAmount(), quote.getWidth()) +
                                 calculateChain(quote.getChainValue(), quote.getAmount(), quote.getWidth()))
-                        )
+                )
         );
         quote.setTotalLabor((int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));
         System.out.println("Total en mano de obra (CLP) = (Valor armado + Valor instalación) × Cantidad                                                  = " + (int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));
@@ -120,45 +126,65 @@ public class QuoteService {
         System.out.println("Valor de venta (CLP)        = Costo de producción ( 1 - Margen de utilidad)                                                  = " + (int) Math.ceil((quote.getProductionCost() / (1 - profitMarginService.getLastProfitMargin().getDecimalProfitMargin()))));
     }
 
-    public float calculateBracket(float bracket, int amount){
+    public float calculateBracket(float bracket, int amount) {
         return bracket * amount;
     }
 
-    public float calculateCap(float cap, int amount){
+    public float calculateCap(float cap, int amount) {
         return cap * amount;
     }
 
-    public float calculatePipe(float pipe, int amount, float width){
+    public float calculatePipe(float pipe, int amount, float width) {
         return pipe * amount * width;
     }
 
-    public float calculateBand(float band, int amount, float width){
+    public float calculateBand(float band, int amount, float width) {
         return band * amount * width;
     }
 
-    public float calculateChain(float chain, int amount, float width){
+    public float calculateChain(float chain, int amount, float width) {
         return chain * amount * width;
     }
 
-    public float calculateCounterweight(float counterWeight, int amount, float width){
+    public float calculateCounterweight(float counterWeight, int amount, float width) {
         return counterWeight * amount * width;
     }
 
 
-
     // Función que recibe una lista de elementos QuoteEntity para agregarlos a la base de datos uno a uno
-    public void createQuotes(List<QuoteEntity> quoteList){
-        for (int i = 0; i < quoteList.size(); i ++){
+    public void createQuotes(List<QuoteEntity> quoteList) {
+        for (int i = 0; i < quoteList.size(); i++) {
             quoteRepository.save(quoteList.get(i));
         }
     }
 
-    public void generatePDF(Long idseller) {
-        List<QuoteSummaryEntity> quoteSummary = quoteRepository.findAll();
-
-        for(int i = quoteSummary.size()-1; i != 0; i--) {
-            if(quoteSummary.get(i).getSeller.getUserID  )
+    public QuoteSummaryEntity lastQuoteSummary(Long idseller) {
+        List<QuoteSummaryEntity> quoteSummaryEntities = (List<QuoteSummaryEntity>) quoteSummaryRepository.findAll();
+        QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();
+        for (int i = quoteSummaryEntities.size() - 1; i != 0; i--) {
+            if (quoteSummaryEntities.get(i).getSeller().getUserID() == idseller) {
+                quoteSummary = quoteSummaryEntities.get(i);
+            }
         }
+        return quoteSummary;
+
     }
 
+    public List<QuoteEntity> lastQuotes(Long idQuoteSummary) {
+        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
+        List<QuoteEntity> quoteEntitiesSelected = new ArrayList<>();
+        for (int i = quoteEntities.size() - 1; i >= 0; i--) {
+            if (quoteEntities.get(i).getQuoteSummary().getQuoteSummaryID() == idQuoteSummary) {
+                quoteEntitiesSelected.add(quoteEntities.get(i));
+            }
+        }
+        return quoteEntitiesSelected;
+    }
+
+    public String instalation(float value){
+        if (value != 0){
+            return "Si";
+        }
+        return "No";
+    }
 }

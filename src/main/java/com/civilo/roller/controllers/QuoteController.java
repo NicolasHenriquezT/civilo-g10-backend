@@ -318,7 +318,7 @@ public class QuoteController {
 
             // Se agrega el texto "COTIZACION" dentro del rectángulo
             Font font1 = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
-            Paragraph paragraph = new Paragraph("COTIZACION", font1);
+            Paragraph paragraph = new Paragraph("COTIZACIÓN", font1);
             paragraph.setAlignment(Element.ALIGN_CENTER);
             document.add(paragraph);
 
@@ -375,7 +375,7 @@ public class QuoteController {
             columnText.setSimpleColumn(textArea);
 
             // Agregar el texto al área de texto
-            String textoIzquierdo = "Suc Brisas Oriente 1331 / Pudahuel\nAv PaJaritos 3145 / Maipu\n(+569) 95389027  (+569) 97414699 \nContacto Marcelo Civilo 95389027";
+            String textoIzquierdo = "Suc Brisas Oriente 1331 / Pudahuel\nAv Pajaritos 3145 / Maipú\n(+569) 95389027  (+569) 97414699 \nContacto Marcelo Civilo 95389027";
             Font font2 = FontFactory.getFont(FontFactory.HELVETICA, 10, BaseColor.BLACK);
             Paragraph paragraph2 = new Paragraph(textoIzquierdo, font2);
             columnText.addElement(paragraph2);
@@ -390,6 +390,7 @@ public class QuoteController {
             float height3 = height2 - (2 * padding); // Altura del rectángulo derecho
 
             String imagePath = "C:/Users/Golden Gamers/Desktop/Usach/2023/1- Primer Semestre/4- TALLER DE INGENIERIA DE SOFTWARE/civilo-g10-backend/fotopdf/roller.png"; // Ruta o URL de la imagen
+            //String imagePath = "C:/Users/javie/Cotizaciones/civilo-g10-backend/fotopdf/roller.png"; // Ruta o URL de la imagen
 
             try {
                 Image image = Image.getInstance(imagePath);
@@ -432,23 +433,137 @@ public class QuoteController {
                 }
             }
 
-
-
-            
-
-            
-
             // Agregar la tabla al documento
             document.add(table);
 
 
-
-
-            // Se agregan los atributos al PDF
-            //document.add(new Paragraph("  Materiales: "));
-            //document.add(new Paragraph("  - Amount: " + quote.getAmount()));
-            //document.add(new Paragraph("  - Value Square Meters: " + quote.getValueSquareMeters()));
+            document.add(new Paragraph("\n"));
             
+            // Crear una tabla con 8 columnas
+            PdfPTable table2 = new PdfPTable(8);
+
+            // Establecer el ancho de la tabla para que ocupe el ancho completo
+            table2.setWidthPercentage(100f);
+
+            // Agregar celdas a la tabla
+
+            // Primera columna
+            PdfPCell cell1 = new PdfPCell(new Paragraph("Tipo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell1.setBorderColor(BaseColor.BLACK);
+            table2.addCell(cell1);
+
+            // Segunda columna
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Ancho (mt)", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell2.setBorderColor(BaseColor.BLACK);
+            table2.addCell(cell2);
+
+            // Tercera columna
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Alto (mt)", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell3.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell3.setBorderColor(BaseColor.BLACK);
+            table2.addCell(cell3);
+
+            // Cuarta columna
+            PdfPCell cell4 = new PdfPCell(new Paragraph("Tela", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell4.setBorderColor(BaseColor.BLACK);
+            table2.addCell(cell4);
+
+            // Quinta columna
+            PdfPCell cell5 = new PdfPCell(new Paragraph("Unidades", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell5.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell5.setBorderColor(BaseColor.BLACK);
+            table2.addCell(cell5);
+
+            // Sexta columna
+            PdfPCell cell6 = new PdfPCell(new Paragraph("Nota", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell6.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell6.setBorderColor(BaseColor.BLACK);
+            table2.addCell(cell6);
+
+            // Septima columna
+            PdfPCell cell7 = new PdfPCell(new Paragraph("Valor Unitario", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell7.setBorderColor(BaseColor.BLACK);
+            table2.addCell(cell7);
+
+            // Octava columna
+            PdfPCell cell8 = new PdfPCell(new Paragraph("Total", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell8.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell8.setBorderColor(BaseColor.BLACK);
+            table2.addCell(cell8);
+
+            // Datos para las filas (ejemplo)
+            List<String[]> data2 = new ArrayList<>();
+            data2.add(new String[]{"Tipo 1", "Ancho 1", "Alto 1", "Tela 1", "Unidades 1", "Nota 1", "Valor Unitario 1", "Total 1"});
+            data2.add(new String[]{"Tipo 2", "Ancho 2", "Alto 2", "Tela 2", "Unidades 2", "Nota 2", "Valor Unitario 2", "Total 2"});
+            data2.add(new String[]{"Tipo 3", "Ancho 3", "Alto 3", "Tela 3", "Unidades 3", "Nota 3", "Valor Unitario 3", "Total 3"});
+
+            // Agregar las filas a la tabla
+            for (String[] row : data2) {
+                for (String value : row) {
+                    PdfPCell cellx = new PdfPCell(new Paragraph(value, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+                    cellx.setBorderColor(BaseColor.BLACK);
+                    table2.addCell(cellx);
+                }
+            }
+
+            // Agregar la tabla al documento
+            document.add(table2);
+
+            //---------------------------
+
+            PdfPTable table3 = new PdfPTable(2);
+            table3.setWidthPercentage(100);
+
+            // Columna 1
+            PdfPCell cell19 = new PdfPCell(new Paragraph("Datos transferencia", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell19.setRowspan(6); // Fusionar 3 filas en la columna 1
+            //cell19.setPercentageWidth(75f);
+            table3.addCell(cell19);
+
+            // Columna 2
+            PdfPCell cell20 = new PdfPCell(new Paragraph("Fila 1, Columna 2"));
+            //PdfPCell cell20;
+            //table3.addCell(cell20);
+
+            // Crear la tabla anidada con 2 columnas
+            PdfPTable nestedTable = new PdfPTable(2);
+            nestedTable.setWidthPercentage(101f);
+
+            // Agregar celdas a la tabla anidada
+            nestedTable.addCell(new PdfPCell(new Paragraph("Subtotal", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ Subtotal", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("Descuento", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ Descuento", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("Neto", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ Neto", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("IVA", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ IVA", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("TOTAL", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ TOTAL", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("Incluye instalación?", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("Si / No", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+
+            cell20.addElement(nestedTable);
+            table3.addCell(cell20);
+
+            // Omitir la celda de la columna 1 para la segunda fila
+            PdfPCell emptyCell = new PdfPCell();
+            emptyCell.setBorder(Rectangle.NO_BORDER);
+            table3.addCell(emptyCell);
+
+            // Agregar una celda más grande en la segunda fila, columna 2
+            PdfPCell cell21 = new PdfPCell(new Paragraph("Comentarios:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            cell21.setColspan(2); // Fusionar 2 columnas en la celda
+            table3.addCell(cell21);
+
+
+            // Agregar la tabla al documento
+            document.add(table3);
+
 
             // Se cierra el documento
             document.close();

@@ -17,6 +17,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.apache.pdfbox:pdfbox:2.0.27'
 	implementation 'com.itextpdf:itextpdf:5.5.13'
+	implementation group: 'com.itextpdf', name: 'itext-pdfa', version: '5.5.13'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'

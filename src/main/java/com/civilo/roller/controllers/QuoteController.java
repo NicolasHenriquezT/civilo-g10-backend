@@ -22,12 +22,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 import java.util.List;
+import java.util.ArrayList;
 
 //nuevos
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.springframework.http.HttpHeaders;
 import java.io.FileOutputStream;
+import java.net.MalformedURLException;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -49,7 +51,7 @@ public class QuoteController {
     }
 
     // Permite obtener los datos de una cotizacion en especifico.
-    /*
+    
     @GetMapping("/{id}")
     public ResponseEntity<QuoteEntity> getQuoteById(@PathVariable long id){
         Optional<QuoteEntity> quote = quoteService.getQuoteById(id);
@@ -60,7 +62,7 @@ public class QuoteController {
         return new ResponseEntity<QuoteEntity>(quote.get(), HttpStatus.OK);
     }
 
-     */
+
 
     // Permite guardar entidad cotizacion.
     @PostMapping()
@@ -204,6 +206,8 @@ public class QuoteController {
     @PostMapping("/{id}")
     public ResponseEntity<?> generatePDF(@PathVariable long id, @RequestBody QuoteEntity quote) {
 
+
+
         Optional<QuoteEntity> checkQuote = quoteService.getQuoteById(id);
 
         if(!checkQuote.isPresent()){
@@ -300,7 +304,7 @@ public class QuoteController {
 
             // Configuración de la caja
             float borderWidth = 2f;
-            float padding = 10f;
+            //float padding = 10f;
             float spacingAfter = 20f;
             BaseColor boxColor = new BaseColor(0, 153, 255); // Color azul
             BaseColor textColor = BaseColor.WHITE; // Color del texto dentro de la caja
@@ -313,13 +317,14 @@ public class QuoteController {
             canvas.rectangle(rect);
 
             // Se agrega el texto "COTIZACION" dentro del rectángulo
-            Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
-            Paragraph paragraph = new Paragraph("COTIZACION", font);
+            Font font1 = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
+            Paragraph paragraph = new Paragraph("COTIZACION", font1);
             paragraph.setAlignment(Element.ALIGN_CENTER);
             document.add(paragraph);
 
-            document.add(new Paragraph("\n\n"));
+            //document.add(new Paragraph("\n\n"));
 
+            /* 
             PdfContentByte canvas2 = writer.getDirectContent();
             // Definir las coordenadas y el tamaño de la caja
             float x = 36f; // Posición X de la esquina inferior izquierda
@@ -337,11 +342,112 @@ public class QuoteController {
             // Dibujar el borde y el fondo
             canvas2.stroke();
             canvas2.fill();
+            */
+
+            PdfContentByte canvas2 = writer.getDirectContent();
+            float x2 = 36f; // Posición X de la esquina inferior izquierda del nuevo rectángulo
+            float y2 = 690f; // Posición Y de la esquina inferior izquierda del nuevo rectángulo
+            float width2 = 523f; // Ancho del nuevo rectángulo
+            float height2 = 75f; // Altura del nuevo rectángulo
+
+            // Configuración de los colores y bordes del nuevo rectángulo
+            BaseColor borderColor2 = BaseColor.BLACK;
+            BaseColor backgroundColor2 = BaseColor.WHITE;
+
+            // Dibujar el rectángulo
+            canvas2.rectangle(x2, y2, width2, height2);
+            canvas2.setColorStroke(borderColor2);
+            canvas2.setColorFill(backgroundColor2);
+            canvas2.stroke();
+            canvas2.fill();
+
+            // Dibujar la línea vertical en la mitad del rectángulo
+            float shift = 70f; // Desplazamiento adicional hacia la derecha
+            float midX2 = x2 + (width2 / 2);
+            canvas2.moveTo(midX2, y2);
+            canvas2.lineTo(midX2, y2 + height2);
+            canvas2.stroke();
+
+            // Definir el área de texto dentro del rectángulo izquierdo
+            float padding = 5f;
+            Rectangle textArea = new Rectangle(x2 + padding, y2 + padding, midX2 - padding, y2 + height2 - padding);
+            ColumnText columnText = new ColumnText(canvas2);
+            columnText.setSimpleColumn(textArea);
+
+            // Agregar el texto al área de texto
+            String textoIzquierdo = "Suc Brisas Oriente 1331 / Pudahuel\nAv PaJaritos 3145 / Maipu\n(+569) 95389027  (+569) 97414699 \nContacto Marcelo Civilo 95389027";
+            Font font2 = FontFactory.getFont(FontFactory.HELVETICA, 10, BaseColor.BLACK);
+            Paragraph paragraph2 = new Paragraph(textoIzquierdo, font2);
+            columnText.addElement(paragraph2);
+
+            // Procesar y dibujar el contenido del área de texto
+            columnText.go();
+            
+            // Agregar la imagen al rectángulo derecho
+            float x3 = midX2 + padding; // Posición X de la esquina inferior izquierda del rectángulo derecho
+            float y3 = y2 + padding; // Posición Y de la esquina inferior izquierda del rectángulo derecho
+            float width3 = width2 - shift - (2 * padding); // Ancho del rectángulo derecho
+            float height3 = height2 - (2 * padding); // Altura del rectángulo derecho
+
+            String imagePath = "C:/Users/Golden Gamers/Desktop/Usach/2023/1- Primer Semestre/4- TALLER DE INGENIERIA DE SOFTWARE/civilo-g10-backend/fotopdf/roller.png"; // Ruta o URL de la imagen
+
+            try {
+                Image image = Image.getInstance(imagePath);
+                image.scaleToFit(width3-15f, height3-15f);
+                image.setAbsolutePosition(x3, y3+10f);
+                // Agregar la imagen al documento
+                document.add(image);
+            } catch (MalformedURLException e) {
+                // Manejo de la excepción MalformedURLException
+                e.printStackTrace(); // Opcionalmente, puedes imprimir la traza de la excepción
+            } catch (IOException e) {
+                // Manejo de la excepción IOException
+                e.printStackTrace(); // Opcionalmente, puedes imprimir la traza de la excepción
+            }
+            
+            document.add(new Paragraph("\n\n\n\n\n"));
+
+            // Crear una tabla con 3 columnas
+            PdfPTable table = new PdfPTable(3);
+
+            // Establecer el ancho de la tabla para que ocupe el ancho completo
+            table.setWidthPercentage(100f);
+            
+            //Datos de las celdas de la tabla
+            String[][] data = {
+                {"Cliente:", "Hernan Astudillo", "Número: " + 17},
+                {"Fono contacto", "+569 92297540", "Fecha: 5/6/2020"},
+                {"RUT:", "", ""},
+                {"Ciudad:", "Santiago", "www.rollerdeco.cl"},
+                {"Pais:", "Chile", "contacto@rollerdeco.cl"},
+            };
+
+            // Agregar las celdas a la tabla
+            for (String[] rowData : data) {
+                for (String cellData : rowData) {
+                    PdfPCell cell = new PdfPCell(new Paragraph(cellData, FontFactory.getFont(FontFactory.HELVETICA, 10, BaseColor.BLACK)));
+                    cell.setBackgroundColor(BaseColor.WHITE);
+                    cell.setBorderColor(BaseColor.BLACK);
+                    table.addCell(cell);
+                }
+            }
+
+
+
+            
+
+            
+
+            // Agregar la tabla al documento
+            document.add(table);
+
+
+
 
             // Se agregan los atributos al PDF
-            document.add(new Paragraph("  Materiales: "));
-            document.add(new Paragraph("  - Amount: " + quote.getAmount()));
-            document.add(new Paragraph("  - Value Square Meters: " + quote.getValueSquareMeters()));
+            //document.add(new Paragraph("  Materiales: "));
+            //document.add(new Paragraph("  - Amount: " + quote.getAmount()));
+            //document.add(new Paragraph("  - Value Square Meters: " + quote.getValueSquareMeters()));
             
 
             // Se cierra el documento
@@ -354,7 +460,8 @@ public class QuoteController {
             // Se guarda el archivo PDF en la carpeta seleccionada
 
             // Se define la ruta donde se guardará el archivo PDF
-            String filePath = "C:/Users/javie/Desktop/Cotizaciones/test.pdf";
+            //String filePath = "C:/Users/javie/Desktop/Cotizaciones/test.pdf";
+            String filePath = "C:/Users/Golden Gamers/Desktop/Usach/2023/2- Segundo Semestre/test.pdf";
             try (FileOutputStream fos = new FileOutputStream(filePath)) {
                 fos.write(pdfBytes);
                 System.out.println("PDF guardado exitosamente en: " + filePath);

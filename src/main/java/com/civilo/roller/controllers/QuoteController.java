@@ -166,7 +166,6 @@ public class QuoteController {
         quoteEntities = quoteService.lastQuotes(quoteSummaryEntity.getQuoteSummaryID());
         QuoteEntity quote = quoteEntities.get(0);
 
-
         // Se revisa si existe el resumen de cotizacion (si no existe entonces no hay cotizaciones)
         if(quoteSummaryEntity.getQuoteSummaryID() == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La cotizacion con el ID especificado no se encuentra registrada.");
@@ -190,7 +189,6 @@ public class QuoteController {
 
             // Se configura el rectángulo 1 de fondo
             PdfContentByte canvas = writer.getDirectContentUnder();
-            //Rectangle rect = new Rectangle(36, 750, 559, 800);
             Rectangle rect = new Rectangle(36, 765, 559, 810);
             rect.setBackgroundColor(BaseColor.LIGHT_GRAY);
             canvas.rectangle(rect);
@@ -247,8 +245,8 @@ public class QuoteController {
             float width3 = width2 - shift - (2 * padding); // Ancho del rectángulo derecho
             float height3 = height2 - (2 * padding); // Altura del rectángulo derecho
 
-            String imagePath = "C:\\Users\\tomaq\\OneDrive\\Escritorio\\civilo-g10-backend\\fotopdf\\roller.png"; // Ruta o URL de la imagen
-            //String imagePath = "C:/Users/javie/Cotizaciones/civilo-g10-backend/fotopdf/roller.png"; // Ruta o URL de la imagen
+            //String imagePath = "C:\\Users\\tomaq\\OneDrive\\Escritorio\\civilo-g10-backend\\fotopdf\\roller.png"; // Ruta o URL de la imagen
+            String imagePath = "C:/Users/javie/Cotizaciones/civilo-g10-backend/fotopdf/roller.png"; // Ruta o URL de la imagen
 
             try {
                 Image image = Image.getInstance(imagePath);
@@ -292,81 +290,6 @@ public class QuoteController {
 
             // Agregar la tabla al documento
             document.add(table);
-
-            /* 
-            [  {"amount":50,"valueSquareMeters":50,"width":50,"height":50,"bracketValue":50,"capValue":50,"counterweightValue":50,"bandValue":50,"chainValue":50,"pipe":{"pipeID":5,"pipeName":"Tubo 38 mm"},"pipeValue":50,"assemblyValue":"50","installationValue":"50","description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}},
-            
-               {"amount":100,"valueSquareMeters":100,"width":100,"height":100,"bracketValue":10,"capValue":100,"counterweightValue":100,"bandValue":100,"chainValue":100,"pipe":{"pipeID":5,"pipeName":"Tubo 38 mm"},"pipeValue":100,"assemblyValue":"100","installationValue":"100","description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":2,"curtainType":"Roller Screen"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}},
-               
-               {"amount":null,"valueSquareMeters":null,"width":null,"height":null,"bracketValue":null,"capValue":null,"counterweightValue":null,"bandValue":null,"chainValue":null,"pipe":null,"pipeValue":null,"assemblyValue":null,"installationValue":null,"description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":3,"curtainType":"Duo Blackout"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}},
-               
-               {"amount":null,"valueSquareMeters":null,"width":null,"height":null,"bracketValue":null,"capValue":null,"counterweightValue":null,"bandValue":null,"chainValue":null,"pipe":null,"pipeValue":null,"assemblyValue":null,"installationValue":null,"description":"","totalSquareMeters":null,"totalFabrics":null,"totalMaterials":null,"totalLabor":null,"productionCost":null,"saleValue":null,"percentageDiscount":0,"iva":19,"total":null,"date":null,"seller":{"userID":3,"name":"Vendedor","surname":"1","email":"vendedor@gmail.com","password":"vendedor","phoneNumber":"0 1234 5678","commune":"Petorca","birthDate":"2000-04-10","age":23,"startTime":null,"endTime":null,"role":{"roleID":3,"accountType":"Vendedor"},"companyName":"Compañia 1","disponibility":true,"rut":null,"bank":null,"bankAccountType":null,"bankAccountNumber":null,"coverageID":[8,110,186],"quoteEntities":[]},"curtain":{"curtainID":4,"curtainType":"Duo Transparente"},"currentIVA":null,"requestEntity":{"requestID":1,"description":"Texto prueba","deadline":"2023-06-07","admissionDate":"2023-06-02","closingDate":null,"reason":null,"sellerId":3,"userID":[],"user":{"userID":4,"name":"Cliente","surname":"1","email":"cliente@gmail.com","password":"cliente","phoneNumber":"0 1234 5678","commune":"Hualpén","birthDate":"2002-01-26","age":21,"startTime":null,"endTime":null,"role":{"roleID":4,"accountType":"Cliente"}},"coverage":{"coverageID":251,"commune":"Quinta Normal"},"curtain":{"curtainID":1,"curtainType":"Roller Blackout"},"status":{"statusID":2,"statusName":"Asignada"}}}]
-            */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             document.add(new Paragraph("\n"));
             
@@ -426,17 +349,17 @@ public class QuoteController {
             cell8.setBorderColor(BaseColor.BLACK);
             table2.addCell(cell8);
 
-            // Datos para las filas (ejemplo)
+            // Datos para las filas 
             List<String[]> data2 = new ArrayList<>();
             for (int i = 0; i < quoteEntities.size(); i++){
                 data2.add(new String[]{quoteEntities.get(i).getCurtain().getCurtainType().toString(),
                         String.valueOf(quoteEntities.get(i).getWidth()),
                         String.valueOf(quoteEntities.get(i).getHeight()),
-                        String.valueOf(quoteEntities.get(i).getProductionCost()),
+                        String.valueOf("$ " + (int) Math.floor(quoteEntities.get(i).getProductionCost())),
                         String.valueOf(quoteEntities.get(i).getAmount()),
                         null,
-                        String.valueOf(quoteEntities.get(i).getProfitMarginEntity().getProfitMarginPercentaje()),
-                        String.valueOf(quoteEntities.get(i).getSaleValue())});
+                        String.valueOf(quoteEntities.get(i).getProfitMarginEntity().getProfitMarginPercentaje() + "%"),
+                        String.valueOf("$ " + (int) Math.floor(quoteEntities.get(i).getSaleValue()))});
             }
 
             // Agregar las filas a la tabla
@@ -474,15 +397,17 @@ public class QuoteController {
             String instalation = quoteService.instalation(quote.getTotalLabor());
             // Agregar celdas a la tabla anidada
             nestedTable.addCell(new PdfPCell(new Paragraph("Subtotal", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getTotalCostOfProduction()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            //System.out.println(quoteSummaryEntity.getTotalCostOfProduction());
+            //System.out.println((int) Math.floor(quoteSummaryEntity.getTotalCostOfProduction()));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ " + String.valueOf((int) Math.floor(quoteSummaryEntity.getTotalCostOfProduction())), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("Descuento", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getValueAfterDiscount()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ " + String.valueOf((int) Math.floor(quoteSummaryEntity.getValueAfterDiscount())), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("Neto", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getNetTotal()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ " + String.valueOf((int) Math.floor(quoteSummaryEntity.getNetTotal())), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("IVA", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getCurrentIVA().getIvaPercentage()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getCurrentIVA().getIvaPercentage()) + "%", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("TOTAL", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
-            nestedTable.addCell(new PdfPCell(new Paragraph(String.valueOf(quoteSummaryEntity.getTotal()), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
+            nestedTable.addCell(new PdfPCell(new Paragraph("$ " + String.valueOf((int) Math.floor(quoteSummaryEntity.getTotal())), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph("Incluye instalación?", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
             nestedTable.addCell(new PdfPCell(new Paragraph(instalation, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK))));
 
@@ -495,7 +420,7 @@ public class QuoteController {
             table3.addCell(emptyCell);
 
             // Agregar una celda más grande en la segunda fila, columna 2
-            PdfPCell cell21 = new PdfPCell(new Paragraph("Comentarios:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+            PdfPCell cell21 = new PdfPCell(new Paragraph("Comentarios:" + "\n", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
             cell21.setColspan(2); // Fusionar 2 columnas en la celda
             table3.addCell(cell21);
 
@@ -514,8 +439,8 @@ public class QuoteController {
             // Se guarda el archivo PDF en la carpeta seleccionada
 
             // Se define la ruta donde se guardará el archivo PDF
-            //String filePath = "C:/Users/javie/Desktop/Cotizaciones/test.pdf";
-            String filePath = "C:\\Users\\tomaq\\Downloads\\test.pdf";
+            String filePath = "C:/Users/javie/Desktop/Cotizaciones/cotizacion.pdf";
+            //String filePath = "C:\\Users\\tomaq\\Downloads\\cotizacion.pdf";
             try (FileOutputStream fos = new FileOutputStream(filePath)) {
                 fos.write(pdfBytes);
                 System.out.println("PDF guardado exitosamente en: " + filePath);

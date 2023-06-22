@@ -164,6 +164,7 @@ public class QuoteService {
         for (int i = quoteSummaryEntities.size() - 1; i != 0; i--) {
             if (quoteSummaryEntities.get(i).getSeller().getUserID() == idseller) {
                 quoteSummary = quoteSummaryEntities.get(i);
+                return quoteSummary;
             }
         }
         return quoteSummary;

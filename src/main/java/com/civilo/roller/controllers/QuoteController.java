@@ -61,16 +61,8 @@ public class QuoteController {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
 
-        System.out.println("nombre del cliente: " + quote.get().getRequestEntity().getUser().getName() + "\n");
-        System.out.println("telefono del cliente: " + quote.get().getRequestEntity().getUser().getPhoneNumber() + "\n");
-
-
-
-
         return new ResponseEntity<QuoteEntity>(quote.get(), HttpStatus.OK);
     }
-
-
 
     // Permite guardar entidad cotizacion.
     @PostMapping()
@@ -245,9 +237,8 @@ public class QuoteController {
             float width3 = width2 - shift - (2 * padding); // Ancho del rectángulo derecho
             float height3 = height2 - (2 * padding); // Altura del rectángulo derecho
 
-            //String imagePath = "C:\\Users\\tomaq\\OneDrive\\Escritorio\\civilo-g10-backend\\fotopdf\\roller.png"; // Ruta o URL de la imagen
-            String imagePath = "C:/Users/javie/Cotizaciones/civilo-g10-backend/fotopdf/roller.png"; // Ruta o URL de la imagen
-
+            // Se define la ruta donde se agregara la imagen al PDF 
+            String imagePath = "fotopdf/roller.png"; 
             try {
                 Image image = Image.getInstance(imagePath);
                 image.scaleToFit(width3-15f, height3-15f);
@@ -379,10 +370,11 @@ public class QuoteController {
             PdfPTable table3 = new PdfPTable(2);
             table3.setWidthPercentage(100);
 
-            // Columna 1
-            PdfPCell cell19 = new PdfPCell(new Paragraph("Datos transferencia", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
-            cell19.setRowspan(6); // Fusionar 3 filas en la columna 1
-            //cell19.setPercentageWidth(75f);
+            // Columna 1 
+            PdfPCell cell19 = new PdfPCell(new Paragraph("Datos transferencia \n\n mcivilo@gmail.com \n Importacion Global Deco Ltda \n Banco Santander \n Cta. Cte 73121418 \n RUT 76.892.524-0", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK))); 
+            cell19.setRowspan(6); // Fusionar 3 filas en la columna 1 
+            //cell19.setPercentageWidth(75f); 
+            cell19.setHorizontalAlignment(Element.ALIGN_CENTER); 
             table3.addCell(cell19);
 
             // Columna 2
@@ -435,12 +427,11 @@ public class QuoteController {
             // Se obtiene el contenido del PDF como bytes
             byte[] pdfBytes = outputStream.toByteArray();
 
-            // Guardar el archivo PDF en la carpeta deseada
-            // Se guarda el archivo PDF en la carpeta seleccionada
-
-            // Se define la ruta donde se guardará el archivo PDF
-            String filePath = "C:/Users/javie/Desktop/Cotizaciones/cotizacion.pdf";
-            //String filePath = "C:\\Users\\tomaq\\Downloads\\cotizacion.pdf";
+            // Se define el nombre del archivo PDF 
+            String namePDF = "cotizacion_"+String.valueOf(quote.getRequestEntity().getRequestID())+".pdf"; 
+            
+            // Se define la ruta donde se guardará el archivo PDF 
+            String filePath = "pdfs/"+namePDF;
             try (FileOutputStream fos = new FileOutputStream(filePath)) {
                 fos.write(pdfBytes);
                 System.out.println("PDF guardado exitosamente en: " + filePath);
@@ -466,8 +457,4 @@ public class QuoteController {
             document.close();
         }
     }
-
-
-
-
 }

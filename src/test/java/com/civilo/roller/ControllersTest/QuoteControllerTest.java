@@ -46,8 +46,8 @@ public class QuoteControllerTest {
     @Test
     void getQuotes() {
         List<QuoteEntity> expectedQuotes = new ArrayList<>();
-        expectedQuotes.add(new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null, null));
-        expectedQuotes.add(new QuoteEntity(2L, 1, 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 77000f, null, null, null, null, null, null));
+        expectedQuotes.add(new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 0f, 44000f, 77000f, null, null, null, null, null, null, null));
+        expectedQuotes.add(new QuoteEntity(2L, 1, 10.0f, 5.0f, 5.0f, 25.0f, 20.0f, 5.0f, 2.0f, 3.0f, 1.0f, 0.5f, 2.5f, 15.0f, 8.0f, 7.0f, 30.0f, 50.0f, 10.0f, 77000f, null, null, null, null, null, null, null));
         Mockito.when(quoteService.getQuotes()).thenReturn(expectedQuotes);
         List<QuoteEntity> actualQuotes = quoteController.getQuotes();
         assertEquals(expectedQuotes, actualQuotes);

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > StatusController</title>
+  <title>Coverage Report > SellerController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.controllers</a>
 </div>
 
-<h1>Coverage Summary for Class: StatusController (com.civilo.roller.controllers)</h1>
+<h1>Coverage Summary for Class: SellerController (com.civilo.roller.controllers)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -40,7 +40,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">StatusController</td>
+  <td class="name">SellerController</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -54,15 +54,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (7/7)
+    (8/8)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    92%
   </span>
   <span class="absValue">
-    (32/32)
+    (23/25)
   </span>
 </td>
 </tr>
@@ -76,100 +76,89 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.controllers;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.StatusEntity;
-&nbsp;import com.civilo.roller.services.StatusService;
+&nbsp;import com.civilo.roller.Entities.CoverageEntity;
+&nbsp;import com.civilo.roller.Entities.SellerEntity;
+&nbsp;import com.civilo.roller.services.SellerService;
+&nbsp;import jakarta.servlet.http.HttpServletRequest;
+&nbsp;import jakarta.servlet.http.HttpSession;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.http.HttpStatus;
 &nbsp;import org.springframework.http.ResponseEntity;
 &nbsp;import org.springframework.web.bind.annotation.*;
-&nbsp;import java.util.Optional;
-&nbsp;
+&nbsp;import java.util.Optional; 
 &nbsp;import java.util.List;
-&nbsp;import org.springframework.web.bind.annotation.PostMapping;
-&nbsp;import org.springframework.web.bind.annotation.RequestBody;
 &nbsp;
 &nbsp;@CrossOrigin(origins = &quot;*&quot;, allowedHeaders = &quot;*&quot;)
 &nbsp;@RestController
-&nbsp;@RequestMapping(&quot;/status&quot;)
-<b class="fc">&nbsp;public class StatusController {</b>
+&nbsp;@RequestMapping(&quot;/sellers&quot;)
+<b class="fc">&nbsp;public class SellerController {</b>
 &nbsp;    @Autowired
-&nbsp;    StatusService statusService;
+&nbsp;    SellerService sellerService;
 &nbsp;
-&nbsp;    // Permite obtener todos los estados del sistema.
+&nbsp;    // Permite obtener todos los vendedores del sistema.
 &nbsp;    @GetMapping()
-&nbsp;    public List&lt;StatusEntity&gt; getStatus(){
-<b class="fc">&nbsp;        return statusService.getStatus();</b>
+&nbsp;    public List&lt;SellerEntity&gt; getSellers(){
+<b class="fc">&nbsp;        return sellerService.getSellers();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite obtener un estado en especifico del sistema.
+&nbsp;    //Permite obtener un vendedor en especifico del sistema.
 &nbsp;    @GetMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;StatusEntity&gt; getStatusById(@PathVariable long id){
-<b class="fc">&nbsp;        Optional&lt;StatusEntity&gt; status = statusService.getStatusById(id);</b>
-<b class="fc">&nbsp;        if(!status.isPresent()){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO EL ESTADO \n&quot;);</b>
-<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(null,HttpStatus.NOT_FOUND); </b>
+&nbsp;    public ResponseEntity&lt;SellerEntity&gt; getSellerById(@PathVariable long id){
+<b class="fc">&nbsp;        Optional&lt;SellerEntity&gt; seller = sellerService.getSellerById(id);</b>
+<b class="fc">&nbsp;        if(!seller.isPresent()){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO EL VENDEDOR \n&quot;);</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(null,HttpStatus.NOT_FOUND); </b>
 &nbsp;        }
-<b class="fc">&nbsp;        return new ResponseEntity&lt;StatusEntity&gt;(status.get(), HttpStatus.OK);</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;SellerEntity&gt;(seller.get(), HttpStatus.OK);</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    // Permite guardar entidad vendedor.
+&nbsp;    @PostMapping()
+&nbsp;    public SellerEntity saveSeller(@RequestBody SellerEntity seller){
+<b class="fc">&nbsp;        return this.sellerService.saveSeller(seller);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite guardar un nuevo estado en el sistema.
-&nbsp;    @PostMapping()
-&nbsp;    public ResponseEntity&lt;?&gt; createStatus(@RequestBody StatusEntity status){
+&nbsp;    //**Funciones register y update son implementadas directamente en UserController.**//
 &nbsp;
-<b class="fc">&nbsp;        Optional&lt;StatusEntity&gt; existingStatus = statusService.validateStatusName(status.getStatusName());</b>
+&nbsp;    // Permite eliminar todos los vendedores del sistema
+&nbsp;    @DeleteMapping()
+&nbsp;    public ResponseEntity&lt;String&gt; deleteSellers(){
+<b class="fc">&nbsp;        sellerService.deleteSellers();</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;SE ELIMINARON LOS VENDEDORES CORRECTAMENTE&quot;);</b>
+&nbsp;    }
 &nbsp;
-&nbsp;        //Se verifica si el estado ya existe
-<b class="fc">&nbsp;        if(existingStatus.isPresent()){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;ESTADO YA EXISTE\n&quot;);</b>
-<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;El estado ingresado ya existe&quot;); </b>
+&nbsp;    // Permite eliminar un vendedor en especifico del sistema.
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; deleteSellerById(@PathVariable Long id){
+<b class="fc">&nbsp;        if(!sellerService.existsSellerById(id)){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO UN VENDEDOR CON EL ID: &quot;+ id + &quot;\n&quot;);</b>
+<b class="fc">&nbsp;            return ResponseEntity.notFound().build();</b>
 &nbsp;        }
+<b class="fc">&nbsp;        sellerService.deleteSellerById(id);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;VENDEDOR CON ID &quot; + id + &quot; ELIMINADO CORRECTAMENTE\n&quot;);</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    //------------------------------------------------------------------------------------------------------------------------------------------------//
 &nbsp;
-<b class="fc">&nbsp;        statusService.createStatus(status);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;ESTADO GUARDADO CON EXITO\n&quot;);</b>
+&nbsp;    @PostMapping(&quot;/login&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; login(@RequestBody SellerEntity userDTO, HttpServletRequest request){
+<b class="fc">&nbsp;        SellerEntity seller = sellerService.validateSeller(userDTO.getEmail(), userDTO.getPassword());</b>
+<b class="fc">&nbsp;        if (seller == null){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;CORREO O CONTRASEÑA INCORRECTA\n&quot;);</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        HttpSession session = request.getSession();</b>
+<b class="fc">&nbsp;        session.setAttribute(&quot;seller&quot;, seller);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;SESIÓN INICIADA CORRECTAMENTE&quot;);</b>
 <b class="fc">&nbsp;        return ResponseEntity.ok().build();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite actualizar información de un estado.
-&nbsp;    @PutMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;?&gt; updateUser(@PathVariable long id, @RequestBody StatusEntity status) {
-&nbsp;        
-<b class="fc">&nbsp;        Optional&lt;StatusEntity&gt; checkStatus = statusService.getStatusById(id);</b>
-&nbsp;        
-<b class="fc">&nbsp;        if(!checkStatus.isPresent()){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO EL ESTADO CON ID: &quot; + id + &quot; \n&quot;);</b>
-<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;El estado con el ID especificado no existe.&quot;); </b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        Optional&lt;StatusEntity&gt; checkStatusName = statusService.validateStatusName(status.getStatusName());</b>
-&nbsp;
-<b class="fc">&nbsp;        if(checkStatusName.isPresent()){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;ESTADO INGRESADO YA EXISTE\n&quot;);</b>
-<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;El estado ingresado ya existe&quot;); </b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        statusService.updateStatus(id,status);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;ESTADO ACTUALIZADO CON EXITO\n&quot;);</b>
-<b class="fc">&nbsp;        return ResponseEntity.ok().build(); </b>
+&nbsp;    @PostMapping(&quot;/sellerInformation&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; sellerInformationUpdateCompanyName(@RequestBody SellerEntity userDTO){
+<b class="fc">&nbsp;        sellerService.updateCoverageIdAndCompanyNameSellerByEmail(userDTO.getEmail(), userDTO.getCompanyName(), userDTO.getCoverageID());</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok().build();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Permite eliminar todos los estados del sistema.
-&nbsp;    @DeleteMapping()
-&nbsp;    public ResponseEntity&lt;String&gt; deleteStatus(){
-<b class="fc">&nbsp;        statusService.deleteStatus();</b>
-<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;SE ELIMINARON LOS ESTADOS CORRECTAMENTE&quot;);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Permite eliminar un estado en especifico del sistema.
-&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;String&gt; deleteStatusById(@PathVariable Long id){
-<b class="fc">&nbsp;        if(!statusService.existsStatusById(id)){</b>
-<b class="fc">&nbsp;            System.out.println(&quot;NO SE ENCONTRO UN ESTADO CON EL ID: &quot;+ id + &quot;\n&quot;);</b>
-<b class="fc">&nbsp;            return ResponseEntity.notFound().build();</b>
-&nbsp;        }
-<b class="fc">&nbsp;        statusService.deleteStatusById(id);</b>
-<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;ESTADO CON ID &quot; + id + &quot; ELIMINADO CORRECTAMENTE\n&quot;);</b>
-&nbsp;
-&nbsp;    }
 &nbsp;}
 </code>
 </pre>
@@ -194,7 +183,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-14 17:09</div>
+    <div style="float:right;">generated on 2023-06-23 13:38</div>
 </div>
 </body>
 </html>

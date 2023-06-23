@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > QuoteController</title>
+  <title>Coverage Report > ProfitMarginController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.controllers</a>
 </div>
 
-<h1>Coverage Summary for Class: QuoteController (com.civilo.roller.controllers)</h1>
+<h1>Coverage Summary for Class: ProfitMarginController (com.civilo.roller.controllers)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -40,7 +40,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">QuoteController</td>
+  <td class="name">ProfitMarginController</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -51,18 +51,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    50%
   </span>
   <span class="absValue">
-    (3/3)
+    (1/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    50%
   </span>
   <span class="absValue">
-    (15/15)
+    (1/2)
   </span>
 </td>
 </tr>
@@ -76,127 +76,28 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.controllers;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.QuoteEntity;
-&nbsp;import com.civilo.roller.Entities.QuoteSummaryEntity;
-&nbsp;import com.civilo.roller.services.IVAService;
-&nbsp;import com.civilo.roller.services.QuoteService;
-&nbsp;import com.civilo.roller.services.QuoteSummaryService;
+&nbsp;import com.civilo.roller.Entities.ProfitMarginEntity;
+&nbsp;import com.civilo.roller.services.ProfitMarginService;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
-&nbsp;import org.springframework.web.bind.annotation.*;
-&nbsp;import org.springframework.http.ResponseEntity;
-&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.web.bind.annotation.CrossOrigin;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.RequestMapping;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
 &nbsp;
-&nbsp;import java.util.Date;
-&nbsp;import java.util.Optional;
 &nbsp;import java.util.List;
 &nbsp;
 &nbsp;@CrossOrigin(origins = &quot;*&quot;, allowedHeaders = &quot;*&quot;)
 &nbsp;@RestController
-&nbsp;@RequestMapping(&quot;/quotes&quot;)
-<b class="fc">&nbsp;public class QuoteController {</b>
+&nbsp;@RequestMapping(&quot;/profitMargins&quot;)
+<b class="fc">&nbsp;public class ProfitMarginController {</b>
 &nbsp;    @Autowired
-&nbsp;    QuoteService quoteService;
+&nbsp;    ProfitMarginService profitMarginService;
 &nbsp;
-&nbsp;    @Autowired
-&nbsp;    QuoteSummaryService quoteSummaryService;
-&nbsp;
-&nbsp;    @Autowired
-&nbsp;    IVAService ivaService;
-&nbsp;
-&nbsp;    // Permite obtener todas las cotizaciones del sistema.
+&nbsp;    // Permite obtener todos los margenes de utilidad utilizados en el sistema.
 &nbsp;    @GetMapping()
-&nbsp;    public List&lt;QuoteEntity&gt; getQuotes(){
-<b class="fc">&nbsp;        return quoteService.getQuotes();</b>
+&nbsp;    public List&lt;ProfitMarginEntity&gt; getProfitMargins(){
+<b class="nc">&nbsp;        return profitMarginService.getProfitMargins();</b>
 &nbsp;    }
-&nbsp;
-&nbsp;    // Permite obtener los datos de una cotizacion en especifico.
-&nbsp;    /*
-&nbsp;    @GetMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;QuoteEntity&gt; getQuoteById(@PathVariable long id){
-&nbsp;        Optional&lt;QuoteEntity&gt; quote = quoteService.getQuoteById(id);
-&nbsp;        if(!quote.isPresent()){
-&nbsp;            System.out.println(&quot;NO SE ENCONTRO LA COTIZACION \n&quot;);
-&nbsp;            return new ResponseEntity&lt;&gt;(null,HttpStatus.NOT_FOUND);
-&nbsp;        }
-&nbsp;        return new ResponseEntity&lt;QuoteEntity&gt;(quote.get(), HttpStatus.OK);
-&nbsp;    }
-&nbsp;
-&nbsp;     */
-&nbsp;
-&nbsp;    // Permite guardar entidad cotizacion.
-&nbsp;    @PostMapping()
-&nbsp;    public ResponseEntity&lt;QuoteSummaryEntity&gt; saveQuotes(@RequestBody List&lt;QuoteEntity&gt; quoteList){
-<b class="fc">&nbsp;        for (int i = 0; i &lt; quoteList.size(); i ++) {</b>
-<b class="fc">&nbsp;            if (quoteList.get(i).getAmount() == 0){</b>
-<b class="fc">&nbsp;                quoteList.remove(quoteList.get(i));</b>
-<b class="fc">&nbsp;                i--;</b>
-&nbsp;            }
-&nbsp;        }
-<b class="fc">&nbsp;        for (int i = 0; i &lt; quoteList.size(); i ++) {</b>
-<b class="fc">&nbsp;            System.out.println(&quot;-------------------------------\n&quot;);</b>
-<b class="fc">&nbsp;            System.out.println(quoteList.get(i));</b>
-<b class="fc">&nbsp;            quoteService.calculation(quoteList.get(i));</b>
-&nbsp;        }
-<b class="fc">&nbsp;        QuoteSummaryEntity quoteSummary = quoteSummaryService.summaryCalculation(quoteList);</b>
-<b class="fc">&nbsp;        for (int i = 0; i &lt; quoteList.size(); i ++) {</b>
-<b class="fc">&nbsp;            quoteList.get(i).setQuoteSummary(quoteSummary);</b>
-&nbsp;        }
-<b class="fc">&nbsp;        this.quoteService.createQuotes(quoteList);</b>
-<b class="fc">&nbsp;        return ResponseEntity.ok(quoteSummary);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Permite guardar una nueva cotizacion en el sistema.
-&nbsp;    // FALTA: Solo los vendedores deberian poder hacerlo
-&nbsp;    //@PostMapping(&quot;/register&quot;)
-&nbsp;    //public ResponseEntity&lt;?&gt; createQuote(@RequestBody QuoteEntity quote){
-&nbsp;    //    Optional&lt;QuoteEntity&gt; existingQuote = quoteService.
-&nbsp;    //} 
-&nbsp;
-&nbsp;    // Permite actualizar informacion de una cotizacion.
-&nbsp;    // FALTA: Ver si solo administradores pueden hacer esto
-&nbsp;    /*
-&nbsp;    @PutMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;?&gt; updateQuote(@PathVariable long id, @RequestBody QuoteEntity quote){
-&nbsp;        
-&nbsp;        Optional&lt;QuoteEntity&gt; checkQuote = quoteService.getQuoteById(id);
-&nbsp;        
-&nbsp;        if(!checkQuote.isPresent()){
-&nbsp;            System.out.println(&quot;NO SE ENCONTRO LA COTIZACION CON ID: &quot; + id + &quot; \n&quot;);
-&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;La cotizacion con el ID especificado no se encuentra registrada.&quot;); 
-&nbsp;        }
-&nbsp;
-&nbsp;        //Aca deberia ir chequeo si es administrador el tipo de cuenta
-&nbsp;
-&nbsp;        quoteService.updateQuote(id,quote);
-&nbsp;        System.out.println(&quot;ACTUALIZADO CON EXITO \n&quot;);
-&nbsp;        return ResponseEntity.ok().build();
-&nbsp;    }
-&nbsp;
-&nbsp;     */
-&nbsp;
-&nbsp;    // Permite eliminar todas las cotizaciones del sistema.
-&nbsp;    /*
-&nbsp;    @DeleteMapping()
-&nbsp;    public ResponseEntity&lt;String&gt; deleteQuotes(){
-&nbsp;        quoteService.deleteQuotes();
-&nbsp;        return ResponseEntity.ok(&quot;SE ELIMINARON LAS COTIZACIONES CORRECTAMENTE&quot;);
-&nbsp;    }
-&nbsp;
-&nbsp;    // Permite elminar una cotizacion en especifico del sistema.
-&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
-&nbsp;    public ResponseEntity&lt;String&gt; deleteQuoteById(@PathVariable Long id){
-&nbsp;        if(!quoteService.existsQuoteById(id)){
-&nbsp;            System.out.println(&quot;NO SE ENCONTRO COTIZACION CON EL ID: &quot; + id + &quot;\n&quot;);
-&nbsp;            return ResponseEntity.notFound().build();
-&nbsp;        }
-&nbsp;        quoteService.deleteQuoteById(id);
-&nbsp;        return ResponseEntity.ok(&quot;COTIZACION CON ID &quot; + id + &quot; ELIMINADA CORRECTAMENTE \n&quot;);
-&nbsp;    }
-&nbsp;
-&nbsp;     */
-&nbsp;
-&nbsp;    //------------------------------------------------------------------------------------------------------------------------------------------------//
-&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -221,7 +122,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-14 17:09</div>
+    <div style="float:right;">generated on 2023-06-23 13:38</div>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > QuoteService</title>
+  <title>Coverage Report > ProfitMarginService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.services</a>
 </div>
 
-<h1>Coverage Summary for Class: QuoteService (com.civilo.roller.services)</h1>
+<h1>Coverage Summary for Class: ProfitMarginService (com.civilo.roller.services)</h1>
 
 <table class="coverageStats">
 
@@ -37,13 +37,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">QuoteService</td>
+  <td class="name">ProfitMarginService</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (16/16)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
@@ -51,63 +51,24 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (43/43)
+    (5/5)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw</td>
+    <td class="name">ProfitMarginService$MockitoMock$PwU8AnrB</td>
   </tr>
   <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$bo1OeZBa</td>
+    <td class="name">ProfitMarginService$MockitoMock$PwU8AnrB$auxiliary$3uPnQVYW</td>
   </tr>
   <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$cGngyZGR</td>
+    <td class="name">ProfitMarginService$MockitoMock$PwU8AnrB$auxiliary$7Y0QE5n7</td>
   </tr>
   <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$dPKW8CGy</td>
+    <td class="name">ProfitMarginService$MockitoMock$PwU8AnrB$auxiliary$aGym0eih</td>
   </tr>
   <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$fGPHgtcR</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$hGPWP4Fi</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$IKMSiCgJ</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$IusHjJJd</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$jQzpfy89</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$K9RTp4xV</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$KHYkjhQD</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$lYq7jn1x</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$NBOhEcs9</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$tgprpsYJ</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$UJFfrNof</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$WoJVzOng</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$yaGvUIL6</td>
-  </tr>
-  <tr>
-    <td class="name">QuoteService$MockitoMock$EiCwrhzw$auxiliary$zq6KeMfB</td>
+    <td class="name">ProfitMarginService$MockitoMock$PwU8AnrB$auxiliary$wbh4qufI</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -116,7 +77,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (16/16)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
@@ -124,7 +85,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (43/43)
+    (5/5)
   </span>
 </td>
 </tr>
@@ -137,153 +98,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.services;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.QuoteEntity;
-&nbsp;import com.civilo.roller.repositories.QuoteRepository;
+&nbsp;import com.civilo.roller.Entities.ProfitMarginEntity;
+&nbsp;import com.civilo.roller.repositories.ProfitMarginRepository;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Service;
-&nbsp;import org.springframework.http.ResponseEntity;
-&nbsp;import com.civilo.roller.exceptions.EntityNotFoundException;
 &nbsp;
-&nbsp;import java.util.Date;
-&nbsp;import java.util.Optional;
 &nbsp;import java.util.List;
 &nbsp;
 &nbsp;@Service
-<b class="fc">&nbsp;public class QuoteService {</b>
+&nbsp;
+<b class="fc">&nbsp;public class ProfitMarginService {</b>
 &nbsp;    @Autowired
-&nbsp;    QuoteRepository quoteRepository;
+&nbsp;    ProfitMarginRepository profitMarginRepository;
 &nbsp;
-&nbsp;    // Get all
-&nbsp;    // Permite obtener un listado con toda la informacion asociada a las solicitudes.
-&nbsp;    public List&lt;QuoteEntity&gt; getQuotes(){
-<b class="fc">&nbsp;        return (List&lt;QuoteEntity&gt;) quoteRepository.findAll();</b>
+&nbsp;    public ProfitMarginEntity getLastProfitMargin(){
+<b class="fc">&nbsp;        List&lt;ProfitMarginEntity&gt; profitMarginEntities = (List&lt;ProfitMarginEntity&gt;) profitMarginRepository.findAll();</b>
+<b class="fc">&nbsp;        int size = profitMarginEntities.size();</b>
+<b class="fc">&nbsp;        return profitMarginEntities.get(size - 1);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // Get by id
-&nbsp;    // Permite obtener la informacion de una solicitud en especifico.
-&nbsp;    public Optional&lt;QuoteEntity&gt; getQuoteById(Long id){ 
-<b class="fc">&nbsp;        return quoteRepository.findById(id);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Permite guardar un objeto del tipo &quot;QuoteEntity&quot; en la base de datos.
-&nbsp;    public QuoteEntity saveQuote(QuoteEntity quote){
-<b class="fc">&nbsp;        return quoteRepository.save(quote);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Create
-&nbsp;    // Permite guardar un objeto del tipo &quot;QuoteEntity&quot; en la base de datos.
-&nbsp;    public QuoteEntity createQuote(QuoteEntity quote){
-<b class="fc">&nbsp;        return quoteRepository.save(quote);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Update
-&nbsp;    // Permite actualizar los datos de un objeto del tipo &quot;QuoteEntity&quot; en la base de datos.
-&nbsp;    /*
-&nbsp;    public QuoteEntity updateQuote(Long quoteID, QuoteEntity quote){
-&nbsp;
-&nbsp;        QuoteEntity existingQuote = quoteRepository.findById(quoteID)
-&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Cotizacion no encontrada con el ID: &quot; + quoteID));
-&nbsp;
-&nbsp;        existingQuote.setProductName(quote.getProductName());
-&nbsp;        existingQuote.setAmount(quote.getAmount());
-&nbsp;        existingQuote.setValue(quote.getValue());
-&nbsp;        existingQuote.setDescription(quote.getDescription());
-&nbsp;        existingQuote.setCommission(quote.getCommission());
-&nbsp;
-&nbsp;        //Falta asignar id del vendedor
-&nbsp;
-&nbsp;        QuoteEntity updatedQuote = quoteRepository.save(existingQuote);
-&nbsp;        return updatedQuote;
-&nbsp;    }
-&nbsp;
-&nbsp;     */
-&nbsp;
-&nbsp;    // Delete all
-&nbsp;    // Permite eliminar todas las cotizaciones de un sistema.
-&nbsp;    public void deleteQuotes(){
-<b class="fc">&nbsp;        quoteRepository.deleteAll();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Delete by id
-&nbsp;    // Permite eliminar una cotizacion en especifico del sistema.
-&nbsp;    public void deleteQuoteById(Long id){
-<b class="fc">&nbsp;        quoteRepository.deleteById(id);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Permite verificar si existe una cotizacion en el sistema, segun el id ingresado.
-&nbsp;    public boolean existsQuoteById(Long id){
-<b class="fc">&nbsp;        return quoteRepository.findById(id).isPresent();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    //-----------------------------------------------------------------------------------------------------------------------------------------------//
-&nbsp;
-&nbsp;    //Función que permite extraer/cálcular y settear las variables referentes a la fecha, total en metros
-&nbsp;    //cuadrados (área), valor total de telas (fabrics), valor total de materiales, valor total de mano
-&nbsp;    //de obra (labor), valor total de producción y valor total de venta
-&nbsp;    public void calculation(QuoteEntity quote) {
-<b class="fc">&nbsp;        Date currentDate = new Date();</b>
-<b class="fc">&nbsp;        quote.setDate(currentDate);</b>
-<b class="fc">&nbsp;        quote.setTotalSquareMeters((int) Math.ceil(quote.getHeight() * quote.getWidth() * quote.getAmount()));</b>
-<b class="fc">&nbsp;        System.out.println(&quot;Metros cuadrados: &quot; + (int) Math.ceil(quote.getHeight() * quote.getWidth() * quote.getAmount()));</b>
-<b class="fc">&nbsp;        quote.setTotalFabrics((int) Math.ceil(quote.getHeight() * quote.getValueSquareMeters() * quote.getAmount()));</b>
-<b class="fc">&nbsp;        System.out.println(&quot;Total fabricación: &quot; + (int) Math.ceil(quote.getHeight() * quote.getValueSquareMeters() * quote.getAmount()));</b>
-<b class="fc">&nbsp;        quote.setTotalMaterials((int) Math.ceil(</b>
-<b class="fc">&nbsp;                (calculateBracket(quote.getBracketValue(), quote.getAmount()) +</b>
-<b class="fc">&nbsp;                        calculateCap(quote.getCapValue(), quote.getAmount()) +</b>
-<b class="fc">&nbsp;                        calculatePipe(quote.getPipeValue(), quote.getAmount(), quote.getWidth()) +</b>
-<b class="fc">&nbsp;                        calculateCounterweight(quote.getCounterweightValue(), quote.getAmount(), quote.getWidth()) +</b>
-<b class="fc">&nbsp;                        calculateBand(quote.getBandValue(), quote.getAmount(), quote.getWidth()) +</b>
-<b class="fc">&nbsp;                        calculateChain(quote.getChainValue(), quote.getAmount(), quote.getWidth()))</b>
-&nbsp;        ));
-<b class="fc">&nbsp;        System.out.println(&quot;Total materiales: &quot; +</b>
-<b class="fc">&nbsp;                (int) Math.ceil(</b>
-<b class="fc">&nbsp;                        (calculateBracket(quote.getBracketValue(), quote.getAmount()) +</b>
-<b class="fc">&nbsp;                            calculateCap(quote.getCapValue(), quote.getAmount()) +</b>
-<b class="fc">&nbsp;                                calculatePipe(quote.getPipeValue(), quote.getAmount(), quote.getWidth()) +</b>
-<b class="fc">&nbsp;                                calculateCounterweight(quote.getCounterweightValue(), quote.getAmount(), quote.getWidth()) +</b>
-<b class="fc">&nbsp;                                calculateBand(quote.getBandValue(), quote.getAmount(), quote.getWidth()) +</b>
-<b class="fc">&nbsp;                                calculateChain(quote.getChainValue(), quote.getAmount(), quote.getWidth()))</b>
-&nbsp;                        )
-&nbsp;        );
-<b class="fc">&nbsp;        quote.setTotalLabor((int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));</b>
-<b class="fc">&nbsp;        System.out.println(&quot;Total MO: &quot; + (int) Math.ceil((quote.getAssemblyValue() + quote.getInstallationValue()) * quote.getAmount()));</b>
-<b class="fc">&nbsp;        quote.setProductionCost((int) Math.ceil(quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics()));</b>
-<b class="fc">&nbsp;        System.out.println(&quot;Total Costo producción: &quot; + (int) Math.ceil((quote.getTotalLabor() + quote.getTotalMaterials() + quote.getTotalFabrics())));</b>
-<b class="fc">&nbsp;        quote.setSaleValue((int) Math.ceil((quote.getProductionCost() / (1 - 0.4f))));</b>
-<b class="fc">&nbsp;        System.out.println(&quot;Total Venta: &quot; + (int) Math.ceil((quote.getProductionCost() / (1 - 0.4f))));</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public float calculateBracket(float bracket, int amount){
-<b class="fc">&nbsp;        return bracket * amount;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public float calculateCap(float cap, int amount){
-<b class="fc">&nbsp;        return cap * amount;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public float calculatePipe(float pipe, int amount, float width){
-<b class="fc">&nbsp;        return pipe * amount * width;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public float calculateBand(float band, int amount, float width){
-<b class="fc">&nbsp;        return band * amount * width;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public float calculateChain(float chain, int amount, float width){
-<b class="fc">&nbsp;        return chain * amount * width;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public float calculateCounterweight(float counterWeight, int amount, float width){
-<b class="fc">&nbsp;        return counterWeight * amount * width;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;    // Función que recibe una lista de elementos QuoteEntity para agregarlos a la base de datos uno a uno
-&nbsp;    public void createQuotes(List&lt;QuoteEntity&gt; quoteList){
-<b class="fc">&nbsp;        for (int i = 0; i &lt; quoteList.size(); i ++){</b>
-<b class="fc">&nbsp;            quoteRepository.save(quoteList.get(i));</b>
-&nbsp;        }
+&nbsp;    public List&lt;ProfitMarginEntity&gt; getProfitMargins(){
+<b class="fc">&nbsp;        return (List&lt;ProfitMarginEntity&gt;) profitMarginRepository.findAll();</b>
 &nbsp;    }
 &nbsp;}
 </code>
@@ -309,7 +144,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-14 17:09</div>
+    <div style="float:right;">generated on 2023-06-23 13:38</div>
 </div>
 </body>
 </html>

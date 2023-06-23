@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > RequestService</title>
+  <title>Coverage Report > QuoteSummaryService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.services</a>
 </div>
 
-<h1>Coverage Summary for Class: RequestService (com.civilo.roller.services)</h1>
+<h1>Coverage Summary for Class: QuoteSummaryService (com.civilo.roller.services)</h1>
 
 <table class="coverageStats">
 
@@ -37,65 +37,38 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">RequestService</td>
+  <td class="name">QuoteSummaryService</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (12/12)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    91,2%
+    100%
   </span>
   <span class="absValue">
-    (31/34)
+    (31/31)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy</td>
+    <td class="name">QuoteSummaryService$MockitoMock$mzzCGUBa</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$1yDl9ipk</td>
+    <td class="name">QuoteSummaryService$MockitoMock$mzzCGUBa$auxiliary$8rWwo3IT</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$358O7UgE</td>
+    <td class="name">QuoteSummaryService$MockitoMock$mzzCGUBa$auxiliary$b3hzbTUx</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$A8yGMj2m</td>
+    <td class="name">QuoteSummaryService$MockitoMock$mzzCGUBa$auxiliary$MlFU6Fmj</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$DSrsxoAX</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$fa3Yggmn</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$GxyDI9c5</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$QuaMS2iy</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$SbeQSeEp</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$SyGmNisJ</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$TsQRDIYY</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$vbsv3TXm</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$VDdzjSaI</td>
-  </tr>
-  <tr>
-    <td class="name">RequestService$MockitoMock$kYqbZrjy$auxiliary$vXMzbIhw</td>
+    <td class="name">QuoteSummaryService$MockitoMock$mzzCGUBa$auxiliary$OWrzE29i</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -104,15 +77,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (12/12)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    91,2%
+    100%
   </span>
   <span class="absValue">
-    (31/34)
+    (31/31)
   </span>
 </td>
 </tr>
@@ -125,126 +98,64 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.services;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.RequestEntity;
+&nbsp;import com.civilo.roller.Entities.QuoteEntity;
+&nbsp;import com.civilo.roller.Entities.QuoteSummaryEntity;
 &nbsp;import com.civilo.roller.Entities.SellerEntity;
-&nbsp;import com.civilo.roller.repositories.RequestRepository;
+&nbsp;import com.civilo.roller.repositories.QuoteSummaryRepository;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Service;
-&nbsp;import com.civilo.roller.exceptions.EntityNotFoundException;
 &nbsp;
-&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Date;
 &nbsp;import java.util.List;
-&nbsp;import java.util.Optional;
-&nbsp;import java.util.Random;
-&nbsp;
 &nbsp;
 &nbsp;@Service
-<b class="fc">&nbsp;public class RequestService {</b>
+<b class="fc">&nbsp;public class QuoteSummaryService {</b>
 &nbsp;    @Autowired
-&nbsp;    RequestRepository requestRepository;
-&nbsp;
-&nbsp;    @Autowired
-&nbsp;    SellerService sellerService;
+&nbsp;    QuoteSummaryRepository quoteSummaryRepository;
 &nbsp;
 &nbsp;    @Autowired
-&nbsp;    StatusService statusService;
+&nbsp;    IVAService ivaService;
 &nbsp;
-&nbsp;    // Get all
-&nbsp;    // El siguiente método retorna un listado el cual contiene TODA la información asociada a las solicitudes
-&nbsp;    public List&lt;RequestEntity&gt; getRequests(){
-<b class="fc">&nbsp;        return (List&lt;RequestEntity&gt;) requestRepository.findAll();</b>
+&nbsp;    // Permite guardar un objeto del tipo &quot;QuoteSummaryEntity&quot; en la base de datos.
+&nbsp;    public QuoteSummaryEntity saveQuoteSummary(QuoteSummaryEntity quoteSummary){
+<b class="fc">&nbsp;        return quoteSummaryRepository.save(quoteSummary);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    //Get By CLient ID
-&nbsp;    //Permite obtener las solicitudes de un cliente especifico
-&nbsp;    public ArrayList&lt;RequestEntity&gt; getRequestByUserId(Long id_cliente){
-&nbsp;        //List&lt;RequestEntity&gt; listado =  (List&lt;RequestEntity&gt;) requestRepository.findRequestByUserId(id_cliente);
-&nbsp;        //System.out.println(&quot;HOLAAAAAAAAAAAAAAAAAA&quot;+listado);
-&nbsp;        //System.out.println(&quot;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&quot;);
-&nbsp;
-<b class="fc">&nbsp;        return requestRepository.findRequestByUserId(id_cliente);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Get by id
-&nbsp;    // Permite obtener la informacion de una solicitud en especifico.
-&nbsp;    public Optional&lt;RequestEntity&gt; getRequestById(Long id){
-<b class="fc">&nbsp;        return requestRepository.findById(id);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Create
-&nbsp;    // Permite guardar un objeto del tipo &quot;RequestEntity&quot; en la base de datos.
-&nbsp;    public RequestEntity createRequest(RequestEntity request){   
-<b class="fc">&nbsp;        return requestRepository.save(request);  </b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Update
-&nbsp;    // Permite actualizar los datos de un objeto del tipo &quot;RequestEntity&quot; en la base de datos.
-&nbsp;    public RequestEntity updateRequest(Long requestID, RequestEntity request){
-&nbsp;
-<b class="fc">&nbsp;        RequestEntity existingRequest = requestRepository.findById(requestID)</b>
-<b class="fc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Solicitud no encontrada con el ID: &quot; + requestID));</b>
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;        existingRequest.setDescription(request.getDescription());</b>
-<b class="fc">&nbsp;        existingRequest.setDeadline(request.getDeadline());</b>
-<b class="fc">&nbsp;        existingRequest.setAdmissionDate(request.getAdmissionDate());</b>
-<b class="fc">&nbsp;        existingRequest.setClosingDate(request.getClosingDate());</b>
-<b class="fc">&nbsp;        existingRequest.setReason(request.getReason());</b>
-&nbsp;    
-<b class="fc">&nbsp;        RequestEntity updatedRequest = requestRepository.save(existingRequest);</b>
-<b class="fc">&nbsp;        return updatedRequest;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Delete all
-&nbsp;    // Permite eliminar todas las solicitudes de un sistema.
-&nbsp;    public void deleteRequest() {
-<b class="fc">&nbsp;        requestRepository.deleteAll();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Delete by id
-&nbsp;    // Permite eliminar una solicitud en especifico del sistema.
-&nbsp;    public void deleteRequestById(Long id){
-<b class="fc">&nbsp;        requestRepository.deleteById(id);</b>
-&nbsp;    }
-&nbsp;    
-&nbsp;    // Permite verificar si existe una solicitud en el sistema, según el id ingresado.
-&nbsp;    public boolean existsRequestById(Long id){
-<b class="fc">&nbsp;        return requestRepository.findById(id).isPresent();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    //----------------------------------------------------------------------------------------------
-&nbsp;
-&nbsp;    public RequestEntity saveRequest(RequestEntity request){
-<b class="fc">&nbsp;        return requestRepository.save(request);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public List&lt;RequestEntity&gt; getRequestBySellerId(Long sellerId) {
-<b class="fc">&nbsp;        List&lt;RequestEntity&gt; requests = getRequests();</b>
-<b class="fc">&nbsp;        List&lt;RequestEntity&gt; myRequest = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;        for (int i = 0; i &lt; requests.size(); i++){</b>
-<b class="fc">&nbsp;            if (requests.get(i).getSellerId() == sellerId){</b>
-<b class="fc">&nbsp;                myRequest.add(requests.get(i));</b>
-&nbsp;            }
+&nbsp;    //
+&nbsp;    public QuoteSummaryEntity summaryCalculation(List&lt;QuoteEntity&gt; quoteEntities){
+<b class="fc">&nbsp;        QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();</b>
+<b class="fc">&nbsp;        float totalCostOfProduction = 0, totalSaleValue = 0, valueAfterDiscount = 0, discountPercentage = 0, totalNet = 0, iva = 0, ivaPercentage = 0, total = 0;</b>
+<b class="fc">&nbsp;        Date date = null;</b>
+<b class="fc">&nbsp;        SellerEntity seller = null;</b>
+<b class="fc">&nbsp;        for (int i = 0; i &lt; quoteEntities.size(); i++) {</b>
+<b class="fc">&nbsp;            totalCostOfProduction += quoteEntities.get(i).getProductionCost();</b>
+<b class="fc">&nbsp;            totalSaleValue += quoteEntities.get(i).getSaleValue();</b>
+<b class="fc">&nbsp;            discountPercentage = quoteEntities.get(i).getPercentageDiscount();</b>
+<b class="fc">&nbsp;            date = quoteEntities.get(i).getDate();</b>
+<b class="fc">&nbsp;            seller = quoteEntities.get(i).getSeller();</b>
 &nbsp;        }
-<b class="fc">&nbsp;        return myRequest;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void automaticAssignment(){
-<b class="fc">&nbsp;        List&lt;RequestEntity&gt; requestEntities = getRequests();</b>
-<b class="fc">&nbsp;        List&lt;SellerEntity&gt; sellerEntities = sellerService.getSellers();</b>
-<b class="fc">&nbsp;        Random rand = new Random();</b>
-<b class="fc">&nbsp;        RequestEntity currentRequest = new RequestEntity();</b>
-<b class="fc">&nbsp;        for (int i = 0; i &lt; requestEntities.size(); i++){</b>
-<b class="fc">&nbsp;            currentRequest = requestEntities.get(i);</b>
-<b class="fc">&nbsp;            if (currentRequest.getSellerId() == 0){</b>
-<b class="nc">&nbsp;                currentRequest.setSellerId(sellerEntities.get(rand.nextInt(sellerEntities.size())).getUserID().intValue());</b>
-<b class="nc">&nbsp;                currentRequest.setStatus(statusService.getStatus().get(1));</b>
-<b class="nc">&nbsp;                requestRepository.save(currentRequest);</b>
-&nbsp;            }
+<b class="fc">&nbsp;        ivaPercentage = ivaService.getLastIVA().getIvaPercentage();</b>
+<b class="fc">&nbsp;        valueAfterDiscount = totalSaleValue;</b>
+<b class="fc">&nbsp;        totalNet = totalSaleValue;</b>
+<b class="fc">&nbsp;        if (discountPercentage != 0) {</b>
+<b class="fc">&nbsp;            valueAfterDiscount = (float) Math.ceil(totalSaleValue * (discountPercentage / 100));</b>
+<b class="fc">&nbsp;            totalNet = totalSaleValue - valueAfterDiscount;</b>
 &nbsp;        }
+<b class="fc">&nbsp;        iva = totalNet;</b>
+<b class="fc">&nbsp;        if (ivaPercentage != 0) {</b>
+<b class="fc">&nbsp;            iva = (float) Math.ceil(totalNet * (ivaPercentage / 100));</b>
+&nbsp;        }
+<b class="fc">&nbsp;        total = (float) Math.ceil(totalNet * (1 + ivaPercentage / 100));</b>
+<b class="fc">&nbsp;        quoteSummary.setDate(date);</b>
+<b class="fc">&nbsp;        quoteSummary.setSeller(seller);</b>
+<b class="fc">&nbsp;        quoteSummary.setTotalCostOfProduction((int) Math.ceil(totalCostOfProduction));</b>
+<b class="fc">&nbsp;        quoteSummary.setTotalSaleValue((int) Math.ceil(totalSaleValue));</b>
+<b class="fc">&nbsp;        quoteSummary.setValueAfterDiscount((int) Math.ceil(valueAfterDiscount));</b>
+<b class="fc">&nbsp;        quoteSummary.setNetTotal((int) Math.ceil(totalNet));</b>
+<b class="fc">&nbsp;        quoteSummary.setTotal((int) Math.ceil(total));</b>
+<b class="fc">&nbsp;        quoteSummary.setCurrentIVA(ivaService.getIVAByPercentage(ivaPercentage));</b>
+<b class="fc">&nbsp;        return quoteSummaryRepository.save(quoteSummary);</b>
 &nbsp;    }
-&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -269,7 +180,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-14 17:09</div>
+    <div style="float:right;">generated on 2023-06-23 13:38</div>
 </div>
 </body>
 </html>

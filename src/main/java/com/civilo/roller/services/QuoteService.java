@@ -158,67 +158,62 @@ public class QuoteService {
         }
     }
 
-    public QuoteSummaryEntity lastQuoteSummary(Long idseller) {
+    
+    // Permite obtener un listado de todos los resumenes de cotizaciones
+    public List<QuoteSummaryEntity> listQuoteSummary(Long idSeller) {
         List<QuoteSummaryEntity> quoteSummaryEntities = (List<QuoteSummaryEntity>) quoteSummaryRepository.findAll();
+        List<QuoteSummaryEntity> quoteSummarySelected = new ArrayList<>();
+        for (int i = 0; i < quoteSummaryEntities.size(); i++) {
+            if(quoteSummaryEntities.get(i).getSeller() != null) {
+                if (quoteSummaryEntities.get(i).getSeller().getUserID() == idSeller) {
+                    quoteSummarySelected.add(quoteSummaryEntities.get(i));
+                }
+            }     
+        }
+        return quoteSummarySelected;
+    }
+
+
+    // Permite encontrar el unico resumen de una cotizacion asociado a la solicitud seleccionada
+    public QuoteSummaryEntity findQuoteSummary(List<QuoteSummaryEntity> listSummary, Long idQuoteSelected, Long idSeller) {
+        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
         QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();
-        for (int i = quoteSummaryEntities.size() - 1; i != 0; i--) {
-            if (quoteSummaryEntities.get(i).getSeller().getUserID() == idseller) {
-                quoteSummary = quoteSummaryEntities.get(i);
-                return quoteSummary;
+
+        for (int i = 0; i < listSummary.size(); i++) {  
+            for(int j = 0; j < quoteEntities.size(); j++) {
+                if( listSummary.get(i).getQuoteSummaryID() == quoteEntities.get(j).getQuoteSummary().getQuoteSummaryID() ) {
+                    if(quoteEntities.get(j).getRequestEntity() != null) {
+                        if ( ( idQuoteSelected == quoteEntities.get(j).getRequestEntity().getRequestID() ) && (idSeller == quoteEntities.get(j).getSeller().getUserID() ) ) {
+                            quoteSummary = listSummary.get(i);
+                            return quoteSummary;   
+                        }
+                    } 
+                }
             }
         }
         return quoteSummary;
     }
 
-    /*  
-    // NUEVAA
-    public QuoteSummaryEntity listQuoteSummary(Long idSeller) {
-        List<QuoteSummaryEntity> quoteSummaryEntities = (List<QuoteSummaryEntity>) quoteSummaryRepository.findAll();
-        List<QuoteEntity> quoteSummarySelected = new ArrayList<>();
-        for (int i = 0; i < quoteSummaryEntities.size(); i++) {
-            if (quoteSummaryEntities.get(i).getSeller().getUserID() == idSeller) {
-                quoteSummarySelected.add(quoteSummaryEntities.get(i));
+
+    // Permite encontrar un listado de las cotizaciones asignadas a la misma solicitud
+    public List<QuoteEntity> listQuotes(QuoteSummaryEntity summarySelected, Long idQuoteSelected, Long idSeller) {
+        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
+        List<QuoteEntity> quoteEntitiesSelected = new ArrayList<>();
+        
+        for (int i = 0; i < quoteEntities.size(); i++) {
+            if( summarySelected.getQuoteSummaryID() == quoteEntities.get(i).getQuoteSummary().getQuoteSummaryID() ) {
+                if(quoteEntities.get(i).getRequestEntity() != null) {
+                    if ( ( idQuoteSelected == quoteEntities.get(i).getRequestEntity().getRequestID() ) && (idSeller == quoteEntities.get(i).getSeller().getUserID() ) ) {
+                        quoteEntitiesSelected.add(quoteEntities.get(i));
+                    }
+                }
             }
         }
         return quoteEntitiesSelected;
     }
-
-    // NUEVAA
-    public List<QuoteEntity> listQuotes(List<QuoteSummaryEntity> listSummary, Long idQuoteSelected, Long idSeller) {
-        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
-        List<QuoteEntity> quoteEntitiesSelected = new ArrayList<>();
-        
-        [ [3,34] , [3,33]  , [3, 32]       ]
-        
-        
-        for (int i = 0; i < listSummary.size(); i++) {
-            [3,34]
-            for(int j = 0; j < quoteEntities.size(); j++) {
-                if(listS)
-                
-            }
-        }
-    }
-    */
-
-
-
-
-
-
-    public List<QuoteEntity> lastQuotes(Long idQuoteSummary) {
-        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
-        List<QuoteEntity> quoteEntitiesSelected = new ArrayList<>();
-        for (int i = quoteEntities.size() - 1; i >= 0; i--) {
-
-            if (quoteEntities.get(i).getQuoteSummary().getQuoteSummaryID() == idQuoteSummary) {
-                quoteEntitiesSelected.add(quoteEntities.get(i));
-            }
-            
-        }
-        return quoteEntitiesSelected;
-    }
-
+     
+ 
+    // Permite determinar si se incluye la instalacion de la cortina roller en base al valor de instalacion de la cotizacion
     public String instalation(List<QuoteEntity> quotes){
         for (int i = 0; i < quotes.size(); i++){
             if (quotes.get(i).getInstallationValue() != 0){
@@ -229,3 +224,5 @@ public class QuoteService {
     }
 
 }
+
+

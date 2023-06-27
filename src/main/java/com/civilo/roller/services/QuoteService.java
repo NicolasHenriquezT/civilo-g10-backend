@@ -168,24 +168,64 @@ public class QuoteService {
             }
         }
         return quoteSummary;
-
     }
 
-    public List<QuoteEntity> lastQuotes(Long idQuoteSummary) {
-        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
-        List<QuoteEntity> quoteEntitiesSelected = new ArrayList<>();
-        for (int i = quoteEntities.size() - 1; i >= 0; i--) {
-            if (quoteEntities.get(i).getQuoteSummary().getQuoteSummaryID() == idQuoteSummary) {
-                quoteEntitiesSelected.add(quoteEntities.get(i));
+    /*  
+    // NUEVAA
+    public QuoteSummaryEntity listQuoteSummary(Long idSeller) {
+        List<QuoteSummaryEntity> quoteSummaryEntities = (List<QuoteSummaryEntity>) quoteSummaryRepository.findAll();
+        List<QuoteEntity> quoteSummarySelected = new ArrayList<>();
+        for (int i = 0; i < quoteSummaryEntities.size(); i++) {
+            if (quoteSummaryEntities.get(i).getSeller().getUserID() == idSeller) {
+                quoteSummarySelected.add(quoteSummaryEntities.get(i));
             }
         }
         return quoteEntitiesSelected;
     }
 
-    public String instalation(float value){
-        if (value != 0){
-            return "Si";
+    // NUEVAA
+    public List<QuoteEntity> listQuotes(List<QuoteSummaryEntity> listSummary, Long idQuoteSelected, Long idSeller) {
+        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
+        List<QuoteEntity> quoteEntitiesSelected = new ArrayList<>();
+        
+        [ [3,34] , [3,33]  , [3, 32]       ]
+        
+        
+        for (int i = 0; i < listSummary.size(); i++) {
+            [3,34]
+            for(int j = 0; j < quoteEntities.size(); j++) {
+                if(listS)
+                
+            }
+        }
+    }
+    */
+
+
+
+
+
+
+    public List<QuoteEntity> lastQuotes(Long idQuoteSummary) {
+        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
+        List<QuoteEntity> quoteEntitiesSelected = new ArrayList<>();
+        for (int i = quoteEntities.size() - 1; i >= 0; i--) {
+
+            if (quoteEntities.get(i).getQuoteSummary().getQuoteSummaryID() == idQuoteSummary) {
+                quoteEntitiesSelected.add(quoteEntities.get(i));
+            }
+            
+        }
+        return quoteEntitiesSelected;
+    }
+
+    public String instalation(List<QuoteEntity> quotes){
+        for (int i = 0; i < quotes.size(); i++){
+            if (quotes.get(i).getInstallationValue() != 0){
+                return "Si";
+            }
         }
         return "No";
     }
+
 }

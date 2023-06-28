@@ -157,8 +157,12 @@ public class QuoteController {
         QuoteSummaryEntity summarySelected = new QuoteSummaryEntity();
         List<QuoteEntity> listQuotes = new ArrayList<>();
         listSummary = quoteService.listQuoteSummary(seller.getUserID());
+        System.out.println("-------\n" + listSummary + "\n-------");
         summarySelected = quoteService.findQuoteSummary(listSummary, id, seller.getUserID());
+        System.out.println("-------\n" + summarySelected + "\n-------");
         listQuotes = quoteService.listQuotes(summarySelected, id, seller.getUserID());
+        System.out.println("-------\n" + listQuotes + "\n-------");
+
 
         //System.out.println("REVISANDO SUMMARY SELECTED: ");
         //System.out.println(summarySelected); 

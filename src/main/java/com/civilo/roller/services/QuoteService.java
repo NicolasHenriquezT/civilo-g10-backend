@@ -179,8 +179,8 @@ public class QuoteService {
         List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
         QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();
 
-        for (int i = 0; i < listSummary.size(); i++) {  
-            for(int j = 0; j < quoteEntities.size(); j++) {
+        for (int i = listSummary.size() - 1; i > 0; i--) {
+            for(int j = quoteEntities.size() - 1; j > 0; j--) {
                 if( listSummary.get(i).getQuoteSummaryID() == quoteEntities.get(j).getQuoteSummary().getQuoteSummaryID() ) {
                     if(quoteEntities.get(j).getRequestEntity() != null) {
                         if ( ( idQuoteSelected == quoteEntities.get(j).getRequestEntity().getRequestID() ) && (idSeller == quoteEntities.get(j).getSeller().getUserID() ) ) {

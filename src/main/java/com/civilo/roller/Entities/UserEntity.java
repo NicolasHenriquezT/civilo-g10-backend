@@ -25,6 +25,7 @@ public class UserEntity {
     private String surname;
     private String email;
     private String password;
+    private String rut;
     private String phoneNumber;
     private String commune;
     private LocalDate birthDate;

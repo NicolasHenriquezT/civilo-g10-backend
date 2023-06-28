@@ -53,6 +53,7 @@ public class UserService {
         existingUser.setSurname(user.getSurname());
         existingUser.setEmail(user.getEmail());
         existingUser.setPassword(user.getPassword());
+        existingUser.setRut(user.getRut());
         existingUser.setPhoneNumber(user.getPhoneNumber());
         existingUser.setCommune(user.getCommune());
         existingUser.setStartTime(user.getStartTime());

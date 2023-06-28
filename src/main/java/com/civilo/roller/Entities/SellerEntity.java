@@ -19,7 +19,6 @@ public class SellerEntity extends UserEntity {
     //Atributos
     private String companyName;
     private boolean disponibility;
-    private String rut;
     private String bank;
     private String bankAccountType;
     private Integer bankAccountNumber; 
@@ -38,13 +37,12 @@ public class SellerEntity extends UserEntity {
 
     //Constructor
     public SellerEntity(Long userID, String name, String surname, String email,
-                        String password, String phoneNumber, String commune,
+                        String password, String rut, String phoneNumber, String commune,
                         LocalDate birthDate, int age, LocalTime startTime, LocalTime endTime, RoleEntity role, String companyName, boolean disponibility,
-                        String rut, String bank, String bankAccountType, int bankAccountNumber) {
-        super(userID, name, surname, email, password, phoneNumber, commune, birthDate, age, startTime, endTime, role);
+                        String bank, String bankAccountType, int bankAccountNumber) {
+        super(userID, name, surname, email, password, rut, phoneNumber, commune, birthDate, age, startTime, endTime, role);
         this.companyName = companyName;
         this.disponibility = disponibility;
-        this.rut = rut;
         this.bank = bank;
         this.bankAccountType = bankAccountType;
         this.bankAccountNumber = bankAccountNumber;

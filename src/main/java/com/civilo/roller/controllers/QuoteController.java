@@ -276,10 +276,11 @@ public class QuoteController {
                 // Establecer el ancho de la tabla para que ocupe el ancho completo
                 table.setWidthPercentage(100f);
                 //Datos de las celdas de la tabla
+
                 String[][] data = {
                     {"Cliente:", quote.getRequestEntity().getUser().getName(), "Número: " + quote.getRequestEntity().getRequestID()},
                     {"Fono contacto", quote.getRequestEntity().getUser().getPhoneNumber(), "Fecha: " + quote.getRequestEntity().getAdmissionDate()},
-                    //{"RUT:", "", ""},
+                    {"RUT:", quote.getRequestEntity().getUser().getRut(), ""},
                     {"Comuna:", quote.getRequestEntity().getCoverage().getCommune(), "www.rollerdeco.cl"},
                     {"Pais:", "Chile", "contacto@rollerdeco.cl"},
                 };
@@ -394,8 +395,6 @@ public class QuoteController {
 
                 // Columna 2
                 PdfPCell cell20 = new PdfPCell(new Paragraph("Fila 1, Columna 2"));
-                //PdfPCell cell20;
-                //table3.addCell(cell20);
 
                 // Crear la tabla anidada con 2 columnas
                 PdfPTable nestedTable = new PdfPTable(2);
@@ -444,9 +443,6 @@ public class QuoteController {
 
                 // Se define el nombre del archivo PDF 
                 String namePDF = "cotizacion_ID" + String.valueOf(quote.getRequestEntity().getRequestID()) + "_vendedor" + seller.getName() + ".pdf";
-
-                //System.out.println("NOMBRE PDF: ");
-                //System.out.println(namePDF);
 
                 // Construir el objeto JSON de respuesta
                 JSONObject responseJson = new JSONObject();

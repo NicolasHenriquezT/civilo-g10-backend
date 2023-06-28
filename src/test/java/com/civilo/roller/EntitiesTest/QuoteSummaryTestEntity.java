@@ -53,4 +53,34 @@ public class QuoteSummaryTestEntity {
         Assertions.assertEquals(1L, quoteSummary.getSeller().getUserID());
         Assertions.assertEquals(1L, quoteSummary.getCurrentIVA().getIvaID());
     }
+
+    @Test
+    public void testGettersAndSetters2() {
+        QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity(
+                1L,
+                "Test description",
+                100.0f,
+                200.0f,
+                180.0f,
+                150.0f,
+                10.0f,
+                165.0f,
+                new Date(),
+                new SellerEntity(),
+                new IVAEntity()
+        );
+
+        // Verify values using getters
+        Assertions.assertEquals(1L, quoteSummary.getQuoteSummaryID());
+        Assertions.assertEquals("Test description", quoteSummary.getDescription());
+        Assertions.assertEquals(100.0f, quoteSummary.getTotalCostOfProduction(), 0.01);
+        Assertions.assertEquals(200.0f, quoteSummary.getTotalSaleValue(), 0.01);
+        Assertions.assertEquals(180.0f, quoteSummary.getValueAfterDiscount(), 0.01);
+        Assertions.assertEquals(150.0f, quoteSummary.getNetTotal(), 0.01);
+        Assertions.assertEquals(10.0f, quoteSummary.getPercentageDiscount(), 0.01);
+        Assertions.assertEquals(165.0f, quoteSummary.getTotal(), 0.01);
+        Assertions.assertNotNull(quoteSummary.getDate());
+        Assertions.assertEquals(new SellerEntity(), quoteSummary.getSeller());
+        Assertions.assertEquals(new IVAEntity(), quoteSummary.getCurrentIVA());
+    }
 }

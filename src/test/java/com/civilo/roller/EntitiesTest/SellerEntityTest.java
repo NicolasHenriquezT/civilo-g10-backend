@@ -1,6 +1,7 @@
 package com.civilo.roller.EntitiesTest;
 
 import com.civilo.roller.Entities.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -37,7 +38,8 @@ public class SellerEntityTest {
         List<QuoteEntity> quoteEntities = new ArrayList<>();
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        SellerEntity seller = new SellerEntity(userID, name, surname, email, password, phoneNumber, commune, birthDate, age, startTime, endTime, role, companyName, disponibility, "rut", "banco", "cuenta", 1);
+        String rut = "rut";
+        SellerEntity seller = new SellerEntity(userID, name, surname, email, password, rut, phoneNumber, commune, birthDate, age, startTime, endTime, role, companyName, disponibility, "banco", "cuenta", 1);
         seller.setUserID(1L);
         seller.setName("John");
         seller.setSurname("Doe");
@@ -88,4 +90,53 @@ public class SellerEntityTest {
         assertNull(seller.getCoverageID());
         assertNull(seller.getQuoteEntities());
     }
+
+    @Test
+    void testAllArgsConstructorWithNullValues() {
+        Long userID = null;
+        String name = null;
+        String surname = null;
+        String email = null;
+        String password = null;
+        String rut = null;
+        String phoneNumber = null;
+        String commune = null;
+        LocalDate birthDate = null;
+        int age = 0;
+        LocalTime startTime = null;
+        LocalTime endTime = null;
+        RoleEntity role = null;
+        String companyName = null;
+        boolean disponibility = false;
+        String bank = null;
+        String bankAccountType = null;
+        int bankAccountNumber = 0;
+
+        SellerEntity seller = new SellerEntity(userID, name, surname, email, password, rut, phoneNumber, commune,
+                birthDate, age, startTime, endTime, role, companyName, disponibility, bank, bankAccountType,
+                bankAccountNumber);
+
+        assertNull(seller.getUserID());
+        assertNull(seller.getName());
+        assertNull(seller.getSurname());
+        assertNull(seller.getEmail());
+        assertNull(seller.getPassword());
+        assertNull(seller.getRut());
+        assertNull(seller.getPhoneNumber());
+        assertNull(seller.getCommune());
+        assertNull(seller.getBirthDate());
+        assertEquals(0, seller.getAge());
+        assertNull(seller.getStartTime());
+        assertNull(seller.getEndTime());
+        assertNull(seller.getRole());
+        assertNull(seller.getCompanyName());
+        assertFalse(seller.isDisponibility());
+        assertNull(seller.getBank());
+        assertNull(seller.getBankAccountType());
+        assertEquals(0, seller.getBankAccountNumber());
+        assertNull(seller.getCoverageID());
+        assertNull(seller.getQuoteEntities());
+    }
+
+
 }

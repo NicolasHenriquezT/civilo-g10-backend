@@ -39,7 +39,7 @@ public class UserServiceTest {
     void saveUser(){
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         when(userRepository.save(user)).thenReturn(user);
         final UserEntity currentResponse = userService.createUser(user);
         assertEquals(user,currentResponse);
@@ -49,7 +49,7 @@ public class UserServiceTest {
     void getUsers(){
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         List<UserEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(user);
         when((List<UserEntity>) userRepository.findAll()).thenReturn(expectedAnswer);
@@ -61,7 +61,7 @@ public class UserServiceTest {
     void getUserById(){
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         List<UserEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(user);
         when(userRepository.findById(Long.valueOf("9999"))).thenReturn(Optional.of(user));
@@ -73,7 +73,7 @@ public class UserServiceTest {
     void validateUser(){
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
         user.setPassword("p");
         UserEntity currentResponse = userService.validateUser(user.getEmail(), user.getPassword());
@@ -162,7 +162,7 @@ public class UserServiceTest {
     void deleteUsers_shouldCallDeleteAllMethodInUserRepository() {
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));
         userService.deleteUsers();
         verify(userRepository, times(1)).deleteAll();
     }

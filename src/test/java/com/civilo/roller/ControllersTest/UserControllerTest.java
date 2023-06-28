@@ -60,8 +60,8 @@ public class UserControllerTest {
         List<UserEntity> expectedUsers = new ArrayList<>();
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        expectedUsers.add(new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime,  new RoleEntity(1L, "Cliente")));
-        expectedUsers.add(new UserEntity(Long.valueOf("1111"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente")));
+        expectedUsers.add(new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime,  new RoleEntity(1L, "Cliente")));
+        expectedUsers.add(new UserEntity(Long.valueOf("1111"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente")));
         when(userService.getUsers()).thenReturn(expectedUsers);
         List<UserEntity> actualUsers = userController.getUsers();
         assertEquals(expectedUsers, actualUsers);
@@ -71,7 +71,7 @@ public class UserControllerTest {
     void testSaveUser() {
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity expectedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));;
+        UserEntity expectedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"));;
         when(userService.createUser(Mockito.any(UserEntity.class))).thenReturn(expectedUser);
         UserEntity actualUser = userController.saveUser(new UserEntity());
         assertEquals(expectedUser, actualUser);
@@ -107,7 +107,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         Mockito.when(userService.validateUser(Mockito.anyString(), Mockito.anyString())).thenReturn(user);
         Mockito.when(request.getSession()).thenReturn(session);
         ResponseEntity<?> response = userController.login(user, request);
@@ -120,7 +120,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         Mockito.when(userService.validateUser(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
         ResponseEntity<?> response = userController.login(user, request);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
@@ -133,7 +133,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", email, "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", email, "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
 
         when(userService.getUserByEmail(anyString())).thenReturn(user);
 
@@ -146,7 +146,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         when(userService.validateEmail(user.getEmail())).thenReturn(Optional.empty());
         when(roleService.getRoleIdByAccountType(user.getRole().getAccountType())).thenReturn(Long.valueOf("1234"));
         ResponseEntity<?> response = userController.createUser(user);
@@ -159,7 +159,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         when(userService.validateEmail(any(String.class))).thenReturn(Optional.of(user));
         ResponseEntity<?> responseEntity = userController.createUser(user);
         assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());
@@ -172,8 +172,8 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
-        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         when(userService.getUserById(userId)).thenReturn(Optional.of(user));
         when(userService.validateEmail(updatedUser.getEmail())).thenReturn(Optional.empty());
         ResponseEntity<?> response = userController.updateUser(userId, updatedUser);
@@ -187,7 +187,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         when(userService.getUserById(userId)).thenReturn(Optional.empty());
         ResponseEntity<?> response = userController.updateUser(userId, updatedUser);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -201,8 +201,8 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
-        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity updatedUser = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "newemail", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         when(userService.getUserById(userId)).thenReturn(Optional.of(user));
         when(userService.validateEmail(updatedUser.getEmail())).thenReturn(Optional.of(user));
         ResponseEntity<?> response = userController.updateUser(userId, updatedUser);
@@ -223,7 +223,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, startTime, endTime, role);
         when(userService.validateUser("Email", "Password")).thenReturn(user);
         UserEntity result = userController.getCurrentSession("Email", "Password");
         assertEquals(user, result);
@@ -237,7 +237,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Ejecutivo");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "email@example.com", "Password", "0 1234 5678", "Commune", null, 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "email@example.com", "Password", "rut", "0 1234 5678", "Commune", null, 20, startTime, endTime, role);
         when(userService.validateUser(userDTO.getEmail(), userDTO.getPassword())).thenReturn(user);
         when(request.getSession()).thenReturn(session);
         ResponseEntity<?> response = userController.loginExecutive(userDTO, request);
@@ -259,7 +259,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9998"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         UserEntity userDTO = new UserEntity();
         userDTO.setEmail("email");
         userDTO.setPassword("password");
@@ -274,7 +274,7 @@ public class UserControllerTest {
         String sessionId = "session-id-123";
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(Long.valueOf("9999"), "Cliente"));
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(Long.valueOf("9999"), "Cliente"));
         when(session.getId()).thenReturn(sessionId);
         when(session.getAttribute("user")).thenReturn(user);
         String expected = "Session ID: " + sessionId + "\n" +
@@ -297,14 +297,23 @@ public class UserControllerTest {
     }
 
     @Test
+    public void testDeleteUserById_withExistingUser_shouldReturnOk() {
+        Long existingUserId = Long.valueOf("5678");
+        when(userService.existsUserById(existingUserId)).thenReturn(true);
+        ResponseEntity<String> response = userController.deleteUserById(existingUserId);
+        assertEquals(ResponseEntity.ok("USUARIO CON ID " + existingUserId + " ELIMINADO CORRECTAMENTE \n"), response);
+        verify(userService, times(1)).deleteUserById(existingUserId);
+    }
+
+    @Test
     public void testCreateUserAsSeller() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Vendedor");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         String accountType = "Vendedor";
         Long IdRol = Long.valueOf("8888");
-        SellerEntity seller = new SellerEntity(null, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getCommune(), user.getBirthDate(), user.getAge(), user.getStartTime(), user.getEndTime(), user.getRole(), null, false, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(null, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getRut(), user.getPhoneNumber(), user.getCommune(), user.getBirthDate(), user.getAge(), user.getStartTime(), user.getEndTime(), user.getRole(), null, false,  "banco", "cuenta", 1);
         Mockito.when(userService.validateEmail(user.getEmail())).thenReturn(Optional.empty());
         Mockito.when(roleService.getRoleIdByAccountType(accountType)).thenReturn(IdRol);
         Mockito.when(sellerService.saveSeller(Mockito.any(SellerEntity.class))).thenReturn(seller);
@@ -319,7 +328,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Administrador");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         when(userService.validateUser(anyString(), anyString())).thenReturn(user);
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
@@ -333,7 +342,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Rol No Admin");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         when(userService.validateUser(anyString(), anyString())).thenReturn(user);
         ResponseEntity<?> response = userController.loginAdmin(user, request);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
@@ -344,7 +353,7 @@ public class UserControllerTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Rol No Admin");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         when(userService.validateUser(anyString(), anyString())).thenReturn(null);
         ResponseEntity<?> response = userController.loginAdmin(user, request);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());

@@ -1,6 +1,8 @@
 package com.civilo.roller.ControllersTest;
 
 import com.civilo.roller.Entities.QuoteEntity;
+import com.civilo.roller.Entities.QuoteSummaryEntity;
+import com.civilo.roller.Entities.SellerEntity;
 import com.civilo.roller.controllers.QuoteController;
 import com.civilo.roller.repositories.QuoteRepository;
 import com.civilo.roller.services.QuoteService;
@@ -57,5 +59,24 @@ public class QuoteControllerTest {
     public void testDeleteQuote() {
         quoteService.deleteQuotes();
         verify(quoteRepository, times(0)).deleteAll();
+    }
+
+    @Test
+    public void testGeneratePDF1() {
+        Long id = 1L;
+        SellerEntity seller = new SellerEntity(1L, null, null, null, null, null, null, null, null, 0, null, null, null, null, true, null, null, 0);
+
+        List<QuoteSummaryEntity> listSummary = new ArrayList<>();
+        QuoteSummaryEntity summarySelected = new QuoteSummaryEntity(2L, null, 0, 0, 0, 0, 0, 0, null, seller, null);
+        listSummary.add(summarySelected);
+        List<QuoteEntity> listQuotes = new ArrayList<>();
+        listQuotes.add(new QuoteEntity(1L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, seller, null, null, null, null, null));
+        when(quoteService.listQuoteSummary(anyLong())).thenReturn(listSummary);
+        when(quoteService.findQuoteSummary(anyList(), anyLong(), anyLong())).thenReturn(new QuoteSummaryEntity());
+        when(quoteService.listQuotes(any(QuoteSummaryEntity.class), anyLong(), anyLong())).thenReturn(new ArrayList<>());
+
+        ResponseEntity<?> response = quoteController.generatePDF(id, seller);
+
+        assertEquals("No se encontro un resumen de cotizacion para la solicitud seleccionada.", response.getBody());
     }
 }

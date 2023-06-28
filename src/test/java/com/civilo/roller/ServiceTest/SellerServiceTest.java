@@ -37,7 +37,7 @@ public class SellerServiceTest {
     void saveSeller(){
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"), "Company", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"), "Company", true, "banco", "cuenta", 1);
         when(sellerRepository.save(seller)).thenReturn(seller);
         final SellerEntity currentResponse = sellerService.saveSeller(seller);
         assertEquals(seller,currentResponse);
@@ -47,7 +47,7 @@ public class SellerServiceTest {
     void getSellers(){
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"), "Company", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, new RoleEntity(1L, "Cliente"), "Company", true, "banco", "cuenta", 1);
         List<SellerEntity> expectedAnswer = new ArrayList<>();
         expectedAnswer.add(seller);
         when((List<SellerEntity>) sellerRepository.findAll()).thenReturn(expectedAnswer);
@@ -81,7 +81,7 @@ public class SellerServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "banco", "cuenta", 1);
         seller.setUserID(Long.valueOf("9999"));
         List<Integer> coverageID = Arrays.asList(1, 2, 3);
         String newCompanyName = "newCompanyName";
@@ -97,7 +97,7 @@ public class SellerServiceTest {
         Long id = Long.valueOf("9999");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, startTime, endTime, null, "companyName", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, startTime, endTime, null, "companyName", true, "banco", "cuenta", 1);
         when(sellerRepository.findById(id)).thenReturn(Optional.of(seller));
         Optional<SellerEntity> result = sellerService.getSellerById(id);
         assertTrue(result.isPresent());

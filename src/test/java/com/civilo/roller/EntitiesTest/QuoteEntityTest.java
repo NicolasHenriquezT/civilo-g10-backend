@@ -35,9 +35,9 @@ public class QuoteEntityTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true,  "banco", "cuenta", 1);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         quoteEntity.setQuoteID(Long.valueOf("9999"));
         quoteEntity.setAmount(1);

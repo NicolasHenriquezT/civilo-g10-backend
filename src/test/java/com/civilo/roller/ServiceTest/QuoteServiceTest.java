@@ -45,10 +45,10 @@ public class QuoteServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "banco", "cuenta", 1);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
@@ -69,10 +69,10 @@ public class QuoteServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "banco", "cuenta", 1);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
@@ -91,10 +91,10 @@ public class QuoteServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true,  "banco", "cuenta", 1);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
@@ -113,10 +113,10 @@ public class QuoteServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true, "banco", "cuenta", 1);
         PermissionEntity permission = new PermissionEntity(Long.valueOf("9999"), "Permission 1", role);
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
         CoverageEntity coverage = new CoverageEntity(9999L, "Santiago");
@@ -194,17 +194,51 @@ public class QuoteServiceTest {
 
     @Test
     public void testInstalation() {
-        float value = 10.5f;
+        QuoteEntity quote = new QuoteEntity();
+        quote.setHeight(1f);
+        quote.setWidth(1f);
+        quote.setValueSquareMeters(12500f);
+        quote.setAmount(1);
+        quote.setBracketValue(2500f);
+        quote.setCapValue(1400f);
+        quote.setPipeValue(2300f);
+        quote.setCounterweightValue(1400f);
+        quote.setBandValue(300f);
+        quote.setChainValue(190f);
+        quote.setAssemblyValue(2000f);
+        quote.setInstallationValue(5000f);
+        ProfitMarginEntity profitMarginEntity = new ProfitMarginEntity(1L, 40f, 0.4f);
+        quote.setProfitMarginEntity(profitMarginEntity);
+        List<QuoteEntity> quoteList = new ArrayList<>();
+        quoteList.add(quote);
+
         String expectedResult = "Si";
-        String result = quoteService.instalation(value);
+        String result = quoteService.instalation(quoteList);
         assertEquals(expectedResult, result);
     }
 
     @Test
     public void testInstalation2() {
-        float value = 0f;
+        QuoteEntity quote = new QuoteEntity();
+        quote.setHeight(1f);
+        quote.setWidth(1f);
+        quote.setValueSquareMeters(12500f);
+        quote.setAmount(1);
+        quote.setBracketValue(2500f);
+        quote.setCapValue(1400f);
+        quote.setPipeValue(2300f);
+        quote.setCounterweightValue(1400f);
+        quote.setBandValue(300f);
+        quote.setChainValue(190f);
+        quote.setAssemblyValue(0f);
+        quote.setInstallationValue(0f);
+        ProfitMarginEntity profitMarginEntity = new ProfitMarginEntity(1L, 40f, 0.4f);
+        quote.setProfitMarginEntity(profitMarginEntity);
+        List<QuoteEntity> quoteList = new ArrayList<>();
+        quoteList.add(quote);
+
         String expectedResult = "No";
-        String result = quoteService.instalation(value);
+        String result = quoteService.instalation(quoteList);
         assertEquals(expectedResult, result);
     }
 
@@ -214,16 +248,7 @@ public class QuoteServiceTest {
     @InjectMocks
     private QuoteSummaryService quoteSummaryService;
 
-    @Test
-    public void testLastQuoteSummary() {
-        Long idseller = 1L;
-        List<QuoteSummaryEntity> quoteSummaryEntities = new ArrayList<>();
-        quoteSummaryEntities.add(new QuoteSummaryEntity()); // Add some quote summary entities for testing
-        when(quoteSummaryRepository.findAll()).thenReturn(quoteSummaryEntities);
-        QuoteSummaryEntity result = quoteService.lastQuoteSummary(idseller);
-        assertEquals(quoteSummaryEntities.get(quoteSummaryEntities.size() - 1), result);
-        verify(quoteSummaryRepository, times(1)).findAll();
-    }
+
 /*
     @Test
     public void testLastQuoteSummary2() {
@@ -240,20 +265,81 @@ public class QuoteServiceTest {
  */
 
     @Test
-    public void testLastQuotes() {
-        Long idQuoteSummary = 1L;
+    void testListQuoteSummary() {
+        Long idSeller = 1L;
+        List<QuoteSummaryEntity> quoteSummaryEntities = new ArrayList<>();
+        quoteSummaryEntities.add(new QuoteSummaryEntity(1L, null, 0, 0, 0, 0, 0, 0, null, new SellerEntity(1L, null, null, null, null, null, null, null, null, 0, null, null, null, null, true, null, null, 0), null));
+        quoteSummaryEntities.add(new QuoteSummaryEntity());
+        quoteSummaryEntities.add(new QuoteSummaryEntity());
+        when(quoteSummaryRepository.findAll()).thenReturn(quoteSummaryEntities);
+        List<QuoteSummaryEntity> quoteSummarySelected = quoteService.listQuoteSummary(idSeller);
+        verify(quoteSummaryRepository, times(1)).findAll();
+        assertEquals(1, quoteSummarySelected.size());
+    }
+
+    @Test
+    void testFindQuoteSummary() {
+        Long idQuoteSelected = 1L;
+        Long idSeller = 1L;
+        SellerEntity seller = new SellerEntity(1L, null, null, null, null, null, null, null, null, 0, null, null, null, null, true, null, null, 0);
+        List<QuoteSummaryEntity> listSummary = new ArrayList<>();
+        QuoteSummaryEntity quoteSummary1 = new QuoteSummaryEntity(1L, null, 0, 0, 0, 0, 0, 0, null, new SellerEntity(1L, null, null, null, null, null, null, null, null, 0, null, null, null, null, true, null, null, 0), null);
+        quoteSummary1.setSeller(seller);
+        listSummary.add(quoteSummary1);
+        QuoteEntity quoteEntity1 = new QuoteEntity(1L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null);
+        quoteEntity1.setQuoteSummary(quoteSummary1);
+        quoteEntity1.setSeller(seller);
         List<QuoteEntity> quoteEntities = new ArrayList<>();
-        QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity(1L, null, 0, 0, 0, 0, 0, 0, null, null, null);
-        quoteEntities.add(new QuoteEntity(1L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, quoteSummary, null, null)); // Add some quote entities for testing
-
+        quoteEntity1.setRequestEntity(new RequestEntity(1L, null, null, null, null, null, 1, null, null, null, null, null));
+        quoteEntity1.getSeller().setUserID(idSeller);
+        quoteEntities.add(quoteEntity1);
+        QuoteSummaryEntity expectedQuoteSummary = quoteSummary1;
         when(quoteRepository.findAll()).thenReturn(quoteEntities);
-
-        List<QuoteEntity> result = quoteService.lastQuotes(idQuoteSummary);
-
-        // Assert that the selected quote entities are returned
-        assertEquals(quoteEntities, result);
-
-        // Verify that the repository method was called
+        QuoteSummaryEntity actualQuoteSummary = quoteService.findQuoteSummary(listSummary, idQuoteSelected, idSeller);
         verify(quoteRepository, times(1)).findAll();
+        assertEquals(expectedQuoteSummary, actualQuoteSummary);
+    }
+
+    @Test
+    void testFindQuoteSummary2() {
+        Long idQuoteSelected = 2L;
+        Long idSeller = 1L;
+        SellerEntity seller = new SellerEntity(1L, null, null, null, null, null, null, null, null, 0, null, null, null, null, true, null, null, 0);
+        List<QuoteSummaryEntity> listSummary = new ArrayList<>();
+        QuoteSummaryEntity quoteSummary1 = new QuoteSummaryEntity(1L, null, 0, 0, 0, 0, 0, 0, null, new SellerEntity(1L, null, null, null, null, null, null, null, null, 0, null, null, null, null, true, null, null, 0), null);
+        quoteSummary1.setSeller(seller);
+        listSummary.add(quoteSummary1);
+        QuoteEntity quoteEntity1 = new QuoteEntity(1L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, null);
+        quoteEntity1.setQuoteSummary(quoteSummary1);
+        quoteEntity1.setSeller(seller);
+        List<QuoteEntity> quoteEntities = new ArrayList<>();
+        quoteEntity1.setRequestEntity(new RequestEntity(1L, null, null, null, null, null, 1, null, null, null, null, null));
+        quoteEntity1.getSeller().setUserID(idSeller);
+        quoteEntities.add(quoteEntity1);
+        QuoteSummaryEntity expectedQuoteSummary = quoteSummary1;
+        when(quoteRepository.findAll()).thenReturn(quoteEntities);
+        QuoteSummaryEntity actualQuoteSummary = quoteService.findQuoteSummary(listSummary, idQuoteSelected, idSeller);
+        verify(quoteRepository, times(1)).findAll();
+        assertEquals(new QuoteSummaryEntity(), actualQuoteSummary);
+    }
+
+    @Test
+    void testListQuotes() {
+        Long idQuoteSelected = 1L;
+        Long idSeller = 1L;
+        SellerEntity seller = new SellerEntity(1L, null, null, null, null, null, null, null, null, 0, null, null, null, null, true, null, null, 0);
+        QuoteSummaryEntity summarySelected = new QuoteSummaryEntity(1L, null, 0, 0, 0, 0, 0, 0, null, seller, null);
+        List<QuoteEntity> quoteEntities = new ArrayList<>();
+        QuoteEntity quoteEntity1 = new QuoteEntity(1L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, seller, null, null, null, null, null);
+        quoteEntity1.setQuoteSummary(summarySelected);
+        quoteEntity1.setRequestEntity(new RequestEntity(1L, null, null, null, null, null, 1, null, null, null, null, null));
+        quoteEntity1.getSeller().setUserID(idSeller);
+        quoteEntities.add(quoteEntity1);
+        List<QuoteEntity> expectedQuoteEntities = new ArrayList<>();
+        expectedQuoteEntities.add(quoteEntity1);
+        when(quoteRepository.findAll()).thenReturn(quoteEntities);
+        List<QuoteEntity> actualQuoteEntities = quoteService.listQuotes(summarySelected, idQuoteSelected, idSeller);
+        verify(quoteRepository, times(1)).findAll();
+        assertEquals(expectedQuoteEntities, actualQuoteEntities);
     }
 }

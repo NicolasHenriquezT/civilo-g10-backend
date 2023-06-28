@@ -79,7 +79,7 @@ public class RequestServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(id, "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         when(requestRepository.findById(id)).thenReturn(Optional.of(requestEntity));
         Optional<RequestEntity> result = requestService.getRequestById(id);
@@ -93,7 +93,7 @@ public class RequestServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         when(requestRepository.save(requestEntity)).thenReturn(requestEntity);
         RequestEntity result = requestService.createRequest(requestEntity);
@@ -107,7 +107,7 @@ public class RequestServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(requestID, "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         when(requestRepository.findById(requestID)).thenReturn(Optional.of(requestEntity));
         RequestEntity updatedRequestEntity = new RequestEntity(requestID, "Updated description", LocalDate.of(2022,9,21), LocalDate.of(2022,9,21), LocalDate.of(2022,9,21), "Updated reason", 2, null, user, null, null, null);
@@ -136,7 +136,7 @@ public class RequestServiceTest {
         Long id = Long.valueOf("9999");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        when(requestRepository.findById(id)).thenReturn(Optional.of(new RequestEntity(id, "Description", LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20), "Reason", 1, null, new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, startTime, endTime, new RoleEntity(Long.valueOf("9999"), "Cliente")), null, null, null)));
+        when(requestRepository.findById(id)).thenReturn(Optional.of(new RequestEntity(id, "Description", LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20), "Reason", 1, null, new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, startTime, endTime, new RoleEntity(Long.valueOf("9999"), "Cliente")), null, null, null)));
         assertTrue(requestService.existsRequestById(id));
         assertFalse(requestService.existsRequestById(Long.valueOf("8888")));
         verify(requestRepository, times(2)).findById(anyLong());
@@ -148,12 +148,12 @@ public class RequestServiceTest {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         requestEntities.add(requestEntity);
         List<SellerEntity> sellerEntities = new ArrayList<>();
         RoleEntity sellerRole = new RoleEntity(Long.valueOf("9999"), "Vendedor");
-        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, sellerRole, "companyName", true, "rut", "banco", "cuenta", 1);
+        SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, sellerRole, "companyName", true, "banco", "cuenta", 1);
         sellerEntities.add(seller);
         List<StatusEntity> statusEntities = new ArrayList<>();
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
@@ -167,11 +167,47 @@ public class RequestServiceTest {
     }
 
     @Test
+    public void testAutomaticAssignment2() {
+        List<RequestEntity> requestEntities = new ArrayList<>();
+        RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
+        LocalTime startTime = LocalTime.of(15, 30, 0);
+        LocalTime endTime = LocalTime.of(16, 30, 0);
+        UserEntity user = new UserEntity(Long.valueOf("0"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, startTime, endTime, role);
+        RequestEntity requestEntity = new RequestEntity(Long.valueOf("1"), "Description", LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20), LocalDate.of(2022, 9, 20), "Reason", 0, null, user, null, null, null);
+        requestEntities.add(requestEntity);
+
+        List<SellerEntity> sellerEntities = new ArrayList<>();
+        RoleEntity sellerRole = new RoleEntity(Long.valueOf("9999"), "Vendedor");
+        SellerEntity seller = new SellerEntity(Long.valueOf("1"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022, 9, 20), 20, startTime, endTime, sellerRole, "companyName", true, "banco", "cuenta", 1);
+        sellerEntities.add(seller);
+
+        List<StatusEntity> statusEntities = new ArrayList<>();
+        StatusEntity status1 = new StatusEntity(Long.valueOf("9999"), "Status 1");
+        StatusEntity status2 = new StatusEntity(Long.valueOf("9998"), "Status 2");
+        statusEntities.add(status1);
+        statusEntities.add(status2);
+
+        // Mocking the repository and service behavior
+        when(requestService.getRequests()).thenReturn(requestEntities);
+        when(sellerService.getSellers()).thenReturn(sellerEntities);
+        when(statusService.getStatus()).thenReturn(statusEntities);
+
+        // Calling the service method
+        requestService.automaticAssignment();
+
+        // Verifying the interactions
+        verify(sellerService, atLeastOnce()).getSellers();
+        verify(requestRepository, atLeastOnce()).save(any(RequestEntity.class));
+    }
+
+
+
+    @Test
     void testGetRequestByUserId() {
         RoleEntity role = new RoleEntity(Long.valueOf("9999"), "Cliente");
         LocalTime startTime = LocalTime.of(15, 30, 0);
         LocalTime endTime = LocalTime.of(16, 30, 0);
-        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
+        UserEntity user = new UserEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role);
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, user, null, null, null);
         ArrayList<RequestEntity> expected = new ArrayList<>();
         expected.add(requestEntity);

@@ -82,8 +82,9 @@ public class QuoteController {
             System.out.println("Cotización del tipo de cortina: " + quoteList.get(i).getCurtain().getCurtainType());
             quoteService.calculation(quoteList.get(i));
         }
-        
-        QuoteSummaryEntity quoteSummary = quoteSummaryService.summaryCalculation(quoteList);
+
+        Long quoteSummaryID = quoteService.existQuoteSummaryWithMyInfo(quoteList);
+        QuoteSummaryEntity quoteSummary = quoteSummaryService.summaryCalculation(quoteList, quoteSummaryID);
         for (int i = 0; i < quoteList.size(); i ++) {
             quoteList.get(i).setQuoteSummary(quoteSummary);
         }
@@ -94,7 +95,7 @@ public class QuoteController {
                            "\nValor tras descuento (CLP)      = Valor de venta total × Descuento / 100      = " + quoteSummary.getValueAfterDiscount() +
                            "\nTotal neto (CLP)                = Valor de venta total - Valor tras descuento = " + quoteSummary.getNetTotal() +
                            "\nTotal (CLP)                     = Total neto × (1 + IVA / 100)                = " + quoteSummary.getTotal());
-        this.quoteService.createQuotes(quoteList);
+        this.quoteService.updateQuotesWithMyInfo(quoteList);
         return ResponseEntity.ok(quoteSummary);
     }
 

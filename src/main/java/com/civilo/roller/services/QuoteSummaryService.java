@@ -24,7 +24,7 @@ public class QuoteSummaryService {
     }
 
     //
-    public QuoteSummaryEntity summaryCalculation(List<QuoteEntity> quoteEntities){
+    public QuoteSummaryEntity summaryCalculation(List<QuoteEntity> quoteEntities, Long quoteSummaryID){
         QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();
         float totalCostOfProduction = 0, totalSaleValue = 0, valueAfterDiscount = 0, discountPercentage = 0, totalNet = 0, iva = 0, ivaPercentage = 0, total = 0;
         Date date = null;
@@ -56,6 +56,10 @@ public class QuoteSummaryService {
         quoteSummary.setNetTotal((int) Math.ceil(totalNet));
         quoteSummary.setTotal((int) Math.ceil(total));
         quoteSummary.setCurrentIVA(ivaService.getIVAByPercentage(ivaPercentage));
+
+        if (quoteSummaryID != null){
+            quoteSummary.setQuoteSummaryID(quoteSummaryID);
+        }
         return quoteSummaryRepository.save(quoteSummary);
     }
 }

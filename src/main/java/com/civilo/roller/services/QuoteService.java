@@ -179,8 +179,8 @@ public class QuoteService {
         List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
         QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();
 
-        for (int i = listSummary.size() - 1; i > 0; i--) {
-            for(int j = quoteEntities.size() - 1; j > 0; j--) {
+        for (int i = 0; i < listSummary.size(); i++) {
+            for(int j = 0; j < quoteEntities.size(); j++) {
                 if( listSummary.get(i).getQuoteSummaryID() == quoteEntities.get(j).getQuoteSummary().getQuoteSummaryID() ) {
                     if(quoteEntities.get(j).getRequestEntity() != null) {
                         if ( ( idQuoteSelected == quoteEntities.get(j).getRequestEntity().getRequestID() ) && (idSeller == quoteEntities.get(j).getSeller().getUserID() ) ) {
@@ -221,6 +221,38 @@ public class QuoteService {
             }
         }
         return "No";
+    }
+
+    public Long existQuoteSummaryWithMyInfo(List<QuoteEntity> quoteEntities){
+        List<QuoteEntity> quoteEntityList = getQuotes();
+        for (int i = 0; i < quoteEntityList.size(); i++){
+            if (quoteEntities.get(0).getRequestEntity().getRequestID() == quoteEntityList.get(i).getRequestEntity().getRequestID() ){
+                return quoteEntityList.get(i).getQuoteSummary().getQuoteSummaryID();
+            }
+        }
+        return null;
+    }
+
+    public void updateQuotesWithMyInfo(List<QuoteEntity> quoteEntities){
+        List<Long> idList = new ArrayList<>();
+        List<QuoteEntity> quoteEntityList = getQuotes();
+        for (int i = 0; i < quoteEntityList.size(); i++){
+            for (int j = 0; j < quoteEntities.size(); j++){
+                if (quoteEntities.get(j).getRequestEntity().getRequestID() == quoteEntityList.get(i).getRequestEntity().getRequestID() &&
+                    !idList.contains(quoteEntityList.get(i).getQuoteID())){
+                    idList.add(quoteEntityList.get(i).getQuoteID());
+                }
+            }
+        }
+        if (!idList.isEmpty()){
+            for (int i = 0; i < idList.size(); i++){
+                quoteEntities.get(i).setQuoteID(idList.get(i));
+                saveQuote(quoteEntities.get(i));
+            }
+        }
+        for (int i = 0; i < quoteEntities.size(); i++){
+            saveQuote(quoteEntities.get(i));
+        }
     }
 
 }

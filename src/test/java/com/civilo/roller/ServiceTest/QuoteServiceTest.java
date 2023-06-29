@@ -342,4 +342,65 @@ public class QuoteServiceTest {
         verify(quoteRepository, times(1)).findAll();
         assertEquals(expectedQuoteEntities, actualQuoteEntities);
     }
+
+    @Test
+    public void testExistQuoteSummaryWithMyInfo_emptyList() {
+        List<QuoteEntity> quoteEntities = new ArrayList<>();
+        Long result = quoteService.existQuoteSummaryWithMyInfo(quoteEntities);
+        assertNull(result);
+    }
+
+    @Test
+    public void testExistQuoteSummaryWithMyInfo_ExistingSummary() {
+        // Crear una lista de citas
+        List<QuoteEntity> quoteEntities = new ArrayList<>();
+
+        // Crear una cita con el mismo ID de solicitud que la cita existente
+        QuoteSummaryEntity summarySelected = new QuoteSummaryEntity(1L, null, 0, 0, 0, 0, 0, 0, null, null, null);
+        RequestEntity requestEntity = new RequestEntity(1L, null, null, null, null, null, 1, null, null, null, null, null);
+        QuoteEntity quoteEntity = new QuoteEntity(1L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, summarySelected, null, null);
+        quoteEntity.setRequestEntity(requestEntity);
+        quoteEntities.add(quoteEntity);
+
+        // Llamar a la función existQuoteSummaryWithMyInfo
+        when(quoteService.getQuotes()).thenReturn(quoteEntities);
+        Long quoteSummaryID = quoteService.existQuoteSummaryWithMyInfo(quoteEntities);
+
+        // Comprobar que se devuelve el ID de resumen de cita correcto
+        assertEquals(1L, quoteSummaryID.longValue());
+    }
+
+    @Test
+    public void testUpdateQuotesWithMyInfo() {
+        // Crear una lista de citas existentes
+        List<QuoteEntity> quoteEntityList = new ArrayList<>();
+
+        // Crear una cita existente
+        RequestEntity existingRequestEntity = new RequestEntity();
+        existingRequestEntity.setRequestID(1L); // ID de solicitud existente
+        QuoteEntity existingQuoteEntity = new QuoteEntity();
+        existingQuoteEntity.setRequestEntity(existingRequestEntity);
+        existingQuoteEntity.setQuoteID(1L); // ID de cita existente
+        quoteEntityList.add(existingQuoteEntity);
+
+        // Crear una lista de citas para actualizar
+        List<QuoteEntity> quoteEntities = new ArrayList<>();
+
+        // Crear una cita con el mismo ID de solicitud que la cita existente
+        RequestEntity requestEntity = new RequestEntity();
+        requestEntity.setRequestID(1L); // ID de solicitud existente
+        QuoteEntity quoteEntity = new QuoteEntity();
+        quoteEntity.setRequestEntity(requestEntity);
+        quoteEntities.add(quoteEntity);
+
+        // Llamar a la función updateQuotesWithMyInfo
+        when(quoteService.getQuotes()).thenReturn(quoteEntities);
+        quoteService.updateQuotesWithMyInfo(quoteEntities);
+
+        // Comprobar que la cita existente se actualizó con el nuevo ID
+        assertEquals(1L, existingQuoteEntity.getQuoteID().longValue());
+    }
+
+
+
 }

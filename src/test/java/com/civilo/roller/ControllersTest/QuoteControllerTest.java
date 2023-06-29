@@ -1,8 +1,6 @@
 package com.civilo.roller.ControllersTest;
 
-import com.civilo.roller.Entities.QuoteEntity;
-import com.civilo.roller.Entities.QuoteSummaryEntity;
-import com.civilo.roller.Entities.SellerEntity;
+import com.civilo.roller.Entities.*;
 import com.civilo.roller.controllers.QuoteController;
 import com.civilo.roller.repositories.QuoteRepository;
 import com.civilo.roller.services.QuoteService;
@@ -26,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @DataJpaTest
@@ -78,5 +77,46 @@ public class QuoteControllerTest {
         ResponseEntity<?> response = quoteController.generatePDF(id, seller);
 
         assertEquals("No se encontro un resumen de cotizacion para la solicitud seleccionada.", response.getBody());
+    }
+
+    @Test
+    public void testGeneratePDF2() {
+        Long id = 1L;
+        SellerEntity seller = new SellerEntity(1L, null, null, null, null, null, null, null, null, 0, null, null, null, null, true, null, null, 0);
+
+        List<QuoteSummaryEntity> listSummary = new ArrayList<>();
+        QuoteSummaryEntity summarySelected = new QuoteSummaryEntity(2L, null, 0, 0, 0, 0, 0, 0, null, seller, null);
+        listSummary.add(summarySelected);
+        List<QuoteEntity> listQuotes = new ArrayList<>();
+        listQuotes.add(new QuoteEntity(1L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, seller, null, null, null, null, null));
+        when(quoteService.listQuoteSummary(anyLong())).thenReturn(listSummary);
+        when(quoteService.findQuoteSummary(anyList(), anyLong(), anyLong())).thenReturn(summarySelected);
+        when(quoteService.listQuotes(any(QuoteSummaryEntity.class), anyLong(), anyLong())).thenReturn(new ArrayList<>());
+
+        ResponseEntity<?> response = quoteController.generatePDF(id, seller);
+
+        assertEquals("No se encontraron cotizaciones para la solicitud seleccionada.", response.getBody());
+    }
+
+    @Test
+    public void testGeneratePDF3() {
+        Long id = 1L;
+        SellerEntity seller = new SellerEntity(1L, "Name", null, null, null, null, null, "Comuna", null, 0, null, null, null, null, true, null, null, 0);
+
+        List<QuoteSummaryEntity> listSummary = new ArrayList<>();
+        QuoteSummaryEntity summarySelected = new QuoteSummaryEntity(2L, null, 0, 0, 0, 0, 0, 0, null, seller, new IVAEntity(1L, 19f));
+        listSummary.add(summarySelected);
+
+        List<QuoteEntity> listQuotes = new ArrayList<>();
+        RequestEntity request = new RequestEntity(1L, null, null, null, null, null, 1, null, seller, new CoverageEntity(1L, "Comuna"), new CurtainEntity(1L, "Cortina"), null);
+        listQuotes.add(new QuoteEntity(1L, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, seller, new CurtainEntity(1L, "Cortina"), null, null, new ProfitMarginEntity(1L, 40f, 0.4f), request));
+
+        when(quoteService.listQuoteSummary(anyLong())).thenReturn(listSummary);
+        when(quoteService.findQuoteSummary(anyList(), anyLong(), anyLong())).thenReturn(summarySelected);
+        when(quoteService.listQuotes(any(QuoteSummaryEntity.class), anyLong(), anyLong())).thenReturn(listQuotes);
+
+        ResponseEntity<?> response = quoteController.generatePDF(id, seller);
+
+        assertNotNull(response.getBody());
     }
 }

@@ -66,13 +66,13 @@ public class QuoteSummaryServiceTest {
         IVAEntity ivaEntity = new IVAEntity(1L, 19f);
         when(ivaService.getLastIVA()).thenReturn(ivaEntity);
         QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();
-        quoteSummary = quoteSummaryService.summaryCalculation(quoteEntities);
+        quoteSummary = quoteSummaryService.summaryCalculation(quoteEntities, 1L);
 
         List<QuoteEntity> quoteEntities2 = new ArrayList<>();
         QuoteEntity quote2 = new QuoteEntity(1L, 1, 12500f, 1f, 1f, 1f, 12500f, 2300f, 1500f, 900f, 300f, 600f, 190f, 8090f, 2000f, 5000f, 7000f, 1f, 44000f, 77000f, new Date(), null, null, null, null, null, null);
         QuoteSummaryEntity quoteSummary2 = new QuoteSummaryEntity();
         quoteEntities2.add(quote2);
-        quoteSummary2 = quoteSummaryService.summaryCalculation(quoteEntities2);
+        quoteSummary2 = quoteSummaryService.summaryCalculation(quoteEntities2, 1L);
 
 
     }

@@ -68,8 +68,7 @@ public class QuoteController {
 
     // Permite guardar entidad cotizacion.
     @PostMapping()
-    public ResponseEntity<QuoteSummaryEntity> saveQuotes(@RequestBody List<QuoteEntity> quoteList){
-        System.out.println(quoteList.get(0));
+    public ResponseEntity<QuoteSummaryEntity> saveQuotes(@RequestBody List<QuoteEntity> quoteList, @RequestParam("description") String description){
         for (int i = 0; i < quoteList.size(); i ++) {
             if (quoteList.get(i).getAmount() == 0){
                 quoteList.remove(quoteList.get(i));
@@ -85,6 +84,7 @@ public class QuoteController {
 
         Long quoteSummaryID = quoteService.existQuoteSummaryWithMyInfo(quoteList);
         QuoteSummaryEntity quoteSummary = quoteSummaryService.summaryCalculation(quoteList, quoteSummaryID);
+        quoteSummary.setDescription(description);
         for (int i = 0; i < quoteList.size(); i ++) {
             quoteList.get(i).setQuoteSummary(quoteSummary);
         }
@@ -431,7 +431,7 @@ public class QuoteController {
                 table3.addCell(emptyCell);
 
                 // Agregar una celda más grande en la segunda fila, columna 2
-                PdfPCell cell21 = new PdfPCell(new Paragraph("Comentarios:" + "\n", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
+                PdfPCell cell21 = new PdfPCell(new Paragraph("Comentarios:" + summarySelected.getDescription() + "\n", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
                 cell21.setColspan(2); // Fusionar 2 columnas en la celda
                 table3.addCell(cell21);
 

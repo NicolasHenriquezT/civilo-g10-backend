@@ -246,8 +246,15 @@ public class QuoteService {
         }
         if (!idList.isEmpty()){
             for (int i = 0; i < idList.size(); i++){
-                quoteEntities.get(i).setQuoteID(idList.get(i));
-                saveQuote(quoteEntities.get(i));
+                if (quoteEntities.size() <= i) {
+                    deleteQuoteById(idList.get(i));
+                }
+                else {
+                    quoteEntities.get(i).setQuoteID(idList.get(i));
+                    saveQuote(quoteEntities.get(i));
+                }
+                System.out.println(i);
+
             }
         }
         for (int i = 0; i < quoteEntities.size(); i++){

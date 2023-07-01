@@ -4,6 +4,7 @@ import com.civilo.roller.Entities.*;
 import com.civilo.roller.controllers.QuoteController;
 import com.civilo.roller.repositories.QuoteRepository;
 import com.civilo.roller.services.QuoteService;
+import com.civilo.roller.services.QuoteSummaryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,6 +39,9 @@ public class QuoteControllerTest {
 
     @Mock
     private QuoteRepository quoteRepository;
+
+    @Mock
+    private QuoteSummaryService quoteSummaryService;
 
     @BeforeEach
     public void setUp() {
@@ -118,5 +122,37 @@ public class QuoteControllerTest {
         ResponseEntity<?> response = quoteController.generatePDF(id, seller);
 
         assertNotNull(response.getBody());
+    }
+
+    @Test
+    public void testSaveQuotes() {
+        List<QuoteEntity> quoteList = new ArrayList<>();
+        // Add some quote entities to the quoteList for testing
+        quoteList.add(new QuoteEntity());
+
+        String description = "Test Description";
+
+        QuoteSummaryEntity quoteSummary = new QuoteSummaryEntity();
+        quoteSummary.setTotalCostOfProduction(100);
+        quoteSummary.setTotalSaleValue(200);
+        quoteSummary.setValueAfterDiscount(180);
+        quoteSummary.setNetTotal(160);
+        quoteSummary.setTotal(192);
+
+        when(quoteService.existQuoteSummaryWithMyInfo(quoteList)).thenReturn(1L);
+        when(quoteSummaryService.summaryCalculation(quoteList, 1L)).thenReturn(quoteSummary);
+
+        ResponseEntity<QuoteSummaryEntity> result = quoteController.saveQuotes(quoteList, description);
+
+        // Assert that the response entity is not null
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+
+        // Assert that the quote summary in the response entity matches the expected quote summary
+        assertEquals(quoteSummary, result.getBody());
+
+        // Verify that the quoteService and quoteSummaryService methods were called correctly
+        verify(quoteService, times(1)).existQuoteSummaryWithMyInfo(quoteList);
+        verify(quoteSummaryService, times(1)).summaryCalculation(quoteList, 1L);
+        verify(quoteService, times(1)).updateQuotesWithMyInfo(quoteList);
     }
 }

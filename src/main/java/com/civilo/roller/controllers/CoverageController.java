@@ -92,7 +92,7 @@ public class CoverageController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCoverageById(@PathVariable Long id){
         if(!coverageService.existCoverageById(id)){
-            System.out.println("NO SE ENCONTRO UNA COMUNA CON EL ID: " + id + "\n");
+            System.out.println("NO SE ENCONTRO UNA COMUNA CON EL ID: " + id + " \n");
             return ResponseEntity.notFound().build();
         }
         coverageService.deleteCoverageById(id);

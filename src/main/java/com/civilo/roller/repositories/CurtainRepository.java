@@ -12,4 +12,6 @@ public interface CurtainRepository extends CrudRepository<CurtainEntity, Long> {
     //Se consulta la id de una cortina especifica
     @Query(value = "select curtainid idcurtain from curtain r where r.curtain_type = :curtainType", nativeQuery = true)
     Long findIdByCurtainType(@Param("curtainType") String curtainType);
+
+    CurtainEntity findByCurtainType(String curtainName);
 }

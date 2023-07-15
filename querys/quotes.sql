@@ -22,7 +22,10 @@ INSERT INTO quotes (
   date,
   seller_sellerid,
   curtains,
-  pipes)
+  pipes,
+  requests,
+  profit_margin,
+  quote_summary)
 VALUES (
   1,
   40,
@@ -47,4 +50,7 @@ VALUES (
   '2021-09-06 15:30:45',
   3,
   1,
-  5);
+  5,
+  19,
+  1,
+  1);

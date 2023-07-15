@@ -306,7 +306,7 @@ public class QuoteController {
                 document.add(new Paragraph("\n"));
                 
                 // Crear una tabla con 8 columnas
-                PdfPTable table2 = new PdfPTable(8);
+                PdfPTable table2 = new PdfPTable(7);
 
                 // Establecer el ancho de la tabla para que ocupe el ancho completo
                 table2.setWidthPercentage(100f);
@@ -344,10 +344,7 @@ public class QuoteController {
                 table2.addCell(cell5);
 
                 // Sexta columna
-                PdfPCell cell6 = new PdfPCell(new Paragraph("Descripción", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
-                cell6.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                cell6.setBorderColor(BaseColor.BLACK);
-                table2.addCell(cell6);
+
 
                 // Septima columna
                 PdfPCell cell7 = new PdfPCell(new Paragraph("Margen de utilidad", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK)));
@@ -369,7 +366,6 @@ public class QuoteController {
                             String.valueOf(listQuotes.get(i).getHeight()),
                             String.valueOf("$ " + (int) Math.floor(listQuotes.get(i).getProductionCost())),
                             String.valueOf(listQuotes.get(i).getAmount()),
-                            null,
                             String.valueOf(listQuotes.get(i).getProfitMarginEntity().getProfitMarginPercentaje() + "%"),
                             String.valueOf("$ " + (int) Math.floor(listQuotes.get(i).getSaleValue()))});
                 }

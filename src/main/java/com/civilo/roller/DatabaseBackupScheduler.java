@@ -22,15 +22,15 @@ public class DatabaseBackupScheduler {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // Método para ejecutar la tarea de respaldo cada 10 segundos
-    @Scheduled(fixedRate = 3600000) // 1 hora
+    // Método para ejecutar la tarea de respaldo cada 1 hora
+    @Scheduled(fixedRate = 3600000) // 1 hora = 3,600,000 milisegundos
     public void backupDatabase() {
         try {
-            // Ruta absoluta de la carpeta "backup" dentro del proyecto
-            String backupFolderPath = System.getProperty("user.dir") + File.separator + "backup";
+            // Ruta de la carpeta "Documentos" del sistema
+            String documentsFolderPath = System.getProperty("user.home") + File.separator + "Documents";
 
-            // Crear la carpeta "backup" si no existe
-            File backupFolder = new File(backupFolderPath);
+            // Crear la carpeta "backup" dentro de la carpeta "Documentos" si no existe
+            File backupFolder = new File(documentsFolderPath, "backup");
             if (!backupFolder.exists()) {
                 backupFolder.mkdirs();
             }
@@ -39,8 +39,8 @@ public class DatabaseBackupScheduler {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH-mm");
             String timestamp = sdf.format(new Date());
 
-            // Crear la carpeta con el formato de fecha "DD-MM-YYYY_HH-MM"
-            File timestampFolder = new File(backupFolderPath, timestamp);
+            // Crear la carpeta con el formato de fecha "DD-MM-YYYY_HH-MM" dentro de la carpeta "backup"
+            File timestampFolder = new File(backupFolder, timestamp);
             if (!timestampFolder.exists()) {
                 timestampFolder.mkdirs();
             }

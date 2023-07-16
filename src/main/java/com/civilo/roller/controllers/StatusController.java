@@ -55,7 +55,7 @@ public class StatusController {
 
     // Permite actualizar información de un estado.
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody StatusEntity status) {
+    public ResponseEntity<?> updateStatus(@PathVariable long id, @RequestBody StatusEntity status) {
         
         Optional<StatusEntity> checkStatus = statusService.getStatusById(id);
         

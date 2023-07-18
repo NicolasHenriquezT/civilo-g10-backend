@@ -24,8 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @DataJpaTest
@@ -154,5 +153,89 @@ public class QuoteControllerTest {
         verify(quoteService, times(1)).existQuoteSummaryWithMyInfo(quoteList);
         verify(quoteSummaryService, times(1)).summaryCalculation(quoteList, 1L);
         verify(quoteService, times(1)).updateQuotesWithMyInfo(quoteList);
+    }
+
+    @Test
+    public void testDeleteQuotes() {
+        // Arrange & Act
+        ResponseEntity<String> response = quoteController.deleteQuotes();
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("SE ELIMINARON LAS COTIZACIONES CORRECTAMENTE", response.getBody());
+        verify(quoteService, times(1)).deleteQuotes();
+    }
+
+    @Test
+    public void testDeleteQuoteById_ExistingId_ReturnsOkResponse() {
+        // Arrange
+        Long id = 1L;
+        when(quoteService.existsQuoteById(id)).thenReturn(true);
+
+        // Act
+        ResponseEntity<String> response = quoteController.deleteQuoteById(id);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("COTIZACION CON ID " + id + " ELIMINADA CORRECTAMENTE \n", response.getBody());
+        verify(quoteService, times(1)).deleteQuoteById(id);
+    }
+
+    @Test
+    public void testDeleteQuoteById_NonExistingId_ReturnsNotFoundResponse() {
+        // Arrange
+        Long id = 1L;
+        when(quoteService.existsQuoteById(id)).thenReturn(false);
+
+        // Act
+        ResponseEntity<String> response = quoteController.deleteQuoteById(id);
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+        verify(quoteService, never()).deleteQuoteById(id);
+    }
+
+    @Test
+    public void testGetQuoteById_ExistingId_ReturnsQuoteEntity() {
+        // Arrange
+        Long id = 1L;
+        QuoteEntity expectedQuote = new QuoteEntity();
+        when(quoteService.getQuoteById(id)).thenReturn(Optional.of(expectedQuote));
+
+        // Act
+        ResponseEntity<QuoteEntity> response = quoteController.getQuoteById(id);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedQuote, response.getBody());
+    }
+
+    @Test
+    public void testGetQuoteById_NonExistingId_ReturnsNotFoundResponse() {
+        // Arrange
+        Long id = 1L;
+        when(quoteService.getQuoteById(id)).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<QuoteEntity> response = quoteController.getQuoteById(id);
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
+    public void testGetQuoteSellerId_ReturnsListOfQuotes() {
+        // Arrange
+        Long sellerId = 1L;
+        List<QuoteEntity> expectedQuotes = new ArrayList<>();
+        when(quoteService.sellerQuotes(sellerId)).thenReturn(expectedQuotes);
+
+        // Act
+        List<QuoteEntity> result = quoteController.getQuoteSellerId(sellerId);
+
+        // Assert
+        assertEquals(expectedQuotes, result);
     }
 }

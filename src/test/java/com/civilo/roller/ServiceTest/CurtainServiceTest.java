@@ -13,9 +13,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -32,7 +33,7 @@ public class CurtainServiceTest {
     void saveCurtain(){
         CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Roller");
         when(curtainRepository.save(curtain)).thenReturn(curtain);
-        final CurtainEntity currentResponse = curtainService.saveCurtain(curtain);
+        final CurtainEntity currentResponse = curtainService.createCurtain(curtain);
         assertEquals(curtain,currentResponse);
     }
 
@@ -47,10 +48,59 @@ public class CurtainServiceTest {
     }
 
     @Test
-    public void testGetCurtainIdByCurtainType() {
-        CurtainEntity curtain = new CurtainEntity(Long.valueOf("9999"), "Curtain 1");
-        when(curtainRepository.findIdByCurtainType("Curtain 1")).thenReturn(curtain.getCurtainID());
-        Long result = curtainService.getCurtainIdByCurtainType("Curtain 1");
-        assertEquals(curtain.getCurtainID(), result);
+    public void testGetCurtainById() {
+        Long curtainId = 1L;
+        CurtainEntity curtainEntity = new CurtainEntity(curtainId, "Type1");
+        when(curtainRepository.findById(curtainId)).thenReturn(Optional.of(curtainEntity));
+        Optional<CurtainEntity> result = curtainService.getCurtainById(curtainId);
+        assertNotNull(result);
+        assertTrue(result.isPresent());
+        assertEquals(curtainEntity, result.get());
+    }
+
+    @Test
+    public void testValidateCurtain() {
+        String curtainName = "Type1";
+        CurtainEntity curtainEntity = new CurtainEntity(1L, curtainName);
+        when(curtainRepository.findByCurtainType(curtainName)).thenReturn(curtainEntity);
+        Optional<CurtainEntity> result = curtainService.validateCurtain(curtainName);
+        assertNotNull(result);
+        assertTrue(result.isPresent());
+        assertEquals(curtainEntity, result.get());
+    }
+
+    @Test
+    public void testUpdateCurtain() {
+        Long curtainId = 1L;
+        CurtainEntity existingCurtainEntity = new CurtainEntity(curtainId, "Type1");
+        CurtainEntity updatedCurtainEntity = new CurtainEntity(curtainId, "UpdatedType");
+        when(curtainRepository.findById(curtainId)).thenReturn(Optional.of(existingCurtainEntity));
+        when(curtainRepository.save(existingCurtainEntity)).thenReturn(updatedCurtainEntity);
+        CurtainEntity curtainToUpdate = new CurtainEntity(curtainId, "UpdatedType");
+        CurtainEntity result = curtainService.updateCurtain(curtainId, curtainToUpdate);
+        assertNotNull(result);
+        assertEquals("UpdatedType", result.getCurtainType());
+    }
+
+    @Test
+    public void testDeleteCurtains() {
+        curtainService.deleteCurtains();
+        verify(curtainRepository, times(1)).deleteAll();
+    }
+
+    @Test
+    public void testDeleteCurtainById() {
+        Long curtainId = 1L;
+        curtainService.deleteCurtainById(curtainId);
+        verify(curtainRepository, times(1)).deleteById(curtainId);
+    }
+
+    @Test
+    public void testExistCurtainById() {
+        Long curtainId = 1L;
+        CurtainEntity curtainEntity = new CurtainEntity(curtainId, "Type1");
+        when(curtainRepository.findById(curtainId)).thenReturn(Optional.of(curtainEntity));
+        boolean result = curtainService.existCurtainById(curtainId);
+        assertTrue(result);
     }
 }

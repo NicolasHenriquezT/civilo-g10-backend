@@ -93,7 +93,7 @@ public class StatusControllerTest {
         StatusEntity status = new StatusEntity(id, "Status 2");
         when(statusService.getStatusById(id)).thenReturn(Optional.of(new StatusEntity()));
         when(statusService.validateStatusName(status.getStatusName())).thenReturn(Optional.empty());
-        ResponseEntity<?> responseEntity = statusController.updateUser(id, status);
+        ResponseEntity<?> responseEntity = statusController.updateStatus(id, status);
         verify(statusService).getStatusById(id);
         verify(statusService).validateStatusName(status.getStatusName());
         verify(statusService).updateStatus(id, status);
@@ -105,7 +105,7 @@ public class StatusControllerTest {
        long id = 9999L;
        StatusEntity status = new StatusEntity(Long.valueOf("9998"), "Status 2");
        when(statusService.getStatusById(id)).thenReturn(Optional.empty());
-       ResponseEntity<?> response = statusController.updateUser(id, status);
+       ResponseEntity<?> response = statusController.updateStatus(id, status);
        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
    }
 
@@ -115,7 +115,7 @@ public class StatusControllerTest {
         StatusEntity status = new StatusEntity(Long.valueOf("9999"), "Status 1");
         when(statusService.getStatusById(id)).thenReturn(Optional.of(new StatusEntity()));
         when(statusService.validateStatusName(status.getStatusName())).thenReturn(Optional.of(status));
-        ResponseEntity<?> response = statusController.updateUser(id, status);
+        ResponseEntity<?> response = statusController.updateStatus(id, status);
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 

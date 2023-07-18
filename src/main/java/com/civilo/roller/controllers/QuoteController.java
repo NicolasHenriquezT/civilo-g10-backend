@@ -1,5 +1,6 @@
 package com.civilo.roller.controllers;
 
+import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.Entities.QuoteEntity;
 import com.civilo.roller.Entities.QuoteSummaryEntity;
 import com.civilo.roller.Entities.SellerEntity;
@@ -54,7 +55,6 @@ public class QuoteController {
     }
 
     // Permite obtener los datos de una cotizacion en especifico.
-    
     @GetMapping("/{id}")
     public ResponseEntity<QuoteEntity> getQuoteById(@PathVariable long id){
         Optional<QuoteEntity> quote = quoteService.getQuoteById(id);
@@ -62,9 +62,17 @@ public class QuoteController {
             System.out.println("NO SE ENCONTRO LA COTIZACION \n");
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<QuoteEntity>(quote.get(), HttpStatus.OK);
     }
+
+    // Permite obtener un listado de las cotizaciones realizadas por el vendedor con sesion activa.
+    @GetMapping("/sellerQuotes/{id_seller}")
+    public List<QuoteEntity> getQuoteSellerId(@PathVariable long id_seller){
+        List<QuoteEntity> listQuotes = new ArrayList<>();
+        listQuotes = quoteService.sellerQuotes(id_seller);
+        
+        return listQuotes;
+    } 
 
     // Permite guardar entidad cotizacion.
     @PostMapping()
@@ -107,10 +115,9 @@ public class QuoteController {
     //} 
 
     // Permite actualizar informacion de una cotizacion.
-    // FALTA: Ver si solo administradores pueden hacer esto
-    /*
+    /* 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateQuote(@PathVariable long id, @RequestBody QuoteEntity quote){
+    public ResponseEntity<?> updateQuote(@PathVariable long id, @RequestBody QuoteEntity quote, @RequestBody UserEntity user){
         
         Optional<QuoteEntity> checkQuote = quoteService.getQuoteById(id);
         
@@ -119,17 +126,20 @@ public class QuoteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La cotizacion con el ID especificado no se encuentra registrada."); 
         }
 
-        //Aca deberia ir chequeo si es administrador el tipo de cuenta
-
-        quoteService.updateQuote(id,quote);
-        System.out.println("ACTUALIZADO CON EXITO \n");
-        return ResponseEntity.ok().build();
+        String accountType = user.getRole().getAccountType();
+        
+        if (accountType.equals("Administrador")) {
+            quoteService.updateQuote(id,quote);
+            System.out.println("ACTUALIZADO CON EXITO \n");
+            return ResponseEntity.ok().build();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permisos para modificar la cotización");
+        }           
     }
-
     */
 
     // Permite eliminar todas las cotizaciones del sistema.
-    /*
     @DeleteMapping()
     public ResponseEntity<String> deleteQuotes(){
         quoteService.deleteQuotes();
@@ -147,7 +157,6 @@ public class QuoteController {
         return ResponseEntity.ok("COTIZACION CON ID " + id + " ELIMINADA CORRECTAMENTE \n");
     }
 
-     */
 
     //------------------------------------------------------------------------------------------------------------------------------------------------//
 

@@ -50,26 +50,45 @@ public class QuoteService {
 
     // Update
     // Permite actualizar los datos de un objeto del tipo "QuoteEntity" en la base de datos.
-    /*
+    /* 
     public QuoteEntity updateQuote(Long quoteID, QuoteEntity quote){
 
         QuoteEntity existingQuote = quoteRepository.findById(quoteID)
             .orElseThrow(() -> new EntityNotFoundException("Cotizacion no encontrada con el ID: " + quoteID));
 
-        existingQuote.setProductName(quote.getProductName());
         existingQuote.setAmount(quote.getAmount());
-        existingQuote.setValue(quote.getValue());
-        existingQuote.setDescription(quote.getDescription());
-        existingQuote.setCommission(quote.getCommission());
-
-        //Falta asignar id del vendedor
+        existingQuote.setAssemblyValue(quote.getAssemblyValue());
+        existingQuote.setBandValue(quote.getBandValue());
+        existingQuote.setBracketValue(quote.getBracketValue());
+        existingQuote.setCapValue(quote.getCapValue());
+        existingQuote.setChainValue(quote.getChainValue());
+        existingQuote.setCounterweightValue(quote.getCounterweightValue());
+        existingQuote.setDate(quote.getDate());
+        existingQuote.setHeight(quote.getHeight());
+        existingQuote.setInstallationValue(quote.getInstallationValue());
+        existingQuote.setPercentageDiscount(quote.getPercentageDiscount());
+        existingQuote.setPipeValue(quote.getPipeValue());
+        existingQuote.setProductionCost(quote.getProductionCost());
+        existingQuote.setSaleValue(quote.getSaleValue());
+        existingQuote.setTotalFabrics(quote.getTotalFabrics());
+        existingQuote.setTotalLabor(quote.getTotalLabor());
+        existingQuote.setTotalMaterials(quote.getTotalMaterials());
+        existingQuote.setTotalSquareMeters(quote.getTotalSquareMeters());
+        existingQuote.setValueSquareMeters(quote.getValueSquareMeters());
+        existingQuote.setWidth(quote.getWidth());
+        existingQuote.setCurtains(quote.getCurtains());
+        existingQuote.setPipes(quote.getPipes());
+        existingQuote.setProfitMargin(quote.getProfitMargin());
+        existingQuote.setQuoteSummary(quote.getQuoteSummary());
+        existingQuote.setSeller_sellerid(quote.getSeller().getUserID());
+        existingQuote.setRequests(quote.getRequestEntity().getRequestID());
 
         QuoteEntity updatedQuote = quoteRepository.save(existingQuote);
         return updatedQuote;
     }
+    */
 
-     */
-
+    
     // Delete all
     // Permite eliminar todas las cotizaciones de un sistema.
     public void deleteQuotes() {
@@ -148,6 +167,21 @@ public class QuoteService {
 
     public float calculateCounterweight(float counterWeight, int amount, float width) {
         return counterWeight * amount * width;
+    }
+
+
+    // Permite obtener un listado de todas las cotizaciones asociadas a un vendedor especifico.
+    public List<QuoteEntity> sellerQuotes(Long idSeller) {
+        List<QuoteEntity> quoteEntities = (List<QuoteEntity>) quoteRepository.findAll();
+        List<QuoteEntity> quoteSelected = new ArrayList<>();
+        for (int i = 0; i < quoteEntities.size(); i++) {
+            if(quoteEntities.get(i).getSeller() != null) {
+                if (quoteEntities.get(i).getSeller().getUserID() == idSeller) {
+                    quoteSelected.add(quoteEntities.get(i));
+                }
+            }
+        }
+        return quoteSelected;
     }
 
 

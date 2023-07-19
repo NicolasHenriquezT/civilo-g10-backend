@@ -93,6 +93,18 @@ public class UserService {
         }
         return null;
     } 
+
+
+    public int validateRole(Long id){
+        List<UserEntity> listUsers = (List<UserEntity>) userRepository.findAll();
+
+        for (int i = 0; i < listUsers.size(); i++) {
+            if( (listUsers.get(i).getUserID() == id) && (listUsers.get(i).getRole().getAccountType().equals("Administrador")) ){
+                return 1;
+            }
+        }
+        return 0;
+    }
      
         
 

@@ -1,9 +1,19 @@
 package com.civilo.roller.services;
 
+import com.civilo.roller.Entities.CurtainEntity;
+import com.civilo.roller.Entities.PipeEntity;
+import com.civilo.roller.Entities.ProfitMarginEntity;
 import com.civilo.roller.Entities.QuoteEntity;
+import com.civilo.roller.Entities.SellerEntity;
+import com.civilo.roller.Entities.RequestEntity;
 import com.civilo.roller.Entities.QuoteSummaryEntity;
 import com.civilo.roller.repositories.QuoteRepository;
 import com.civilo.roller.repositories.QuoteSummaryRepository;
+import com.civilo.roller.repositories.ProfitMarginRepository;
+import com.civilo.roller.repositories.CurtainRepository;
+import com.civilo.roller.repositories.SellerRepository;
+import com.civilo.roller.repositories.RequestRepository;
+import com.civilo.roller.repositories.PipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +34,21 @@ public class QuoteService {
 
     @Autowired
     ProfitMarginService profitMarginService;
+
+    @Autowired
+    CurtainRepository curtainRepository;
+
+    @Autowired 
+    PipeRepository pipeRepository;
+
+    @Autowired 
+    ProfitMarginRepository profitMarginRepository;
+
+    @Autowired 
+    SellerRepository sellerRepository;
+
+    @Autowired 
+    RequestRepository requestRepository;
 
     // Get all
     // Permite obtener un listado con toda la informacion asociada a las solicitudes.
@@ -50,7 +75,7 @@ public class QuoteService {
 
     // Update
     // Permite actualizar los datos de un objeto del tipo "QuoteEntity" en la base de datos.
-    /* 
+     
     public QuoteEntity updateQuote(Long quoteID, QuoteEntity quote){
 
         QuoteEntity existingQuote = quoteRepository.findById(quoteID)
@@ -76,19 +101,54 @@ public class QuoteService {
         existingQuote.setTotalSquareMeters(quote.getTotalSquareMeters());
         existingQuote.setValueSquareMeters(quote.getValueSquareMeters());
         existingQuote.setWidth(quote.getWidth());
-        existingQuote.setCurtains(quote.getCurtains());
-        existingQuote.setPipes(quote.getPipes());
-        existingQuote.setProfitMargin(quote.getProfitMargin());
-        existingQuote.setQuoteSummary(quote.getQuoteSummary());
-        existingQuote.setSeller_sellerid(quote.getSeller().getUserID());
-        existingQuote.setRequests(quote.getRequestEntity().getRequestID());
+
+        CurtainEntity existingCurtain = curtainRepository.findById(quote.getCurtain().getCurtainID())
+            .orElseThrow(() -> new EntityNotFoundException("Cortina no encontrada con el ID: " + quote.getCurtain().getCurtainID()));
+        Long newCurtainId = quote.getCurtain().getCurtainID();
+        CurtainEntity newCurtain = curtainRepository.findById(newCurtainId)
+            .orElseThrow(() -> new EntityNotFoundException("Cortina no encontrada con el ID: " + newCurtainId));
+        existingQuote.setCurtain(newCurtain);
+
+        PipeEntity existingPipe = pipeRepository.findById(quote.getPipe().getPipeID())
+            .orElseThrow(() -> new EntityNotFoundException("Tubo no encontrado con el ID: " + quote.getPipe().getPipeID()));
+        Long newPipeId = quote.getPipe().getPipeID();
+        PipeEntity newPipe = pipeRepository.findById(newPipeId)
+            .orElseThrow(() -> new EntityNotFoundException("Tubo no encontrado con el ID: " + newPipeId));
+        existingQuote.setPipe(newPipe);
+        
+        ProfitMarginEntity existingProfitMargin = profitMarginRepository.findById(quote.getProfitMarginEntity().getProfitMarginID())
+            .orElseThrow(() -> new EntityNotFoundException("Margen de beneficio no encontrado con el ID: " + quote.getProfitMarginEntity().getProfitMarginID()));
+        Long newProfitMarginId = quote.getProfitMarginEntity().getProfitMarginID();
+        ProfitMarginEntity newProfitMargin = profitMarginRepository.findById(newProfitMarginId)
+            .orElseThrow(() -> new EntityNotFoundException("Margen de beneficio no encontrado con el ID: " + newProfitMarginId));
+        existingQuote.setProfitMarginEntity(newProfitMargin);
+
+        QuoteSummaryEntity existingQuoteSummary = quoteSummaryRepository.findById(quote.getQuoteSummary().getQuoteSummaryID())
+            .orElseThrow(() -> new EntityNotFoundException("Resumen de cotizacion no encontrado con el ID: " + quote.getQuoteSummary().getQuoteSummaryID()));
+        Long newQuoteSummaryId = quote.getQuoteSummary().getQuoteSummaryID();
+        QuoteSummaryEntity newQuoteSummary = quoteSummaryRepository.findById(newQuoteSummaryId)
+            .orElseThrow(() -> new EntityNotFoundException("Resumen de cotizacion no encontrado con el ID: " + newQuoteSummaryId));
+        existingQuote.setQuoteSummary(newQuoteSummary);
+
+        SellerEntity existingSeller = sellerRepository.findById(quote.getSeller().getUserID())
+            .orElseThrow(() -> new EntityNotFoundException("Vendedor no encontrado con el ID: " + quote.getSeller().getUserID()));
+        Long newSellerId = quote.getSeller().getUserID();
+        SellerEntity newSeller = sellerRepository.findById(newSellerId)
+            .orElseThrow(() -> new EntityNotFoundException("Vendedor no encontrado con el ID: " + newSellerId));
+        existingQuote.setSeller(newSeller);
+
+        RequestEntity existingRequest = requestRepository.findById(quote.getRequestEntity().getRequestID())
+            .orElseThrow(() -> new EntityNotFoundException("Solicitud no encontrada con el ID: " + quote.getRequestEntity().getRequestID()));
+        Long newRequestId = quote.getRequestEntity().getRequestID();
+        RequestEntity newRequest = requestRepository.findById(newRequestId)
+            .orElseThrow(() -> new EntityNotFoundException("Solicitud no encontrada con el ID: " + newRequestId));
+        existingQuote.setRequestEntity(newRequest);
 
         QuoteEntity updatedQuote = quoteRepository.save(existingQuote);
         return updatedQuote;
     }
-    */
-
     
+ 
     // Delete all
     // Permite eliminar todas las cotizaciones de un sistema.
     public void deleteQuotes() {

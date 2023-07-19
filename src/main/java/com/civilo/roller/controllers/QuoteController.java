@@ -6,6 +6,7 @@ import com.civilo.roller.Entities.QuoteSummaryEntity;
 import com.civilo.roller.Entities.SellerEntity;
 import com.civilo.roller.services.IVAService;
 import com.civilo.roller.services.QuoteService;
+import com.civilo.roller.services.UserService;
 import com.civilo.roller.services.QuoteSummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,9 @@ public class QuoteController {
 
     @Autowired
     IVAService ivaService;
+
+    @Autowired
+    UserService userService;
 
     // Permite obtener todas las cotizaciones del sistema.
     @GetMapping()
@@ -115,9 +119,9 @@ public class QuoteController {
     //} 
 
     // Permite actualizar informacion de una cotizacion.
-    /* 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateQuote(@PathVariable long id, @RequestBody QuoteEntity quote, @RequestBody UserEntity user){
+    
+    @PutMapping("/{id}/{idLogin}")
+    public ResponseEntity<?> updateQuote(@PathVariable long id, @RequestBody QuoteEntity quote, @PathVariable long idLogin){
         
         Optional<QuoteEntity> checkQuote = quoteService.getQuoteById(id);
         
@@ -126,9 +130,10 @@ public class QuoteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La cotizacion con el ID especificado no se encuentra registrada."); 
         }
 
-        String accountType = user.getRole().getAccountType();
-        
-        if (accountType.equals("Administrador")) {
+        int pass = -1;
+        pass = userService.validateRole(idLogin);
+           
+        if (pass == 1) {
             quoteService.updateQuote(id,quote);
             System.out.println("ACTUALIZADO CON EXITO \n");
             return ResponseEntity.ok().build();
@@ -137,7 +142,7 @@ public class QuoteController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes permisos para modificar la cotización");
         }           
     }
-    */
+    
 
     // Permite eliminar todas las cotizaciones del sistema.
     @DeleteMapping()

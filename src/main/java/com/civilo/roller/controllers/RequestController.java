@@ -53,30 +53,9 @@ public class RequestController {
 
     @GetMapping("/clientRequest/{id_cliente}")
     public ArrayList<RequestEntity> getRequestByUserId(@PathVariable long id_cliente){
-        
         return requestService.getRequestByUserId(id_cliente);
     }
-    /*
-    @PostMapping("/clientRequest")
-    public ResponseEntity<?> createRequest(@RequestBody RequestEntity requestEntity, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            System.out.println("NO EXISTE SESIÓN ACTIVA -> NO SE ENVÍA LA SOLICITUD");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        // Si hay una sesión activa, creamos la solicitud
-        requestEntity.setUser((UserEntity) session.getAttribute("user"));
-        // Validamos que el usuario que envía la solicitud es del tipo cliente
-        if (((UserEntity) session.getAttribute("user")).getRole().getAccountType().equals("Cliente")){
-            requestService.saveRequest(requestEntity);
-            System.out.println("SOLICITUD ENVIADA CORRECTAMENTE");
-            return ResponseEntity.ok().build();
-        }
-        System.out.println("USUARIO SIN PERMISOS PARA ESTA ACCIÓN -> NO SE ENVIA LA SOLICITUD");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-     */
-
+    
     // Permite guardar una nueva solicitud en el sistema.
     @PostMapping("/clientRequest")
     public ResponseEntity<?> createRequest(@RequestBody RequestEntity requestEntity) {
@@ -97,7 +76,7 @@ public class RequestController {
     
     // Permite actualizar información de un usuario.
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody RequestEntity request) {
+    public ResponseEntity<?> updateRequest(@PathVariable long id, @RequestBody RequestEntity request) {
         
         Optional<RequestEntity> checkRequest = requestService.getRequestById(id);
         
@@ -109,7 +88,7 @@ public class RequestController {
         requestService.updateRequest(id,request);
         System.out.println("SOLICITUD ACTUALIZADA CON EXITO\n");
         return ResponseEntity.ok().build(); 
-    }
+    } 
 
     // Permite eliminar todas las solicitudes del sistema.
     @DeleteMapping()

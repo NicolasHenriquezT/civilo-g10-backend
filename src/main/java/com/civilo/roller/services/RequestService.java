@@ -2,7 +2,16 @@ package com.civilo.roller.services;
 
 import com.civilo.roller.Entities.RequestEntity;
 import com.civilo.roller.Entities.SellerEntity;
+import com.civilo.roller.Entities.CoverageEntity;
+import com.civilo.roller.Entities.CurtainEntity;
+import com.civilo.roller.Entities.StatusEntity;
+import com.civilo.roller.Entities.UserEntity;
 import com.civilo.roller.repositories.RequestRepository;
+import com.civilo.roller.repositories.SellerRepository;
+import com.civilo.roller.repositories.CoverageRepository;
+import com.civilo.roller.repositories.CurtainRepository;
+import com.civilo.roller.repositories.StatusRepository;
+import com.civilo.roller.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.civilo.roller.exceptions.EntityNotFoundException;
@@ -11,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-
 
 @Service
 public class RequestService {
@@ -24,6 +32,21 @@ public class RequestService {
     @Autowired
     StatusService statusService;
 
+    @Autowired 
+    SellerRepository sellerRepository;
+
+    @Autowired 
+    CoverageRepository coverageRepository;
+
+    @Autowired 
+    CurtainRepository curtainRepository;
+
+    @Autowired 
+    StatusRepository statusRepository;
+
+    @Autowired 
+    UserRepository userRepository;
+ 
     // Get all
     // El siguiente método retorna un listado el cual contiene TODA la información asociada a las solicitudes
     public List<RequestEntity> getRequests(){
@@ -59,13 +82,41 @@ public class RequestService {
         RequestEntity existingRequest = requestRepository.findById(requestID)
             .orElseThrow(() -> new EntityNotFoundException("Solicitud no encontrada con el ID: " + requestID));
 
-
-        existingRequest.setDescription(request.getDescription());
-        existingRequest.setDeadline(request.getDeadline());
         existingRequest.setAdmissionDate(request.getAdmissionDate());
         existingRequest.setClosingDate(request.getClosingDate());
+        existingRequest.setDeadline(request.getDeadline());
+        existingRequest.setDescription(request.getDescription());
         existingRequest.setReason(request.getReason());
-    
+        existingRequest.setSellerId(request.getSellerId());
+
+        CoverageEntity existingCoverage = coverageRepository.findById(request.getCoverage().getCoverageID())
+            .orElseThrow(() -> new EntityNotFoundException("Cobertura no encontrada con el ID: " + request.getCoverage().getCoverageID()));
+        Long newCoverageId = request.getCoverage().getCoverageID();
+        CoverageEntity newCoverage = coverageRepository.findById(newCoverageId)
+            .orElseThrow(() -> new EntityNotFoundException("Cobertura no encontrada con el ID: " + newCoverageId));
+        existingRequest.setCoverage(newCoverage);
+        
+        CurtainEntity existingCurtain = curtainRepository.findById(request.getCurtain().getCurtainID())
+            .orElseThrow(() -> new EntityNotFoundException("Cortina no encontrada con el ID: " + request.getCurtain().getCurtainID()));
+        Long newCurtainId = request.getCurtain().getCurtainID();
+        CurtainEntity newCurtain = curtainRepository.findById(newCurtainId)
+            .orElseThrow(() -> new EntityNotFoundException("Cortina no encontrada con el ID: " + newCurtainId));
+        existingRequest.setCurtain(newCurtain);
+
+        StatusEntity existingStatus = statusRepository.findById(request.getStatus().getStatusID())
+            .orElseThrow(() -> new EntityNotFoundException("Status no encontrado con el ID: " + request.getStatus().getStatusID()));
+        Long newStatusId = request.getStatus().getStatusID();
+        StatusEntity newStatus = statusRepository.findById(newStatusId)
+            .orElseThrow(() -> new EntityNotFoundException("Status no encontrado con el ID: " + newStatusId));
+        existingRequest.setStatus(newStatus);
+
+        UserEntity existingUser = userRepository.findById(request.getUser().getUserID())
+            .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con el ID: " + request.getUser().getUserID()));
+        Long newUserId = request.getUser().getUserID();
+        UserEntity newUser = userRepository.findById(newUserId)
+            .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con el ID: " + newUserId));
+        existingRequest.setUser(newUser);
+        
         RequestEntity updatedRequest = requestRepository.save(existingRequest);
         return updatedRequest;
     }

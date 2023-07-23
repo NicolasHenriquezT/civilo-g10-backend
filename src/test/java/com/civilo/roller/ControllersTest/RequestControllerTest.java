@@ -157,7 +157,7 @@ public class RequestControllerTest {
         Long id = Long.valueOf("9999");
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, null, null, null, null);
         when(requestService.getRequestById(id)).thenReturn(Optional.empty());
-        ResponseEntity<?> response = requestController.updateUser(id, requestEntity);
+        ResponseEntity<?> response = requestController.updateRequest(id, requestEntity);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
@@ -166,7 +166,7 @@ public class RequestControllerTest {
         Long id = Long.valueOf("9999");
         RequestEntity requestEntity = new RequestEntity(Long.valueOf("9999"), "Description", LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), LocalDate.of(2022,9,20), "Reason", 1, null, null, null, null, null);
         when(requestService.getRequestById(id)).thenReturn(Optional.of(requestEntity));
-        ResponseEntity<?> response = requestController.updateUser(id, requestEntity);
+        ResponseEntity<?> response = requestController.updateRequest(id, requestEntity);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 

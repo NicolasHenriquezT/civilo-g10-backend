@@ -61,12 +61,14 @@ public class SellerService {
     }
 
     // Permite actualizar el id de cobertura y el nombre de compañia
-    public SellerEntity updateCoverageIdAndCompanyNameSellerByEmail(String email, String companyName, List<Integer> coverageID){
+    public SellerEntity updateCoverageIdAndCompanyNameSellerByEmail(String email, String companyName, List<Integer> coverageID, String bank, String bankAccountType, Integer bankAccountNumber){
         email = email.replaceAll("\"", "");
-        System.out.println(email);
         SellerEntity seller = sellerRepository.findByEmail(email);
         seller.setCompanyName(companyName);
         seller.setCoverageID(coverageID);
+        seller.setBank(bank);
+        seller.setBankAccountType(bankAccountType);
+        seller.setBankAccountNumber(bankAccountNumber);
         return sellerRepository.save(seller);
     }
 

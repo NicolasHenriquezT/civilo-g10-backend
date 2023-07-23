@@ -87,7 +87,7 @@ public class SellerServiceTest {
         String newCompanyName = "newCompanyName";
         when(sellerRepository.findByEmail("Email")).thenReturn(seller);
         when(sellerRepository.save(seller)).thenReturn(seller);
-        SellerEntity updatedSeller = sellerService.updateCoverageIdAndCompanyNameSellerByEmail("Email", newCompanyName, coverageID);
+        SellerEntity updatedSeller = sellerService.updateCoverageIdAndCompanyNameSellerByEmail("Email", newCompanyName, coverageID, seller.getBank(), seller.getBankAccountType(), seller.getBankAccountNumber());
         assertEquals(newCompanyName, updatedSeller.getCompanyName());
         assertEquals(coverageID, updatedSeller.getCoverageID());
     }

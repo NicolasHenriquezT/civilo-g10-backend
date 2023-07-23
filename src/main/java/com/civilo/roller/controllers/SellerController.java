@@ -79,7 +79,7 @@ public class SellerController {
 
     @PostMapping("/sellerInformation")
     public ResponseEntity<?> sellerInformationUpdateCompanyName(@RequestBody SellerEntity userDTO){
-        sellerService.updateCoverageIdAndCompanyNameSellerByEmail(userDTO.getEmail(), userDTO.getCompanyName(), userDTO.getCoverageID());
+        sellerService.updateCoverageIdAndCompanyNameSellerByEmail(userDTO.getEmail(), userDTO.getCompanyName(), userDTO.getCoverageID(), userDTO.getBank(), userDTO.getBankAccountType(), userDTO.getBankAccountNumber());
         return ResponseEntity.ok().build();
     }
 

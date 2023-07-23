@@ -402,7 +402,7 @@ public class QuoteController {
                 table3.setWidthPercentage(100);
 
                 // Columna 1 
-                PdfPCell cell19 = new PdfPCell(new Paragraph("Datos transferencia \n\n mcivilo@gmail.com \n Importacion Global Deco Ltda \n Banco Santander \n Cta. Cte 73121418 \n RUT 76.892.524-0", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK))); 
+                PdfPCell cell19 = new PdfPCell(new Paragraph("Datos transferencia \n\n" + seller.getEmail() + "\n" + seller.getCompanyName() + "\n" + seller.getBank() + "\n" + seller.getBankAccountType() + " " + seller.getBankAccountNumber() + "\n" + seller.getRut(), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK)));
                 cell19.setRowspan(6); // Fusionar 3 filas en la columna 1 
                 //cell19.setPercentageWidth(75f); 
                 cell19.setHorizontalAlignment(Element.ALIGN_CENTER); 

@@ -104,7 +104,7 @@ public class SellerControllerTest {
         LocalTime endTime = LocalTime.of(16, 30, 0);
         SellerEntity seller = new SellerEntity(Long.valueOf("9999"), "Name", "Surname", "Email", "Password", "rut", "0 1234 5678", "Commune", LocalDate.of(2022,9,20), 20, startTime, endTime, role, "companyName", true,  "banco", "cuenta", 1);
         ResponseEntity<?> responseEntity = sellerController.sellerInformationUpdateCompanyName(seller);
-        verify(sellerService, times(1)).updateCoverageIdAndCompanyNameSellerByEmail(seller.getEmail(), seller.getCompanyName(), seller.getCoverageID());
+        verify(sellerService, times(1)).updateCoverageIdAndCompanyNameSellerByEmail(seller.getEmail(), seller.getCompanyName(), seller.getCoverageID(), seller.getBank(), seller.getBankAccountType(), seller.getBankAccountNumber());
         assertEquals(200, responseEntity.getStatusCodeValue());
     }
 

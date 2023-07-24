@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  contenedor-mysql: # Nombre de contenedor MYSQL
-    container_name: contenedor-mysql
+  contenedor-civilo-mysql: # Nombre de contenedor MYSQL
+    container_name: contenedor-civilo-mysql
     image: mysql
     restart: always
     volumes:
@@ -25,4 +25,4 @@ services:
       restart_policy:
         condition: on-failure
     depends_on:
-      - contenedor-mysql
+      - contenedor-civilo-mysql

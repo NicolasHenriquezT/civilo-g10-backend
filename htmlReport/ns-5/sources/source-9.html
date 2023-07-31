@@ -48,54 +48,54 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    91,2%
+    57,6%
   </span>
   <span class="absValue">
-    (31/34)
+    (34/59)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$2IHGK2rF</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$Dy1nhRIW</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$Dya3oEgR</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$f5FBKDiD</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$EU9OndQP</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$fD0BF9k5</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$gLpEnras</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$FYscJ3Sy</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$jhqyvKe4</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$HIRmlhoq</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$MlGR9oTe</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$MHQT8P4B</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$nNKmIcq5</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$nqJDXHVc</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$NzufoaBd</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$nVR2XrHq</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$pYFc9uJl</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$Q27a6rsR</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$Q3kfSECx</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$Rtt1anDG</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$SpC8NoQY</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$sQllYP0E</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$UPs5xMLV</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$TvTNr41v</td>
   </tr>
   <tr>
-    <td class="name">RequestService$MockitoMock$GdZ4yPKF$auxiliary$wIJCVoYz</td>
+    <td class="name">RequestService$MockitoMock$v5ICKCWl$auxiliary$VNVNXnFR</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -109,10 +109,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    91,2%
+    57,6%
   </span>
   <span class="absValue">
-    (31/34)
+    (34/59)
   </span>
 </td>
 </tr>
@@ -127,7 +127,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;import com.civilo.roller.Entities.RequestEntity;
 &nbsp;import com.civilo.roller.Entities.SellerEntity;
+&nbsp;import com.civilo.roller.Entities.CoverageEntity;
+&nbsp;import com.civilo.roller.Entities.CurtainEntity;
+&nbsp;import com.civilo.roller.Entities.StatusEntity;
+&nbsp;import com.civilo.roller.Entities.UserEntity;
 &nbsp;import com.civilo.roller.repositories.RequestRepository;
+&nbsp;import com.civilo.roller.repositories.SellerRepository;
+&nbsp;import com.civilo.roller.repositories.CoverageRepository;
+&nbsp;import com.civilo.roller.repositories.CurtainRepository;
+&nbsp;import com.civilo.roller.repositories.StatusRepository;
+&nbsp;import com.civilo.roller.repositories.UserRepository;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Service;
 &nbsp;import com.civilo.roller.exceptions.EntityNotFoundException;
@@ -136,7 +145,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.util.List;
 &nbsp;import java.util.Optional;
 &nbsp;import java.util.Random;
-&nbsp;
 &nbsp;
 &nbsp;@Service
 <b class="fc">&nbsp;public class RequestService {</b>
@@ -149,6 +157,21 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    @Autowired
 &nbsp;    StatusService statusService;
 &nbsp;
+&nbsp;    @Autowired 
+&nbsp;    SellerRepository sellerRepository;
+&nbsp;
+&nbsp;    @Autowired 
+&nbsp;    CoverageRepository coverageRepository;
+&nbsp;
+&nbsp;    @Autowired 
+&nbsp;    CurtainRepository curtainRepository;
+&nbsp;
+&nbsp;    @Autowired 
+&nbsp;    StatusRepository statusRepository;
+&nbsp;
+&nbsp;    @Autowired 
+&nbsp;    UserRepository userRepository;
+&nbsp; 
 &nbsp;    // Get all
 &nbsp;    // El siguiente método retorna un listado el cual contiene TODA la información asociada a las solicitudes
 &nbsp;    public List&lt;RequestEntity&gt; getRequests(){
@@ -184,15 +207,43 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        RequestEntity existingRequest = requestRepository.findById(requestID)</b>
 <b class="fc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Solicitud no encontrada con el ID: &quot; + requestID));</b>
 &nbsp;
-&nbsp;
-<b class="fc">&nbsp;        existingRequest.setDescription(request.getDescription());</b>
-<b class="fc">&nbsp;        existingRequest.setDeadline(request.getDeadline());</b>
 <b class="fc">&nbsp;        existingRequest.setAdmissionDate(request.getAdmissionDate());</b>
 <b class="fc">&nbsp;        existingRequest.setClosingDate(request.getClosingDate());</b>
+<b class="fc">&nbsp;        existingRequest.setDeadline(request.getDeadline());</b>
+<b class="fc">&nbsp;        existingRequest.setDescription(request.getDescription());</b>
 <b class="fc">&nbsp;        existingRequest.setReason(request.getReason());</b>
-&nbsp;    
-<b class="fc">&nbsp;        RequestEntity updatedRequest = requestRepository.save(existingRequest);</b>
-<b class="fc">&nbsp;        return updatedRequest;</b>
+<b class="fc">&nbsp;        existingRequest.setSellerId(request.getSellerId());</b>
+&nbsp;
+<b class="fc">&nbsp;        CoverageEntity existingCoverage = coverageRepository.findById(request.getCoverage().getCoverageID())</b>
+<b class="nc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Cobertura no encontrada con el ID: &quot; + request.getCoverage().getCoverageID()));</b>
+<b class="nc">&nbsp;        Long newCoverageId = request.getCoverage().getCoverageID();</b>
+<b class="nc">&nbsp;        CoverageEntity newCoverage = coverageRepository.findById(newCoverageId)</b>
+<b class="nc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Cobertura no encontrada con el ID: &quot; + newCoverageId));</b>
+<b class="nc">&nbsp;        existingRequest.setCoverage(newCoverage);</b>
+&nbsp;        
+<b class="nc">&nbsp;        CurtainEntity existingCurtain = curtainRepository.findById(request.getCurtain().getCurtainID())</b>
+<b class="nc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Cortina no encontrada con el ID: &quot; + request.getCurtain().getCurtainID()));</b>
+<b class="nc">&nbsp;        Long newCurtainId = request.getCurtain().getCurtainID();</b>
+<b class="nc">&nbsp;        CurtainEntity newCurtain = curtainRepository.findById(newCurtainId)</b>
+<b class="nc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Cortina no encontrada con el ID: &quot; + newCurtainId));</b>
+<b class="nc">&nbsp;        existingRequest.setCurtain(newCurtain);</b>
+&nbsp;
+<b class="nc">&nbsp;        StatusEntity existingStatus = statusRepository.findById(request.getStatus().getStatusID())</b>
+<b class="nc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Status no encontrado con el ID: &quot; + request.getStatus().getStatusID()));</b>
+<b class="nc">&nbsp;        Long newStatusId = request.getStatus().getStatusID();</b>
+<b class="nc">&nbsp;        StatusEntity newStatus = statusRepository.findById(newStatusId)</b>
+<b class="nc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Status no encontrado con el ID: &quot; + newStatusId));</b>
+<b class="nc">&nbsp;        existingRequest.setStatus(newStatus);</b>
+&nbsp;
+<b class="nc">&nbsp;        UserEntity existingUser = userRepository.findById(request.getUser().getUserID())</b>
+<b class="nc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Usuario no encontrado con el ID: &quot; + request.getUser().getUserID()));</b>
+<b class="nc">&nbsp;        Long newUserId = request.getUser().getUserID();</b>
+<b class="nc">&nbsp;        UserEntity newUser = userRepository.findById(newUserId)</b>
+<b class="nc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Usuario no encontrado con el ID: &quot; + newUserId));</b>
+<b class="nc">&nbsp;        existingRequest.setUser(newUser);</b>
+&nbsp;        
+<b class="nc">&nbsp;        RequestEntity updatedRequest = requestRepository.save(existingRequest);</b>
+<b class="nc">&nbsp;        return updatedRequest;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Delete all
@@ -238,9 +289,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        for (int i = 0; i &lt; requestEntities.size(); i++){</b>
 <b class="fc">&nbsp;            currentRequest = requestEntities.get(i);</b>
 <b class="fc">&nbsp;            if (currentRequest.getSellerId() == 0){</b>
-<b class="nc">&nbsp;                currentRequest.setSellerId(sellerEntities.get(rand.nextInt(sellerEntities.size())).getUserID().intValue());</b>
-<b class="nc">&nbsp;                currentRequest.setStatus(statusService.getStatus().get(1));</b>
-<b class="nc">&nbsp;                requestRepository.save(currentRequest);</b>
+<b class="fc">&nbsp;                currentRequest.setSellerId(sellerEntities.get(rand.nextInt(sellerEntities.size())).getUserID().intValue());</b>
+<b class="fc">&nbsp;                currentRequest.setStatus(statusService.getStatus().get(1));</b>
+<b class="fc">&nbsp;                requestRepository.save(currentRequest);</b>
 &nbsp;            }
 &nbsp;        }
 &nbsp;    }
@@ -269,7 +320,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-23 13:38</div>
+    <div style="float:right;">generated on 2023-07-31 11:09</div>
 </div>
 </body>
 </html>

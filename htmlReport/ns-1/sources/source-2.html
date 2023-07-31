@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > RoleEntity</title>
+  <title>Coverage Report > RollerApplication</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -18,10 +18,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.civilo.roller.Entities</a>
+    <a href="../index.html">com.civilo.roller</a>
 </div>
 
-<h1>Coverage Summary for Class: RoleEntity (com.civilo.roller.Entities)</h1>
+<h1>Coverage Summary for Class: RollerApplication (com.civilo.roller)</h1>
 
 <table class="coverageStats">
 
@@ -37,13 +37,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">RoleEntity</td>
+  <td class="name">RollerApplication</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (6/6)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
@@ -51,21 +51,12 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (6/6)
+    (2/2)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">RoleEntity$HibernateProxy$JE5agjKX</td>
-  </tr>
-  <tr>
-    <td class="name">RoleEntity$HibernateProxy$JXQkVZm7</td>
-  </tr>
-  <tr>
-    <td class="name">RoleEntity$HibernateProxy$kJk5pcwc</td>
-  </tr>
-  <tr>
-    <td class="name">RoleEntity$HibernateProxy$los4uw4I</td>
+    <td class="name">RollerApplication$$SpringCGLIB$$0</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -74,7 +65,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (6/6)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
@@ -82,7 +73,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (6/6)
+    (2/2)
   </span>
 </td>
 </tr>
@@ -93,29 +84,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.Entities;
+<code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller;
 &nbsp;
-&nbsp;import lombok.*;
-&nbsp;import jakarta.persistence.Column;
-&nbsp;import jakarta.persistence.*;
+&nbsp;import org.springframework.boot.SpringApplication;
+&nbsp;import org.springframework.boot.autoconfigure.SpringBootApplication;
+&nbsp;import org.springframework.scheduling.annotation.EnableScheduling;
 &nbsp;
+&nbsp;@SpringBootApplication
+&nbsp;@EnableScheduling // Habilita la programación de tareas
+<b class="fc">&nbsp;public class RollerApplication {</b>
 &nbsp;
-&nbsp;@Entity
-&nbsp;@Table(name = &quot;roles&quot;)
-<b class="fc">&nbsp;@Data</b>
-<b class="fc">&nbsp;@NoArgsConstructor</b>
-<b class="fc">&nbsp;@AllArgsConstructor</b>
-&nbsp;@Getter
-<b class="fc">&nbsp;@Setter</b>
-&nbsp;public class RoleEntity {
-&nbsp;    //Atributos
-&nbsp;    @Id
-&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
-&nbsp;    @Column(unique = true, nullable = false)
-<b class="fc">&nbsp;    private Long roleID;</b>
-<b class="fc">&nbsp;    private String accountType;</b>
-&nbsp;
-&nbsp;    //Relaciones
+&nbsp;	public static void main(String[] args) {
+<b class="fc">&nbsp;		SpringApplication.run(RollerApplication.class, args);</b>
+&nbsp;	}
 &nbsp;
 &nbsp;}
 </code>

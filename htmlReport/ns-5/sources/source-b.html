@@ -51,42 +51,42 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (17/17)
+    (19/19)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$5AWTXm3Z</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$2t1FIJTP</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$Fwum8MJf</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$aynKjfLg</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$JBe38RZ5</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$clR6Ha4J</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$ktNqqHQu</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$gCbPRapq</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$ld8OI8i2</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$kEQ9stTA</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$M49j4kuw</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$LPrr6nHR</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$nB6m5EWH</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$P1CG0CW2</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$SQlvS6kP</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$TvTWCIrc</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$T3FAITtU</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$Wt76UPWM</td>
   </tr>
   <tr>
-    <td class="name">SellerService$MockitoMock$p7w3L7W4$auxiliary$ynAgeio5</td>
+    <td class="name">SellerService$MockitoMock$9gfH7VIQ$auxiliary$WXrjjQX1</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -103,7 +103,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (17/17)
+    (19/19)
   </span>
 </td>
 </tr>
@@ -177,12 +177,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    // Permite actualizar el id de cobertura y el nombre de compañia
-&nbsp;    public SellerEntity updateCoverageIdAndCompanyNameSellerByEmail(String email, String companyName, List&lt;Integer&gt; coverageID){
+&nbsp;    public SellerEntity updateCoverageIdAndCompanyNameSellerByEmail(String email, String companyName, List&lt;Integer&gt; coverageID, String bank, String bankAccountType, Integer bankAccountNumber){
 <b class="fc">&nbsp;        email = email.replaceAll(&quot;\&quot;&quot;, &quot;&quot;);</b>
-<b class="fc">&nbsp;        System.out.println(email);</b>
 <b class="fc">&nbsp;        SellerEntity seller = sellerRepository.findByEmail(email);</b>
 <b class="fc">&nbsp;        seller.setCompanyName(companyName);</b>
 <b class="fc">&nbsp;        seller.setCoverageID(coverageID);</b>
+<b class="fc">&nbsp;        seller.setBank(bank);</b>
+<b class="fc">&nbsp;        seller.setBankAccountType(bankAccountType);</b>
+<b class="fc">&nbsp;        seller.setBankAccountNumber(bankAccountNumber);</b>
 <b class="fc">&nbsp;        return sellerRepository.save(seller);</b>
 &nbsp;    }
 &nbsp;
@@ -210,7 +212,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-23 13:38</div>
+    <div style="float:right;">generated on 2023-07-31 11:09</div>
 </div>
 </body>
 </html>

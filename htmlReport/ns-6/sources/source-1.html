@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > QuoteRepository</title>
+  <title>Coverage Report > SellerRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.repositories</a>
 </div>
 
-<h1>Coverage Summary for Class: QuoteRepository (com.civilo.roller.repositories)</h1>
+<h1>Coverage Summary for Class: SellerRepository (com.civilo.roller.repositories)</h1>
 
 <table class="coverageStats">
 
@@ -29,13 +29,13 @@ Current scope:     <a href="../../index.html">all classes</a>
   <th class="name">Class</th>
 </tr>
   <tr>
-    <td class="name">QuoteRepository$MockitoMock$TocUGQ6g</td>
+    <td class="name">SellerRepository$MockitoMock$e8JG8sp4</td>
   </tr>
   <tr>
-    <td class="name">QuoteRepository$MockitoMock$TocUGQ6g$auxiliary$04EauYv7</td>
+    <td class="name">SellerRepository$MockitoMock$e8JG8sp4$auxiliary$ezuzSLkn</td>
   </tr>
   <tr>
-    <td class="name">QuoteRepository$MockitoMock$TocUGQ6g$auxiliary$GAIJogxy</td>
+    <td class="name">SellerRepository$MockitoMock$e8JG8sp4$auxiliary$jAutfOea</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -49,12 +49,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.repositories;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.QuoteEntity;
+&nbsp;import com.civilo.roller.Entities.SellerEntity;
+&nbsp;import com.civilo.roller.Entities.UserEntity;
 &nbsp;import org.springframework.data.repository.CrudRepository;
 &nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
 &nbsp;@Repository
-&nbsp;public interface QuoteRepository extends CrudRepository&lt;QuoteEntity, Long&gt; {
+&nbsp;public interface SellerRepository extends CrudRepository&lt;SellerEntity, Long&gt; {
+&nbsp;    SellerEntity findByEmail(String email);
 &nbsp;}
 </code>
 </pre>
@@ -79,7 +81,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-23 13:38</div>
+    <div style="float:right;">generated on 2023-07-31 11:09</div>
 </div>
 </body>
 </html>

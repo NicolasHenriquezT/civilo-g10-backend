@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > CoverageRepository</title>
+  <title>Coverage Report > ProfitMarginRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.civilo.roller.repositories</a>
 </div>
 
-<h1>Coverage Summary for Class: CoverageRepository (com.civilo.roller.repositories)</h1>
+<h1>Coverage Summary for Class: ProfitMarginRepository (com.civilo.roller.repositories)</h1>
 
 <table class="coverageStats">
 
@@ -29,13 +29,13 @@ Current scope:     <a href="../../index.html">all classes</a>
   <th class="name">Class</th>
 </tr>
   <tr>
-    <td class="name">CoverageRepository$MockitoMock$TjufU3EP</td>
+    <td class="name">ProfitMarginRepository$MockitoMock$XDS5qSJM</td>
   </tr>
   <tr>
-    <td class="name">CoverageRepository$MockitoMock$TjufU3EP$auxiliary$75gA6jCW</td>
+    <td class="name">ProfitMarginRepository$MockitoMock$XDS5qSJM$auxiliary$6rE53HPX</td>
   </tr>
   <tr>
-    <td class="name">CoverageRepository$MockitoMock$TjufU3EP$auxiliary$DKd10ymH</td>
+    <td class="name">ProfitMarginRepository$MockitoMock$XDS5qSJM$auxiliary$f0PCoAse</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -49,21 +49,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.civilo.roller.repositories;
 &nbsp;
-&nbsp;import com.civilo.roller.Entities.CoverageEntity;
+&nbsp;import com.civilo.roller.Entities.ProfitMarginEntity;
 &nbsp;import org.springframework.data.jpa.repository.Query;
 &nbsp;import org.springframework.data.repository.CrudRepository;
 &nbsp;import org.springframework.data.repository.query.Param;
 &nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
 &nbsp;@Repository
-&nbsp;public interface CoverageRepository extends CrudRepository&lt;CoverageEntity, Long&gt; {
+&nbsp;public interface ProfitMarginRepository extends CrudRepository&lt;ProfitMarginEntity, Long&gt; {
 &nbsp;
-&nbsp;    //Se consulta la id de una comuna especifica
-&nbsp;    //@Query(value = &quot;select coverageid idcoverage from coverages r where r.commune = :commune&quot;, nativeQuery = true)
-&nbsp;    //Long findIdByCommune(@Param(&quot;commune&quot;) String commune);
-&nbsp;    
-&nbsp;    CoverageEntity findByCommune(String commune);
-&nbsp;
+&nbsp;    ProfitMarginEntity findByDecimalProfitMargin(float decimalProfitMargin);
 &nbsp;}
 </code>
 </pre>
@@ -88,7 +83,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-23 13:38</div>
+    <div style="float:right;">generated on 2023-07-31 11:09</div>
 </div>
 </body>
 </html>

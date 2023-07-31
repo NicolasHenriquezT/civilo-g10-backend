@@ -43,7 +43,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (4/4)
+    (9/9)
   </span>
 </td>
 <td class="coverageStat">
@@ -51,27 +51,42 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (4/4)
+    (13/13)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">CurtainService$MockitoMock$TajkfiAC</td>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y</td>
   </tr>
   <tr>
-    <td class="name">CurtainService$MockitoMock$TajkfiAC$auxiliary$1q4EJQ6b</td>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$0DMAtVOj</td>
   </tr>
   <tr>
-    <td class="name">CurtainService$MockitoMock$TajkfiAC$auxiliary$jN5Rt8YL</td>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$18ZNiLpj</td>
   </tr>
   <tr>
-    <td class="name">CurtainService$MockitoMock$TajkfiAC$auxiliary$L61suGXi</td>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$bK5JhvIZ</td>
   </tr>
   <tr>
-    <td class="name">CurtainService$MockitoMock$TajkfiAC$auxiliary$mM7OoNUi</td>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$C9qjQLDZ</td>
   </tr>
   <tr>
-    <td class="name">CurtainService$MockitoMock$TajkfiAC$auxiliary$XOxtYA9F</td>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$D0XpPtMy</td>
+  </tr>
+  <tr>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$DuptMWbo</td>
+  </tr>
+  <tr>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$E30hnEsX</td>
+  </tr>
+  <tr>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$gxbbcOvw</td>
+  </tr>
+  <tr>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$oEMdrqx9</td>
+  </tr>
+  <tr>
+    <td class="name">CurtainService$MockitoMock$MtDoum1y$auxiliary$WoThLs6A</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
@@ -80,7 +95,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (4/4)
+    (9/9)
   </span>
 </td>
 <td class="coverageStat">
@@ -88,7 +103,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (4/4)
+    (13/13)
   </span>
 </td>
 </tr>
@@ -105,30 +120,77 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.civilo.roller.repositories.CurtainRepository;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Service;
-&nbsp;
+&nbsp;import com.civilo.roller.exceptions.EntityNotFoundException;
 &nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
 &nbsp;
 &nbsp;@Service
-&nbsp;
 <b class="fc">&nbsp;public class CurtainService {</b>
 &nbsp;    @Autowired
 &nbsp;    CurtainRepository curtainRepository;
 &nbsp;
-&nbsp;    // El siguiente método retorna un listado el cual contiene TODA la información asociada a las cortinas
+&nbsp;    // Get all 
+&nbsp;    // Permite obtener un listado con toda la informacion asociada a las cortinas.
 &nbsp;    public List&lt;CurtainEntity&gt; getCurtains(){
 <b class="fc">&nbsp;        return (List&lt;CurtainEntity&gt;) curtainRepository.findAll();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    // El siguiente método permite guardar un objeto del tipo &quot;CoverageEntity&quot; en la base de datos
-&nbsp;    public CurtainEntity saveCurtain(CurtainEntity curtain){
+&nbsp;    // Get by id
+&nbsp;    // Permite obtener la informacion de una cortina en especifico.
+&nbsp;    public Optional&lt;CurtainEntity&gt; getCurtainById(Long id){
+<b class="fc">&nbsp;        return curtainRepository.findById(id);</b>
+&nbsp;    } 
+&nbsp;
+&nbsp;    // Create
+&nbsp;    // Permite guardar un objetivo del tipo &quot;CurtainEntity&quot; en la base de datos.
+&nbsp;    public CurtainEntity createCurtain(CurtainEntity curtain){
 <b class="fc">&nbsp;        return curtainRepository.save(curtain);</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    // Permite verificar si existe una cortina registrada con el mismo nombre.
+&nbsp;    public Optional&lt;CurtainEntity&gt; validateCurtain(String curtainName){
+<b class="fc">&nbsp;        return Optional.ofNullable(curtainRepository.findByCurtainType(curtainName));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Update
+&nbsp;    // Permite actualizar los datos de un objeto del tipo &quot;CurtainEntity&quot; en la base de datos.
+&nbsp;    public CurtainEntity updateCurtain(Long curtainID, CurtainEntity curtain){
+&nbsp;
+<b class="fc">&nbsp;        CurtainEntity existingCurtain = curtainRepository.findById(curtainID)</b>
+<b class="fc">&nbsp;            .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Cortina no encontrada con el ID: &quot; + curtainID));</b>
+&nbsp;
+<b class="fc">&nbsp;            existingCurtain.setCurtainType(curtain.getCurtainType());</b>
+&nbsp;
+<b class="fc">&nbsp;            CurtainEntity updatedCurtain = curtainRepository.save(existingCurtain);</b>
+<b class="fc">&nbsp;            return updatedCurtain;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Delete all
+&nbsp;    // Permite eliminar todas las cortinas de un sistema.
+&nbsp;    public void deleteCurtains(){
+<b class="fc">&nbsp;        curtainRepository.deleteAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Delete by id
+&nbsp;    // Permite eliminar una cortina en especifico del sistema.
+&nbsp;    public void deleteCurtainById(Long id){
+<b class="fc">&nbsp;        curtainRepository.deleteById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Permite verificar si existe una cortina en el sistema, segun el id ingresado.
+&nbsp;    public boolean existCurtainById(Long id){
+<b class="fc">&nbsp;        return curtainRepository.findById(id).isPresent();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //-----------------------------------------------------------------------------------------------------------------------------------------------//
+&nbsp;
+&nbsp;    /* 
 &nbsp;    //Se obtiene la ID de la cortina dependiendo del tipo de cortina
 &nbsp;    public Long getCurtainIdByCurtainType(String curtainType){
-<b class="fc">&nbsp;        return curtainRepository.findIdByCurtainType(curtainType);</b>
+&nbsp;        return curtainRepository.findIdByCurtainType(curtainType);
 &nbsp;
 &nbsp;    }
+&nbsp;    */
 &nbsp;
 &nbsp;}
 </code>
@@ -154,7 +216,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-23 13:38</div>
+    <div style="float:right;">generated on 2023-07-31 11:09</div>
 </div>
 </body>
 </html>
